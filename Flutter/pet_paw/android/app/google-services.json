@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "825931511240",
+    "project_id": "pet-paw-project",
+    "storage_bucket": "pet-paw-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825931511240:android:83d56ebd124fbd95a9fcfd",
+        "android_client_info": {
+          "package_name": "com.example.pet_paw"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMp-VLfiIIWxLTU3lCbocoYQTYkatoLQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

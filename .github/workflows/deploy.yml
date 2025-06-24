@@ -1,0 +1,34 @@
+name: Build and Deploy
+on:
+  push:
+    branches: [main]
+jobs:
+  build-flutter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.x'
+      - run: cd flutter && flutter pub get
+      - run: cd flutter && flutter build apk --release
+      - uses: actions/upload-artifact@v3
+        with:
+          name: app-release.apk
+          path: flutter/build/app/outputs/flutter-apk/app-release.apk
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-flutter
+    if: github.actor == 'Mahm0udBakir' # Restricts deployment to your account
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: app-release.apk
+      - name: Deploy to Firebase App Distribution
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          npm install -g firebase-tools
+          cd flutter
+          firebase appdistribution:distribute ../app-release.apk --app 1:825931511240:android:83d56ebd124fbd95a9fcfd
+ --token $FIREBASE_TOKEN
