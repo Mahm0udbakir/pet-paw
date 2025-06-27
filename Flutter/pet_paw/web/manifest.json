@@ -1,6 +1,6 @@
 {
-    "name": "pet_paw",
-    "short_name": "pet_paw",
+    "name": "petpaw",
+    "short_name": "petpaw",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
