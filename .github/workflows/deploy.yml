@@ -29,6 +29,6 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           npm install -g firebase-tools
-          cd flutter
-          firebase appdistribution:distribute ../app-release.apk --app 1:825931511240:android:83d56ebd124fbd95a9fcfd
- --token $FIREBASE_TOKEN
+          firebase appdistribution:distribute app-release.apk \
+            --app 1:825931511240:android:83d56ebd124fbd95a9fcfd \
+            --token $FIREBASE_TOKEN
