@@ -47,7 +47,7 @@ class CustomPassword extends StatelessWidget {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white.withOpacity(0.5),
-                prefixIcon: Icon(Icons.lock, color: AppColors.iconColor),
+                prefixIcon: Icon(Icons.lock_outline, color: AppColors.iconColor),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -68,9 +68,38 @@ class CustomPassword extends StatelessWidget {
                   ],
                 ),
                 hintText: "Enter your password",
+                hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppColors.iconColor,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(40),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide(
+                    color: Colors.brown.shade100,
+                    width: 1,
+                  ),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide(
+                    color: Colors.red.shade300,
+                    width: 1.2,
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide(
+                    color: Colors.brown.shade200,
+                    width: 1,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide(
+                    color: Colors.brown.shade100,
+                    width: 1,
+                  ),
                 ),
               ),
             ),

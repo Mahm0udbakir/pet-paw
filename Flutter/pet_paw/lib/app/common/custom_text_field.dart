@@ -101,16 +101,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
               fontSize: 16,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(40),
-              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide(color: Colors.brown.shade100, width: 1),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.circular(50),
               borderSide: BorderSide(color: Colors.brown.shade100, width: 1),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.circular(50),
               borderSide: BorderSide(color: Colors.brown.shade200, width: 1.2),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide(color: Colors.red.shade300, width: 1.2),
             ),
           ),
         ),
