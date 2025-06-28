@@ -22,7 +22,7 @@ class SignupScreen extends StatelessWidget {
                 Loaders.successSnackBar(
                   context: context,
                   title: 'Signup Successful',
-                  message: 'Welcome, ${state.user.name}!',
+                  message: 'Welcome',
                 );
                 // Future.delayed(const Duration(seconds: 2), () {
                 //   Navigator.pushNamedAndRemoveUntil(

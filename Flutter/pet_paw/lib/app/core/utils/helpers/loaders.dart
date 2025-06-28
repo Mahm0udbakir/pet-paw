@@ -48,7 +48,7 @@ class Loaders {
       context: context,
       title: title,
       message: message,
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.success,
       icon: const Icon(Iconsax.check, color: AppColors.white),
       duration: duration,
     );

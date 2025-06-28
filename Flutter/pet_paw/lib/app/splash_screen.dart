@@ -18,7 +18,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   int _currentIndex = 0;
 
-  final List<String> logos = [
+  final String staticLogo = ImagesStrings.constPart;
+
+  final List<String> animatedLogos = [
     ImagesStrings.appLogo,
     ImagesStrings.splash1Logo,
     ImagesStrings.splash2Logo,
@@ -33,8 +35,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _startLogoAnimation() {
-    Timer.periodic(Duration(seconds: 2), (timer) {
-      if (_currentIndex < logos.length - 1) {
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_currentIndex < animatedLogos.length - 1) {
         setState(() {
           _currentIndex++;
         });
@@ -58,18 +60,29 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: Center(
-        child: AnimatedSwitcher(
-          duration: Duration(milliseconds: 600),
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-          child: SvgPicture.asset(
-            logos[_currentIndex],
-            key: ValueKey<int>(_currentIndex),
-            width: 300,
-            height: 300,
-            fit: BoxFit.cover,
-          ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            SvgPicture.asset(
+              staticLogo,
+              width: 300,
+              height: 300,
+              fit: BoxFit.cover,
+            ),
+            AnimatedSwitcher(
+              duration: Duration(milliseconds: 600),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+              child: SvgPicture.asset(
+                animatedLogos[_currentIndex],
+                key: ValueKey<int>(_currentIndex),
+                width: 300,
+                height: 300,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ],
         ),
       ),
     );

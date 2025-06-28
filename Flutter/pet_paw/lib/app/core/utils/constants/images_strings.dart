@@ -1,6 +1,7 @@
 class ImagesStrings {
   // App Logo and Splash Screens
   static const String appLogo = 'assets/images/logos/app_logo.svg';
+  static const String constPart = 'assets/images/logos/const_part.svg';
   static const String splash1Logo = 'assets/images/logos/splash1.svg';
   static const String splash2Logo = 'assets/images/logos/splash2.svg';
   static const String splash3Logo = 'assets/images/logos/splash3.svg';
