@@ -67,7 +67,7 @@ class ValidationPopoverIcon extends StatelessWidget {
                   ),
                 ),
                 Transform.translate(
-                  offset: Offset(-38, -3), // move left
+                  offset: Offset(-38, -3),
                   child: CustomPaint(
                     size: Size(30, 40),
                     painter: TrianglePainter(
@@ -120,10 +120,8 @@ class TrianglePainter extends CustomPainter {
       ..lineTo(size.width, 0)
       ..close();
 
-    // Draw shadow
     canvas.drawShadow(path, Colors.black38,16, true);
 
-    // Draw the triangle itself
     final Paint paint = Paint()..color = color;
     canvas.drawPath(path, paint);
   }

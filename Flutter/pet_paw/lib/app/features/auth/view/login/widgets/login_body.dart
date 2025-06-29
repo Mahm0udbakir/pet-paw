@@ -36,7 +36,7 @@ class LoginBody extends StatelessWidget {
                   Loaders.successSnackBar(
                     context: context,
                     title: 'Login Successful',
-                    message: 'Welcome back, ${state.user.name}!',
+                    message: 'Welcome back',
                   );
                 } else if (state is LoginError) {
                   Loaders.errorSnackBar(
