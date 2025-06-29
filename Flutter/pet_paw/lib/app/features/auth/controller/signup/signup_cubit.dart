@@ -53,13 +53,18 @@ class SignupCubit extends Cubit<SignupState> {
     emit(PasswordVisibilityToggled());
   }
 
+  // void validatePassword(String password) {
+  //   final oldState = isPasswordValid;
+  //   currentPassword = password;
+  //   if (isPasswordValid != oldState) {
+  //     emit(PasswordVisibilityToggled());
+  //   }
+  // }
   void validatePassword(String password) {
-    final oldState = isPasswordValid;
     currentPassword = password;
-    if (isPasswordValid != oldState) {
-      emit(PasswordVisibilityToggled());
-    }
+    emit(PasswordValidationChanged());
   }
+
 
   bool isFormValid() => signupFormKey.currentState?.validate() ?? false;
 

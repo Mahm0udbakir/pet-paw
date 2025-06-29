@@ -35,3 +35,6 @@ class DetailedSignupError extends SignupError {
 
   DetailedSignupError(super.message, {this.type = SignupErrorType.unknown});
 }
+
+class PasswordValidationChanged extends SignupState {}
+

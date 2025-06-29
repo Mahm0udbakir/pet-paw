@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:popover/popover.dart';
-
+import 'package:petpaw/app/features/auth/view/signup/widgets/password_cloud.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../controller/signup/signup_cubit.dart';
 import 'password_strength_label.dart';
@@ -51,11 +50,11 @@ class CustomPassword extends StatelessWidget {
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (showValidationError && !isValid)
-                      IconButton(
-                        onPressed: () => _showValidationPopover(context, cubit),
-                        icon: const Icon(Icons.error, color: Colors.red),
-                      ),
+                    if (controller.text.isNotEmpty && !isValid)
+                      ValidationPopoverIcon(
+                      cubit: cubit,
+                      showBubble: true,
+                    ),
                     IconButton(
                       onPressed: cubit.togglePasswordVisibility,
                       icon: Icon(
@@ -87,7 +86,7 @@ class CustomPassword extends StatelessWidget {
                     width: 1.2,
                   ),
                 ),
-                focusedErrorBorder: OutlineInputBorder(
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.brown.shade200,
@@ -113,68 +112,6 @@ class CustomPassword extends StatelessWidget {
           ],
         ),
       ],
-    );
-  }
-
-  void _showValidationPopover(BuildContext context, SignupCubit cubit) {
-    showPopover(
-      context: context,
-      bodyBuilder: (context) => Container(
-        padding: const EdgeInsets.all(20),
-        width: 250,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildPopoverCheck(
-              cubit.hasMinLength,
-              'Must be at 8-20 characters.',
-            ),
-            _buildPopoverCheck(
-              cubit.hasNumber,
-              'Must include at least 1 number.',
-            ),
-            _buildPopoverCheck(
-              cubit.hasUpper,
-              'Must contain at least 1 uppercase letter. ',
-            ),
-            _buildPopoverCheck(
-              cubit.hasLower,
-              'Must contain at least 1 lowercase letter. ',
-            ),
-            _buildPopoverCheck(
-              cubit.hasSpecial,
-              'Must include at least 1 special character (e.g.!,@,#).',
-            ),
-          ],
-        ),
-      ),
-      direction: PopoverDirection.top,
-      width: 380,
-      arrowHeight: 15,
-      arrowWidth: 30,
-      backgroundColor: AppColors.white,
-      radius: 10,
-      transition: PopoverTransition.scale,
-      transitionDuration: const Duration(milliseconds: 150),
-      barrierColor: Colors.transparent,
-    );
-  }
-
-  Widget _buildPopoverCheck(bool condition, String text) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Icon(
-            condition ? Icons.check : Icons.close,
-            color: condition ? Colors.green : Colors.red,
-            size: 16,
-          ),
-          const SizedBox(width: 8),
-          Text(text, style: TextStyle(color: Colors.black, fontSize: 13)),
-        ],
-      ),
     );
   }
 }
