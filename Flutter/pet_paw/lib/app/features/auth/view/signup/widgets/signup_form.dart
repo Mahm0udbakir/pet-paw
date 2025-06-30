@@ -42,8 +42,7 @@ class SignupForm extends StatelessWidget {
         icon: Icons.phone_outlined,
         keyboardType: TextInputType.phone,
         controller: signupCubit.phoneController,
-        validator: (value) =>
-            Validator.validateEmptyText('Phone number', value),
+        validator: (value) => Validator.validatePhone(value),
       ),
 
       CustomPassword(
