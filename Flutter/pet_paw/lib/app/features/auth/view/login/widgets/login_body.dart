@@ -61,7 +61,7 @@ class LoginBody extends StatelessWidget {
             ),
             const SizedBox(height: Sizes.spaceBetweenItems),
             SocialButtons(),
-            const SizedBox(height: Sizes.spaceBetweenItems * 2),
+            const SizedBox(height: Sizes.spaceBetweenItems),
             Text.rich(
               TextSpan(
                 text: 'No account yet? ',
