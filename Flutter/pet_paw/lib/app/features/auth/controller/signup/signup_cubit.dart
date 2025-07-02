@@ -19,7 +19,7 @@ class SignupCubit extends Cubit<SignupState> {
   final GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
   bool triedToSubmit = false;
-  bool terms = false;
+  bool terms = true;
   bool isPasswordObscured = true;
   String currentPassword = '';
 

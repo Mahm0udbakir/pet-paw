@@ -21,7 +21,7 @@ class LoginForm extends StatelessWidget {
       CustomTextField(
         title: 'Email',
         hintText: 'Enter your email',
-        icon: Icons.email_outlined,
+        icon: Icon(Icons.email_outlined),
         keyboardType: TextInputType.emailAddress,
         controller: loginCubit.emailController,
 
@@ -30,7 +30,7 @@ class LoginForm extends StatelessWidget {
       CustomTextField(
         title: 'Password',
         hintText: 'Enter your password',
-        icon: Icons.lock_outline,
+        icon: Icon(Icons.lock_outline),
         keyboardType: TextInputType.text,
         controller: loginCubit.passwordController,
         validator: (value) => Validator.validatePassword(value),
