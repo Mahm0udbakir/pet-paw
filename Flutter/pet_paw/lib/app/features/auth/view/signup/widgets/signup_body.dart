@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
+import 'package:petpaw/app/features/auth/controller/signup/signup_cubit.dart';
 import 'package:petpaw/app/features/auth/view/login/login_screen.dart';
 import 'package:petpaw/app/features/auth/view/signup/widgets/signup_form.dart';
 
@@ -32,7 +33,10 @@ class SignupBody extends StatelessWidget {
               ),
             ),
             const SizedBox(height: Sizes.spaceBetweenSections),
-            SignupForm(),
+            BlocProvider(
+              create: (context) => SignupCubit(),
+              child: SignupForm(),
+            ),
             const SizedBox(height: Sizes.spaceBetweenItems * 2),
             Text.rich(
               TextSpan(

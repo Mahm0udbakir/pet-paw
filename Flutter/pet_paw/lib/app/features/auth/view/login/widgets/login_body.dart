@@ -84,10 +84,7 @@ class LoginBody extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                              create: (context) => SignupCubit(),
-                              child: const SignupScreen(),
-                            ),
+                            builder: (context) => const SignupScreen(),
                           ),
                           (route) => false,
                         );

@@ -49,7 +49,7 @@ class Sizes {
 
   // Input field
   static const double inputFieldRadius = 12.0;
-  static const double spaceBetweenInputFields = 16.0;
+  static const double spaceBetweenInputFields = 8.0;
 
   // Card sizes
   static const double smCardRadius = 10.0;

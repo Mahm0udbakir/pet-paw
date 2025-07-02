@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/features/auth/controller/signup/signup_cubit.dart';
 import 'package:petpaw/app/features/auth/controller/signup/signup_state.dart';
+import 'package:petpaw/app/features/auth/view/pet_profile/create_pet_profile_screen.dart';
 import 'package:petpaw/app/features/auth/view/signup/widgets/signup_body.dart';
 import 'package:petpaw/app/core/utils/helpers/loaders.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
@@ -14,7 +16,7 @@ class SignupScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => SignupCubit(),
       child: Scaffold(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.primaryBackground,
         body: SafeArea(
           child: BlocListener<SignupCubit, SignupState>(
             listener: (context, state) {
@@ -24,10 +26,6 @@ class SignupScreen extends StatelessWidget {
                   title: 'Signup Successful',
                   message: 'Welcome',
                 );
-                // Future.delayed(const Duration(seconds: 2), () {
-                //   Navigator.pushNamedAndRemoveUntil(
-                //       context, '/home', (route) => false);
-                // });
               } else if (state is SignupError) {
                 Loaders.errorSnackBar(
                   context: context,

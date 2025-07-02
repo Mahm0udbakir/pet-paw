@@ -4,13 +4,15 @@ import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 class CustomTextField extends StatefulWidget {
   final String title;
   final String hintText;
-  final IconData icon;
-  final TextInputType keyboardType;
+  final Widget icon;
+  final TextInputType? keyboardType;
   final bool obscure;
   final bool enabled;
   final bool titleBool;
   final bool filled;
+  final bool readOnly;
   final Color fillColor;
+  final Widget? suffixIcon;
   final TextEditingController controller;
   final String? Function(String?)? validator;
   const CustomTextField({
@@ -18,14 +20,16 @@ class CustomTextField extends StatefulWidget {
     required this.title,
     required this.hintText,
     required this.icon,
-    required this.keyboardType,
+    this.keyboardType,
     required this.controller,
-    required this.validator,
-    this.fillColor = Colors.white,
+    this.validator,
+    this.fillColor = Colors.transparent,
     this.obscure = false,
     this.enabled = false,
     this.titleBool = true,
     this.filled = false,
+    this.readOnly = false,
+    this.suffixIcon,
   });
 
   @override
@@ -60,6 +64,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             : SizedBox.shrink(),
         SizedBox(height: 5),
         TextFormField(
+          readOnly: widget.readOnly,
           controller: widget.controller,
           validator: widget.validator,
           keyboardType: widget.keyboardType,
@@ -78,7 +83,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
               horizontal: 20,
               vertical: 14,
             ),
-            prefixIcon: Icon(widget.icon, color: AppColors.iconColor),
+            prefixIcon: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: widget.icon,
+            ),
             suffixIcon: widget.obscure
                 ? IconButton(
                     onPressed: () {
@@ -93,7 +101,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       color: AppColors.iconColor,
                     ),
                   )
-                : null,
+                : widget.suffixIcon,
             hintText: widget.hintText,
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: AppColors.iconColor,
