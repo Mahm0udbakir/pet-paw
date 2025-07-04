@@ -5,6 +5,7 @@ import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/core/utils/validators/validation.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../reset_password/view/reset_password_screen.dart';
 import '../../../controller/login/login_cubit.dart';
 import '../../../controller/login/login_state.dart';
 import 'register_button.dart';
@@ -24,7 +25,6 @@ class LoginForm extends StatelessWidget {
         icon: Icon(Icons.email_outlined),
         keyboardType: TextInputType.emailAddress,
         controller: loginCubit.emailController,
-
         validator: (value) => Validator.validateEmail(value),
       ),
       CustomTextField(
@@ -54,7 +54,15 @@ class LoginForm extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ResetPasswordScreen(),
+                  ),
+                      (route) => false,
+                );
+              },
               child: Text(
                 'Forgot Password?',
                 style: TextStyle(

@@ -8,6 +8,7 @@ class AppColors {
   // Text Form Colors
   static const Color textFormTextColor = Color(0xFFD8CEB0);
   static const Color textFormBorderColor = Color(0xFFC2AF82);
+  static const Color smallTextColor = Color(0xFF717172);
 
   // Button Colors
   static const Color buttonMainColor = Color(0xFF624837);

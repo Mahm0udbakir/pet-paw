@@ -53,7 +53,7 @@ class TermsAndConditions extends StatelessWidget {
                             ),
                       ),
                       TextSpan(
-                        text: 'Terms & Conditions',
+                        text: 'Privacy Policy',
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               fontWeight: FontWeight.w400,

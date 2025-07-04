@@ -52,6 +52,7 @@ class SignupForm extends StatelessWidget {
         controller: signupCubit.passwordController,
         showValidationError:
             !signupCubit.isPasswordValid && signupCubit.triedToSubmit,
+        validator: (value) => Validator.validatePassword(value),
       ),
 
       CustomTextField(

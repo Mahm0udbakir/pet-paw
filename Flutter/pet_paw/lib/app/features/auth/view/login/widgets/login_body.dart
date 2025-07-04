@@ -2,9 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
-
 import '../../../../../core/utils/helpers/loaders.dart';
-import '../../../controller/signup/signup_cubit.dart';
 import '../../signup/signup_screen.dart';
 import 'social_buttons.dart';
 import '../../../../../core/utils/constants/sizes.dart';

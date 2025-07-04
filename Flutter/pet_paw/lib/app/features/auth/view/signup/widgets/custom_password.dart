@@ -8,11 +8,13 @@ import 'password_strength_label.dart';
 class CustomPassword extends StatelessWidget {
   final TextEditingController controller;
   final bool showValidationError;
+  final String? Function(String?)? validator;
 
   const CustomPassword({
     super.key,
     required this.controller,
     this.showValidationError = false,
+    this.validator,
   });
 
   @override
@@ -38,6 +40,7 @@ class CustomPassword extends StatelessWidget {
               controller: controller,
               obscureText: cubit.isPasswordObscured,
               onChanged: cubit.validatePassword,
+              validator: validator,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: 16,
                 color: Colors.brown.shade500,
@@ -98,6 +101,13 @@ class CustomPassword extends StatelessWidget {
                   borderSide: BorderSide(
                     color: Colors.brown.shade100,
                     width: 1,
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide(
+                    color: Colors.red.shade300,
+                    width: 1.2,
                   ),
                 ),
               ),
