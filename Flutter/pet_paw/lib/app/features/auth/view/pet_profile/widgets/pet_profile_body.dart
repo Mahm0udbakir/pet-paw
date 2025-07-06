@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/features/auth/controller/create_pet_profile/create_pet_profile_cubit.dart';
 import 'package:petpaw/app/features/auth/view/pet_profile/widgets/pet_profile_form.dart';
 
+import 'image_uploaded.dart';
 import 'upload_pet_image.dart';
 
 class PetProfileBody extends StatelessWidget {
@@ -20,26 +19,24 @@ class PetProfileBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             BlocBuilder<CreatePetProfileCubit, CreatePetProfileState>(
+              buildWhen: (previous, current) =>
+                  current is ImageUploadedSuccessfully ||
+                  current is ImageUploading ||
+                  current is ImagePickFailed ||
+                  current is ImagePickCancelled,
               builder: (context, state) {
-                if (state is ImageUploadedSuccessfully) {
-                  return Container(
-                    width: double.infinity,
-                    height: 325,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.file(
-                        File(state.imagePath),
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: 325,
-                      ),
-                    ),
-                  );
-                } else if (state is ImageUploading) {
+                final cubit = context.read<CreatePetProfileCubit>();
+                final imageFile = cubit.imageFile;
+
+                if (state is ImageUploading) {
                   return const CircularProgressIndicator();
+                }
+
+                if (imageFile != null) {
+                  return ImageUploaded(
+                    imageFile: imageFile,
+                    onTap: () => showImageOptionsBottomSheet(context, cubit),
+                  );
                 } else {
                   return const UploadPetImage();
                 }
