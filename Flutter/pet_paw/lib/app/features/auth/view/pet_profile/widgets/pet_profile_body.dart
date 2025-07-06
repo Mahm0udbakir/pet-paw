@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
@@ -17,12 +19,34 @@ class PetProfileBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            UploadPetImage(),
-            const SizedBox(height: Sizes.spaceBetweenItems),
-            BlocProvider(
-              create: (context) => CreatePetProfileCubit(),
-              child: PetProfileForm(),
+            BlocBuilder<CreatePetProfileCubit, CreatePetProfileState>(
+              builder: (context, state) {
+                if (state is ImageUploadedSuccessfully) {
+                  return Container(
+                    width: double.infinity,
+                    height: 325,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.file(
+                        File(state.imagePath),
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: 325,
+                      ),
+                    ),
+                  );
+                } else if (state is ImageUploading) {
+                  return const CircularProgressIndicator();
+                } else {
+                  return const UploadPetImage();
+                }
+              },
             ),
+            const SizedBox(height: Sizes.spaceBetweenItems),
+            PetProfileForm(),
           ],
         ),
       ),

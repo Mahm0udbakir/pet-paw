@@ -9,4 +9,10 @@ class ApiConfig {
   static const String forgetPassword = '/api/Account/ForgetPassword';
   static const String verifyOTP = '/api/Account/VerifyOTP';
   static const String resetPassword = '/api/Account/ResetPassword';
+
+  // pet profile
+  static String createPetProfile(String type) {
+    final petType = type.toLowerCase() == 'dog' ? 1 : 0;
+    return '/api/Pet?petType=$petType';
+  }
 }

@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
-import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 
-Widget buildOption(String value, BuildContext context) {
-  final controller = context.read<CreatePetProfileCubit>();
-  final bool isSelected = controller.selected == value;
-
+Widget buildOption(String value, BuildContext context, Function(String) onTap, bool isSelected) {
   return GestureDetector(
-    onTap: () => controller.radioSelected(value),
+    onTap: () => onTap(value),
     child: AnimatedContainer(
       height: 56,
       duration: const Duration(milliseconds: 500),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       margin: EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
           color: isSelected ? Colors.brown.shade400 : Colors.brown.shade100,

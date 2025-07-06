@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../controller/signup/signup_cubit.dart';
+import '../../../controller/signup/signup_state.dart';
 
 class TermsAndConditions extends StatelessWidget {
   const TermsAndConditions({super.key});
@@ -16,10 +17,14 @@ class TermsAndConditions extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Checkbox(
-            value: controller.terms,
-            onChanged: (value) => controller.toggleTerms(),
-            activeColor: AppColors.buttonMainColor,
+          BlocBuilder<SignupCubit, SignupState>(
+            builder: (context, state) {
+              return Checkbox(
+                value: controller.terms,
+                onChanged: (value) => controller.toggleTerms(),
+                activeColor: AppColors.buttonMainColor,
+              );
+            },
           ),
           Expanded(
             child: Column(

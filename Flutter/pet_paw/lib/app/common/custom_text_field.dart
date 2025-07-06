@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -15,6 +16,7 @@ class CustomTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final int maxLines;
   const CustomTextField({
     super.key,
     required this.title,
@@ -23,13 +25,14 @@ class CustomTextField extends StatefulWidget {
     this.keyboardType,
     required this.controller,
     this.validator,
-    this.fillColor = Colors.transparent,
+    this.fillColor = Colors.white,
     this.obscure = false,
     this.enabled = false,
     this.titleBool = true,
     this.filled = false,
     this.readOnly = false,
     this.suffixIcon,
+    this.maxLines = 1,
   });
 
   @override
@@ -53,17 +56,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _titleBool == true
-            ? Text(
-                widget.title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.greyColor,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16,
-                ),
-              )
+            ? customLabel(widget.title, context)
             : SizedBox.shrink(),
         SizedBox(height: 5),
         TextFormField(
+          maxLines: widget.maxLines,
           readOnly: widget.readOnly,
           controller: widget.controller,
           validator: widget.validator,
@@ -76,9 +73,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
           decoration: InputDecoration(
             filled: true,
-            fillColor: widget.enabled
-                ? Colors.white
-                : Colors.white.withOpacity(0.5),
+            fillColor: Colors.white,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 20,
               vertical: 14,

@@ -17,6 +17,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   int _currentIndex = 0;
+  late final List<Widget> animatedLogoWidgets;
+  Timer? _animationTimer;
 
   final String staticLogo = ImagesStrings.constPart;
 
@@ -31,6 +33,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    animatedLogoWidgets = animatedLogos
+        .map(
+          (path) => SvgPicture.asset(
+            path,
+            width: 300,
+            height: 300,
+            fit: BoxFit.cover,
+            key: ValueKey(path),
+          ),
+        )
+        .toList();
     _startLogoAnimation();
   }
 
@@ -53,6 +66,12 @@ class _SplashScreenState extends State<SplashScreen> {
         );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _animationTimer?.cancel();
+    super.dispose();
   }
 
   @override

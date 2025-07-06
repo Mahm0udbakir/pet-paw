@@ -118,6 +118,7 @@ class CustomPassword extends StatelessWidget {
         Row(
           children: [
             SizedBox(width: 15),
+            if(controller.text.isNotEmpty && !isValid)
             PasswordStrengthLabel(passedCount: cubit.passwordStrengthCount),
           ],
         ),

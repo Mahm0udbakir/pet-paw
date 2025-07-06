@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/common/custom_light_button.dart';
-import '../../../../common/custom_dark_button.dart';
-import '../../../../core/utils/constants/app_colors.dart';
-import '../../../../core/utils/constants/sizes.dart';
+import '../../../../../../common/custom_dark_button.dart';
+import '../../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../../core/utils/constants/sizes.dart';
+import '../../../../../reset_password/controller/reset_password_state.dart';
 import '../../controller/reset_password_cubit.dart';
-import '../../controller/reset_password_state.dart';
 import 'reset_password_form.dart';
 
 class ResetPasswordBody extends StatelessWidget {

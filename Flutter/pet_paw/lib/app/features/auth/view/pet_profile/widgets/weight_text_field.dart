@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
@@ -14,14 +15,7 @@ class WeightTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Weight (Kg.)',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: AppColors.greyColor,
-            fontWeight: FontWeight.w400,
-            fontSize: 16,
-          ),
-        ),
+        customLabel('Weight (Kg.)', context),
         const SizedBox(height: 5),
         BlocBuilder<CreatePetProfileCubit, CreatePetProfileState>(
           buildWhen: (previous, current) => current is WeightUpdated,
@@ -31,7 +25,14 @@ class WeightTextField extends StatelessWidget {
               keyboardType: TextInputType.number,
               controller: controller.weightController,
               decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
                 hintText: "Enter your pet's weight (kg.)",
+                hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppColors.iconColor,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                ),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Image.asset(ImagesStrings.weightIcon),
@@ -60,7 +61,6 @@ class WeightTextField extends StatelessWidget {
                     ],
                   ),
                 ),
-                hintStyle: TextStyle(color: Colors.brown.shade200),
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 20,
                   vertical: 16,

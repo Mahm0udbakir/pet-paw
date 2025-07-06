@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/features/auth/controller/signup/signup_cubit.dart';
 import 'package:petpaw/app/features/auth/controller/signup/signup_state.dart';
-import 'package:petpaw/app/features/auth/view/pet_profile/create_pet_profile_screen.dart';
 import 'package:petpaw/app/features/auth/view/signup/widgets/signup_body.dart';
 import 'package:petpaw/app/core/utils/helpers/loaders.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';

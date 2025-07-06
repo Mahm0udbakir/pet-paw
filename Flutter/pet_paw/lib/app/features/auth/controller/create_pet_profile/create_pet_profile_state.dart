@@ -5,18 +5,79 @@ sealed class CreatePetProfileState {}
 
 final class CreatePetProfileInitial extends CreatePetProfileState {}
 
-final class CreatePetProfileError extends CreatePetProfileState {
-  final String message;
-  CreatePetProfileError(this.message);
-}
-
 class WeightUpdated extends CreatePetProfileState {}
 
-final class CreatePetProfileSuccess extends CreatePetProfileState {}
+class ImagePicking extends CreatePetProfileState {}
 
-final class CreatePetProfileImageUploadError extends CreatePetProfileState {
-  final String message;
-  CreatePetProfileImageUploadError(this.message);
+class ImagePicked extends CreatePetProfileState {
+  final String path;
+  ImagePicked(this.path);
 }
 
-final class CreatePetProfileImageUploadSuccess extends CreatePetProfileState {}
+class ImagePickFailed extends CreatePetProfileState {
+  final String error;
+  ImagePickFailed(this.error);
+}
+
+class ImagePickCancelled extends CreatePetProfileState {}
+
+class ImageUploading extends CreatePetProfileState {}
+
+class ImageUploadedSuccessfully extends CreatePetProfileState {
+  final String imagePath;
+  ImageUploadedSuccessfully(this.imagePath);
+}
+
+class ImageUploadFailed extends CreatePetProfileState {
+  final String error;
+  ImageUploadFailed(this.error);
+}
+
+class BirthdaySelected extends CreatePetProfileState {
+  final DateTime date;
+  BirthdaySelected(this.date);
+}
+
+class ColorSelected extends CreatePetProfileState {
+  final String? color;
+  ColorSelected(this.color);
+}
+
+class PetTypeSelected extends CreatePetProfileState {
+  final String? petType;
+  PetTypeSelected(this.petType);
+}
+
+class BreedSelected extends CreatePetProfileState {
+  final String? breed;
+  BreedSelected(this.breed);
+}
+
+class GenderSelected extends CreatePetProfileState {
+  final String? gender;
+  GenderSelected(this.gender);
+}
+
+class NeuterStatusSelected extends CreatePetProfileState {
+  final String? neuterStatus;
+  NeuterStatusSelected(this.neuterStatus);
+}
+
+class ValidationFailed extends CreatePetProfileState {
+  final String message;
+  ValidationFailed(this.message);
+}
+
+class CreatingPetProfile extends CreatePetProfileState {}
+
+class ProfileCreatedSuccessfully extends CreatePetProfileState {
+  // final Map<String, dynamic> data;
+  // ProfileCreatedSuccessfully(this.data);
+}
+
+class ProfileCreationFailed extends CreatePetProfileState {
+  final String error;
+  ProfileCreationFailed(this.error);
+}
+
+class CreatePetProfileLoading extends CreatePetProfileState {}

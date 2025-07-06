@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/helpers/loaders.dart';
 import '../../signup/signup_screen.dart';
@@ -17,7 +18,7 @@ class LoginBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
+      padding: EdgeInsets.symmetric(
         vertical: Sizes.defaultSpace,
         horizontal: Sizes.md,
       ),
@@ -48,7 +49,7 @@ class LoginBody extends StatelessWidget {
                 return const LoginForm();
               },
             ),
-            const SizedBox(height: Sizes.spaceBetweenItems),
+            SizedBox(height: Sizes.spaceBetweenItems.h),
             Text(
               'Or Sign in with',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -57,15 +58,15 @@ class LoginBody extends StatelessWidget {
                 color: AppColors.buttonMainColor,
               ),
             ),
-            const SizedBox(height: Sizes.spaceBetweenItems),
+            SizedBox(height: Sizes.spaceBetweenItems.h),
             SocialButtons(),
-            const SizedBox(height: Sizes.spaceBetweenItems),
+            SizedBox(height: Sizes.spaceBetweenItems.h),
             Text.rich(
               TextSpan(
                 text: 'No account yet? ',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w400,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   color: AppColors.grey,
                 ),
                 children: [
@@ -73,7 +74,7 @@ class LoginBody extends StatelessWidget {
                     text: 'Create one',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       color: AppColors.buttonMainColor,
                       decoration: TextDecoration.underline,
                     ),

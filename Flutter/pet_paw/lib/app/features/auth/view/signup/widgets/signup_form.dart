@@ -4,12 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/core/utils/validators/validation.dart';
-import 'package:petpaw/app/features/auth/controller/signup/signup_state.dart';
 import 'package:petpaw/app/features/auth/view/pet_profile/create_pet_profile_screen.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../controller/signup/signup_cubit.dart';
-import '../../login/widgets/register_button.dart';
 import 'custom_password.dart';
 import 'terms_and_conditions.dart';
 
@@ -107,9 +105,12 @@ class SignupForm extends StatelessWidget {
                 if (signupCubit.signupFormKey.currentState!.validate()) {
                   signupCubit.signup();
                   Navigator.push(
-                context,
-                CupertinoPageRoute(builder: (context) => CreatePetProfileScreen()),
-              );
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) =>
+                          CreatePetProfileScreen(isFirstTime: true),
+                    ),
+                  );
                 }
               },
               child: Text('Next'),

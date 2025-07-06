@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/features/auth/view/pet_profile/widgets/pet_profile_body.dart';
 
 import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
+import '../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 
 class CreatePetProfileScreen extends StatelessWidget {
-  const CreatePetProfileScreen({super.key});
+  const CreatePetProfileScreen({super.key, required this.isFirstTime});
+
+  final bool isFirstTime;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryBackground,
       appBar: AppBar(
-        title: const Text(
-          'Create Pet Profile',
+        title: Text(
+          isFirstTime ? 'Create Pet Profile' : 'Add another pet',
           style: TextStyle(
             color: AppColors.buttonMainColor,
             fontWeight: FontWeight.w600,
@@ -31,7 +35,10 @@ class CreatePetProfileScreen extends StatelessWidget {
           },
         ),
       ),
-      body: PetProfileBody(),
+      body: BlocProvider(
+        create: (context) => CreatePetProfileCubit(),
+        child: PetProfileBody(),
+      ),
     );
   }
 }

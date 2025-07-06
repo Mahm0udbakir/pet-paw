@@ -1,54 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/images_strings.dart';
+import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 
 class BirthdayAndColor extends StatelessWidget {
   const BirthdayAndColor({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.read<CreatePetProfileCubit>();
     return SizedBox(
       width: double.infinity,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Birthday Container
+          // Birthday
           Expanded(
+            flex: 2,
             child: CustomTextField(
               title: 'Birthday',
               hintText: '',
               readOnly: true,
               icon: Image.asset(ImagesStrings.petIcon),
               suffixIcon: InkWell(
-                onTap: () {},
+                onTap: () => controller.chooseCalendarDate(context),
                 child: const Icon(
                   Icons.calendar_today,
                   color: AppColors.buttonMainColor,
                 ),
               ),
-              controller: TextEditingController(),
+              controller: controller.birthdayController,
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 10),
 
-          // Color Container
+          // Color
           Expanded(
+            flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Color',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.greyColor,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
-                  ),
-                ),
+                customLabel('Color', context),
                 SizedBox(height: 5),
                 DropdownButtonFormField(
+                  value: context.read<CreatePetProfileCubit>().selectedColor,
                   dropdownColor: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                   icon: const Icon(
@@ -61,24 +61,17 @@ class BirthdayAndColor extends StatelessWidget {
                     color: AppColors.buttonMainColor,
                     fontSize: 16,
                   ),
-                  items: [
-                    DropdownMenuItem(
-                      value: '1',
-                      child: Text(
-                        '1',
-                        style: TextStyle(color: AppColors.buttonMainColor),
-                      ),
-                    ),
-                    DropdownMenuItem(
-                      value: '2',
-                      child: Text(
-                        '2',
-                        style: TextStyle(color: AppColors.buttonMainColor),
-                      ),
-                    ),
-                  ],
-                  onChanged: (value) {},
+                  items: context.read<CreatePetProfileCubit>().colorOptions.map(
+                    (color) {
+                      return DropdownMenuItem(value: color, child: Text(color));
+                    },
+                  ).toList(),
+                  onChanged: (value) {
+                    context.read<CreatePetProfileCubit>().chooseColor(value);
+                  },
                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
                     contentPadding: EdgeInsets.symmetric(horizontal: 12),
                     prefixIcon: Image.asset(ImagesStrings.colorIcon),
                     border: OutlineInputBorder(

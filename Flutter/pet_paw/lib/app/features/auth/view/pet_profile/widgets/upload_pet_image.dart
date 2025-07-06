@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 
 import '../../../../../core/utils/constants/sizes.dart';
+import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
+import 'show_pick_image_bottom_sheet.dart';
 
 class UploadPetImage extends StatelessWidget {
   const UploadPetImage({super.key});
@@ -10,10 +13,13 @@ class UploadPetImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        final controller = context.read<CreatePetProfileCubit>();
+        showPickImageBottomSheet(context, controller);
+      },
       child: Container(
         width: double.infinity,
-        height: 300,
+        height: 325,
         decoration: BoxDecoration(
           color: Color(0xffD8CEB0),
           borderRadius: BorderRadius.circular(12),
