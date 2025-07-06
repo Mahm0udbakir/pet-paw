@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petpaw/app/features/auth/view/login/login_screen.dart';
 
 import '../../../../../common/custom_light_button.dart';
 import '../../../../../core/utils/constants/sizes.dart';
@@ -29,7 +30,66 @@ class BottomButtons extends StatelessWidget {
         SizedBox(height: Sizes.spaceBetweenItems),
         RegisterButton(
           isLoading: isLoading,
-          onPressed: () => controller.createPetProfile(),
+          onPressed: () {
+            controller.createPetProfile();
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                contentPadding: const EdgeInsets.all(24),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.check_circle_outline,
+                      color: Colors.green,
+                      size: 64,
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'profile created successfully',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'your pet profile has been created successfully.',
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const LoginScreen(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text('OK'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
           buttonText: 'Create Profile',
           shimmerButtonText: 'Creating Profile...',
         ),
