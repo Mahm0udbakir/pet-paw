@@ -33,10 +33,7 @@ class PetProfileBody extends StatelessWidget {
                 }
 
                 if (imageFile != null) {
-                  return ImageUploaded(
-                    imageFile: imageFile,
-                    onTap: () => showImageOptionsBottomSheet(context, cubit),
-                  );
+                  return ImageUploaded(imageFile: imageFile);
                 } else {
                   return const UploadPetImage();
                 }

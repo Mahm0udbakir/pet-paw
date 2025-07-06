@@ -15,30 +15,25 @@ class ImageUploaded extends StatelessWidget {
   const ImageUploaded({
     super.key,
     required this.imageFile,
-    required this.onTap,
   });
 
   final XFile imageFile;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Container(
-            width: double.infinity,
-            height: 325,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.file(
-                File(imageFile.path),
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: 325,
-              ),
+        Container(
+          width: double.infinity,
+          height: 325,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.file(
+              File(imageFile.path),
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: 325,
             ),
           ),
         ),
