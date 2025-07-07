@@ -14,6 +14,9 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   final newPasswordController = TextEditingController();
   final confirmNewPasswordController = TextEditingController();
 
+  final emailFocus = FocusNode();
+  
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override

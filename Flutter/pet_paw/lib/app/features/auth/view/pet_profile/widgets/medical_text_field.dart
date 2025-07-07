@@ -26,6 +26,7 @@ class MedicalTextField extends StatelessWidget {
           maxLengthEnforcement: MaxLengthEnforcement.enforced,
           inputFormatters: [LengthLimitingTextInputFormatter(500)],
           maxLines: 10,
+          textInputAction: TextInputAction.done,
           decoration: InputDecoration(
             hintText: "Enter any medical conditions or special needs",
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(

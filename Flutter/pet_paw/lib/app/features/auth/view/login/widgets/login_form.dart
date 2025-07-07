@@ -27,6 +27,8 @@ class LoginForm extends StatelessWidget {
         keyboardType: TextInputType.emailAddress,
         controller: loginCubit.emailController,
         validator: (value) => Validator.validateEmail(value),
+        currentFocusNode: loginCubit.emailFocus,
+        nextFocusNode: loginCubit.passwordFocus,
       ),
       CustomTextField(
         title: 'Password',
@@ -36,6 +38,8 @@ class LoginForm extends StatelessWidget {
         controller: loginCubit.passwordController,
         validator: (value) => Validator.validatePassword(value),
         obscure: true,
+        currentFocusNode: loginCubit.passwordFocus,
+        onSubmit: () => loginCubit.login(),
       ),
     ];
 
@@ -48,7 +52,8 @@ class LoginForm extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => customTextFields[index],
-            separatorBuilder: (context, index) => SizedBox(height: Sizes.spaceBetweenInputFields.h),
+            separatorBuilder: (context, index) =>
+                SizedBox(height: Sizes.spaceBetweenInputFields.h),
             itemCount: customTextFields.length,
           ),
           Align(
@@ -60,7 +65,7 @@ class LoginForm extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => const ResetPasswordScreen(),
                   ),
-                      (route) => false,
+                  (route) => false,
                 );
               },
               child: Text(
@@ -74,7 +79,7 @@ class LoginForm extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: Sizes.spaceBetweenItems / 2 .h),
+          SizedBox(height: Sizes.spaceBetweenItems / 2.h),
           RegisterButton(
             isLoading: isLoading,
             buttonText: 'Sign in',

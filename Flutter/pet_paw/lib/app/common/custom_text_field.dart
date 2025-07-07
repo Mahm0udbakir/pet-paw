@@ -20,6 +20,10 @@ class CustomTextField extends StatefulWidget {
   final int maxLines;
   final Function(String)? onChanged;
   final VoidCallback? onEditingComplete;
+  final FocusNode currentFocusNode;
+  final FocusNode? nextFocusNode;
+  final bool isLast;
+  final VoidCallback? onSubmit;
 
   const CustomTextField({
     super.key,
@@ -39,6 +43,10 @@ class CustomTextField extends StatefulWidget {
     this.maxLines = 1,
     this.onChanged,
     this.onEditingComplete,
+    required this.currentFocusNode,
+    this.nextFocusNode,
+    this.isLast = false,
+    this.onSubmit,
   });
 
   @override
@@ -73,6 +81,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
           keyboardType: widget.keyboardType,
           obscureText: _isObscure,
           onChanged: widget.onChanged,
+          textInputAction: widget.isLast ? TextInputAction.done : TextInputAction.next,
+          onFieldSubmitted: (_) {
+            if (widget.isLast) {
+              widget.onSubmit?.call();
+            } else {
+              FocusScope.of(context).requestFocus(widget.nextFocusNode);
+            }
+          },
           onEditingComplete: widget.onEditingComplete,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             fontSize: 14.sp,

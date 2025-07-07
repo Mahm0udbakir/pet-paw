@@ -26,6 +26,8 @@ class SignupForm extends StatelessWidget {
         keyboardType: TextInputType.text,
         controller: signupCubit.nameController,
         validator: (value) => Validator.validateName(value),
+        currentFocusNode: signupCubit.nameFocus,
+        nextFocusNode: signupCubit.emailFocus,
       ),
 
       CustomTextField(
@@ -35,6 +37,8 @@ class SignupForm extends StatelessWidget {
         keyboardType: TextInputType.emailAddress,
         controller: signupCubit.emailController,
         validator: (value) => Validator.validateEmail(value),
+        currentFocusNode: signupCubit.emailFocus,
+        nextFocusNode: signupCubit.phoneFocus,
       ),
 
       CustomTextField(
@@ -44,6 +48,8 @@ class SignupForm extends StatelessWidget {
         keyboardType: TextInputType.phone,
         controller: signupCubit.phoneController,
         validator: (value) => Validator.validatePhone(value),
+        currentFocusNode: signupCubit.phoneFocus,
+        nextFocusNode: signupCubit.passwordFocus,
       ),
 
       CustomPassword(
@@ -61,6 +67,18 @@ class SignupForm extends StatelessWidget {
         controller: signupCubit.confirmPasswordController,
         validator: (value) => Validator.validatePassword(value),
         obscure: true,
+        currentFocusNode: signupCubit.confirmPasswordFocus,
+        isLast: true,
+        onSubmit: () {
+          if (signupCubit.signupFormKey.currentState!.validate()) {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => CreatePetProfileScreen(isFirstTime: true),
+              ),
+            );
+          }
+        },
       ),
     ];
 
@@ -73,7 +91,8 @@ class SignupForm extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => customTextFields[index],
-            separatorBuilder: (context, index) => SizedBox(height: Sizes.spaceBetweenInputFields.h),
+            separatorBuilder: (context, index) =>
+                SizedBox(height: Sizes.spaceBetweenInputFields.h),
             itemCount: customTextFields.length,
           ),
           SizedBox(height: Sizes.spaceBetweenSections.h),

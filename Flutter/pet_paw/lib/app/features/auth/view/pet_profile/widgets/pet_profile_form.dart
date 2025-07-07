@@ -33,6 +33,8 @@ class PetProfileForm extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 controller: controller.nameController,
                 validator: (value) => Validator.validateName(value),
+                currentFocusNode: controller.nameFocus,
+                nextFocusNode: controller.birthdayFocus,
               ),
               SizedBox(height: Sizes.spaceBetweenInputFields.h),
               BirthdayAndColor(),

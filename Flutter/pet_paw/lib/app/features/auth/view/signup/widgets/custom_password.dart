@@ -36,6 +36,7 @@ class CustomPassword extends StatelessWidget {
               obscureText: cubit.isPasswordObscured,
               onChanged: cubit.validatePassword,
               validator: validator,
+              textInputAction: TextInputAction.next,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: 14.sp,
                 color: Colors.brown.shade500,
@@ -44,15 +45,15 @@ class CustomPassword extends StatelessWidget {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white.withOpacity(0.5),
-                prefixIcon: Icon(Icons.lock_outline, color: AppColors.iconColor),
+                prefixIcon: Icon(
+                  Icons.lock_outline,
+                  color: AppColors.iconColor,
+                ),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (controller.text.isNotEmpty && !isValid)
-                      ValidationPopoverIcon(
-                      cubit: cubit,
-                      showBubble: true,
-                    ),
+                      ValidationPopoverIcon(cubit: cubit, showBubble: true),
                     IconButton(
                       onPressed: cubit.togglePasswordVisibility,
                       icon: Icon(
@@ -113,8 +114,8 @@ class CustomPassword extends StatelessWidget {
         Row(
           children: [
             SizedBox(width: 15.w),
-            if(controller.text.isNotEmpty && !isValid)
-            PasswordStrengthLabel(passedCount: cubit.passwordStrengthCount),
+            if (controller.text.isNotEmpty && !isValid)
+              PasswordStrengthLabel(passedCount: cubit.passwordStrengthCount),
           ],
         ),
       ],

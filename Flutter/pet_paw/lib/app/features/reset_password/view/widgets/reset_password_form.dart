@@ -10,23 +10,26 @@ class ResetPasswordForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context.watch<ResetPasswordCubit>().state is ResetPasswordLoading;
+    final isLoading =
+        context.watch<ResetPasswordCubit>().state is ResetPasswordLoading;
     final resetPasswordCubit = context.read<ResetPasswordCubit>();
 
     return Form(
-        key: resetPasswordCubit.formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            CustomTextField(
-              title: 'Email',
-              hintText: 'Enter your email',
-              icon: Icon(Icons.email_outlined),
-              keyboardType: TextInputType.emailAddress,
-              controller: resetPasswordCubit.emailController,
-              validator: (value) => Validator.validateEmail(value),
-            ),
-          ],
-        ));
+      key: resetPasswordCubit.formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          CustomTextField(
+            title: 'Email',
+            hintText: 'Enter your email',
+            icon: Icon(Icons.email_outlined),
+            keyboardType: TextInputType.emailAddress,
+            controller: resetPasswordCubit.emailController,
+            validator: (value) => Validator.validateEmail(value),
+            currentFocusNode: resetPasswordCubit.emailFocus,
+          ),
+        ],
+      ),
+    );
   }
 }

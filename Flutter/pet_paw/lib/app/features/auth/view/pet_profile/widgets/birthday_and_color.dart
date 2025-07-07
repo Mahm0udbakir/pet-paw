@@ -37,6 +37,8 @@ class BirthdayAndColor extends StatelessWidget {
                 ),
               ),
               controller: controller.birthdayController,
+              currentFocusNode: controller.birthdayFocus,
+              nextFocusNode: controller.colorFocus,
               onChanged: (value) {
                 try {
                   final date = DateFormat('yyyy-MM-dd').parseStrict(value);

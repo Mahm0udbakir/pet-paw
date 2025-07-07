@@ -14,6 +14,9 @@ class LoginCubit extends Cubit<LoginState> {
   final passwordController = TextEditingController();
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
+  final emailFocus = FocusNode();
+  final passwordFocus = FocusNode();
+
   @override
   Future<void> close() {
     emailController.dispose();

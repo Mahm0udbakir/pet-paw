@@ -18,6 +18,12 @@ class SignupCubit extends Cubit<SignupState> {
   final confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
+  final nameFocus = FocusNode();
+  final emailFocus = FocusNode();
+  final phoneFocus = FocusNode();
+  final passwordFocus = FocusNode();
+  final confirmPasswordFocus = FocusNode();
+
   bool triedToSubmit = false;
   bool terms = true;
   bool isPasswordObscured = true;

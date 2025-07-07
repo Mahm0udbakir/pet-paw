@@ -26,6 +26,14 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   final breedController = TextEditingController();
   final medicalController = TextEditingController();
 
+  final nameFocus = FocusNode();
+  final birthdayFocus = FocusNode();
+  final colorFocus = FocusNode();
+  final weightFocus = FocusNode();
+  final petTypeFocus = FocusNode();
+  final breedFocus = FocusNode();
+  final medicalFocus = FocusNode();
+
   String? selected;
   String? selectedColor;
   String? selectedType;
