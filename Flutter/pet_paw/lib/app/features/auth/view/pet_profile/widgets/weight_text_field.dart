@@ -25,6 +25,9 @@ class WeightTextField extends StatelessWidget {
               readOnly: false,
               keyboardType: TextInputType.number,
               controller: controller.weightController,
+              onFieldSubmitted: (value) {
+                controller.validateWeightInput(context, value);
+              },
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -32,7 +35,7 @@ class WeightTextField extends StatelessWidget {
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.iconColor,
                   fontWeight: FontWeight.w400,
-                  fontSize: 16.sp,
+                  fontSize: 14.sp,
                 ),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(12.0),

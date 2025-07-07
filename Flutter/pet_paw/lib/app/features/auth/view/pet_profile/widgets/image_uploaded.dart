@@ -19,11 +19,12 @@ class ImageUploaded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<CreatePetProfileCubit>();
     return Column(
       children: [
         Container(
           width: double.infinity,
-          height: 325.h,
+          height: 275.h,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
@@ -31,56 +32,71 @@ class ImageUploaded extends StatelessWidget {
               File(imageFile.path),
               fit: BoxFit.cover,
               width: double.infinity,
-              height: 325.h,
+              height: 275.h,
             ),
           ),
         ),
         SizedBox(height: 8.h),
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ListTile(
-                leading: Icon(Iconsax.edit, color: AppColors.success),
-                title: Text(
-                  'Change the pet image',
-                  style: TextStyle(
-                    color: AppColors.success,
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.w400,
-                    decoration: TextDecoration.underline,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+                showPickImageBottomSheet(context, cubit);
+              },
+              child: Row(
+                children: [
+                  Tooltip(
+                    message: 'Edit image',
+                    child: Icon(
+                      Iconsax.edit,
+                      color: AppColors.success,
+                      size: 16.sp,
+                    ),
                   ),
-                ),
-                onTap: () {
-                  final cubit = context.read<CreatePetProfileCubit>();
-                  Navigator.pop(context);
-                  showPickImageBottomSheet(context, cubit);
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.delete_outline_outlined,
-                  color: AppColors.error,
-                ),
-                title: Text(
-                  'Delete',
-                  style: TextStyle(
-                    color: AppColors.error,
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.w400,
-                    decoration: TextDecoration.underline,
+                  SizedBox(width: 4.w),
+                  Text(
+                    'Change the pet image',
+                    style: TextStyle(
+                      color: AppColors.success,
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
-                ),
-                onTap: () {
-                  final cubit = context.read<CreatePetProfileCubit>();
-                  Navigator.pop(context);
-                  cubit.imageFile = null;
-                  cubit.emit(ImagePickCancelled());
-                },
+                ],
               ),
-            ],
-          ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+                cubit.clearImage();
+              },
+              child: Row(
+                children: [
+                  Tooltip(
+                    message: 'Delete image',
+                    child: Icon(
+                      Icons.delete_outline_outlined,
+                      color: AppColors.error,
+                      size: 16.sp,
+                    ),
+                  ),
+                  SizedBox(width: 4.w),
+                  Text(
+                    'Delete',
+                    style: TextStyle(
+                      color: AppColors.error,
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     );

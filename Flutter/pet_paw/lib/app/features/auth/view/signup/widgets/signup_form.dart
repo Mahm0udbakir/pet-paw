@@ -73,17 +73,17 @@ class SignupForm extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => customTextFields[index],
-            separatorBuilder: (context, index) => SizedBox(height: Sizes.md.h),
+            separatorBuilder: (context, index) => SizedBox(height: Sizes.spaceBetweenInputFields.h),
             itemCount: customTextFields.length,
           ),
-          SizedBox(height: Sizes.spaceBetweenSections * 1.5.h),
+          SizedBox(height: Sizes.spaceBetweenSections.h),
 
           TermsAndConditions(),
 
           SizedBox(height: Sizes.spaceBetweenSections.h),
           SizedBox(
             width: double.infinity,
-            height: 56.h,
+            height: 40.h,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(

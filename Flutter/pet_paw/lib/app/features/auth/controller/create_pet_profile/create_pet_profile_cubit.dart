@@ -175,15 +175,39 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     return true;
   }
 
-  void onWeightChanged(String value) {
+  void validateWeightInput(BuildContext context, String value) {
     final parsed = int.tryParse(value);
-    if (parsed != null && parsed >= minWeight && parsed <= maxWeight) {
+    if (parsed == null) {
+      weightController.text = weight.toString();
+      return;
+    }
+
+    if (parsed > maxWeight) {
+      weight = maxWeight;
+      weightController.text = maxWeight.toString();
+      emit(WeightUpdated());
+      _showError(context, 'the weight cannot be more than $maxWeight');
+    } else if (parsed < minWeight) {
+      weight = minWeight;
+      weightController.text = minWeight.toString();
+      emit(WeightUpdated());
+      _showError(context, 'the weight cannot be less than $minWeight');
+    } else {
       weight = parsed;
       emit(WeightUpdated());
-    } else {
-      weightController.text = weight.toString();
     }
   }
+
+  void _showError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: Colors.red),
+    );
+  }
+
+  void clearImage() {
+  imageFile = null;
+  emit(ImagePickCancelled());
+}
 
   Future<void> createPetProfile() async {
     print("🔁 Starting createPetProfile...");

@@ -34,10 +34,7 @@ class SignupBody extends StatelessWidget {
               ),
             ),
             SizedBox(height: Sizes.spaceBetweenSections.h),
-            BlocProvider(
-              create: (context) => SignupCubit(),
-              child: SignupForm(),
-            ),
+            SignupForm(),
             SizedBox(height: Sizes.spaceBetweenItems * 2.h),
             Text.rich(
               TextSpan(

@@ -48,7 +48,7 @@ class LoginForm extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => customTextFields[index],
-            separatorBuilder: (context, index) => SizedBox(height: Sizes.md.h),
+            separatorBuilder: (context, index) => SizedBox(height: Sizes.spaceBetweenInputFields.h),
             itemCount: customTextFields.length,
           ),
           Align(

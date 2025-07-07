@@ -62,12 +62,19 @@ class CustomDropDownTextField extends StatelessWidget {
             size: 25,
             color: AppColors.buttonMainColor,
           ),
-          hint: Text(hintText, style: TextStyle(color: Colors.brown.shade200)),
-
+          hint: Text(
+            hintText,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: AppColors.iconColor,
+              fontWeight: FontWeight.w400,
+              fontSize: 14.sp,
+            ),
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 12),
-          style: const TextStyle(
-            color: AppColors.buttonMainColor,
-            fontSize: 16,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            fontSize: 14.sp,
+            color: Colors.brown.shade500,
+            fontWeight: FontWeight.w500,
           ),
           decoration: InputDecoration(
             filled: true,

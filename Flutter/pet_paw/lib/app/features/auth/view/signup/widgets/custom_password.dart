@@ -37,7 +37,7 @@ class CustomPassword extends StatelessWidget {
               onChanged: cubit.validatePassword,
               validator: validator,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: 16.sp,
+                fontSize: 14.sp,
                 color: Colors.brown.shade500,
                 fontWeight: FontWeight.w500,
               ),
@@ -68,7 +68,7 @@ class CustomPassword extends StatelessWidget {
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.iconColor,
                   fontWeight: FontWeight.w400,
-                  fontSize: 16.sp,
+                  fontSize: 14.sp,
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),

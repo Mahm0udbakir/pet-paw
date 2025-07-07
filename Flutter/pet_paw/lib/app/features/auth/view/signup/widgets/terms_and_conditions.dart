@@ -35,7 +35,7 @@ class TermsAndConditions extends StatelessWidget {
                   'By creating your account you agree to our ',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w400,
-                    fontSize: 16.sp,
+                    fontSize: 15.sp,
                     color: AppColors.grey,
                   ),
                 ),
@@ -44,7 +44,7 @@ class TermsAndConditions extends StatelessWidget {
                     text: 'Terms & Conditions',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14.sp,
+                      fontSize: 13.sp,
                       color: AppColors.buttonMainColor,
                       decoration: TextDecoration.underline,
                     ),
@@ -54,7 +54,7 @@ class TermsAndConditions extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               fontWeight: FontWeight.w400,
-                              fontSize: 16.sp,
+                              fontSize: 15.sp,
                               color: AppColors.grey,
                             ),
                       ),
@@ -63,7 +63,7 @@ class TermsAndConditions extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               fontWeight: FontWeight.w400,
-                              fontSize: 14.sp,
+                              fontSize: 13.sp,
                               color: AppColors.buttonMainColor,
                               decoration: TextDecoration.underline,
                             ),

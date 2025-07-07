@@ -12,7 +12,7 @@ Widget buildOption(
   return GestureDetector(
     onTap: () => onTap(value),
     child: AnimatedContainer(
-      height: 56.h,
+      height: 40.h,
       duration: const Duration(milliseconds: 500),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       margin: EdgeInsets.symmetric(horizontal: 5),
