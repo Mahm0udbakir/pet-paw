@@ -11,7 +11,7 @@ void main() async {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) => const PetPaw(),
+      builder: (context, child) => SafeArea(child: const PetPaw()),
     ),
   );
 }
