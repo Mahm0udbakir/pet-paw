@@ -42,7 +42,6 @@ class ImageUploaded extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.pop(context);
                 showPickImageBottomSheet(context, cubit);
               },
               child: Row(
@@ -70,7 +69,6 @@ class ImageUploaded extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pop(context);
                 cubit.clearImage();
               },
               child: Row(

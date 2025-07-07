@@ -71,7 +71,6 @@ class SignupCubit extends Cubit<SignupState> {
     emit(PasswordValidationChanged());
   }
 
-
   bool isFormValid() => signupFormKey.currentState?.validate() ?? false;
 
   bool isPasswordConfirmed(String password, String confirmPassword) =>
@@ -79,22 +78,22 @@ class SignupCubit extends Cubit<SignupState> {
 
   bool isTermsAccepted() => terms;
 
-  Future<void> signup() async {
+  Future<bool> signup() async {
     triedToSubmit = true;
 
-    if (!isFormValid()) return;
+    if (!isFormValid()) return false;
 
     final password = passwordController.text.trim();
     final confirmPassword = confirmPasswordController.text.trim();
 
     if (!isPasswordConfirmed(password, confirmPassword)) {
       emit(SignupError('Passwords do not match.'));
-      return;
+      return false;
     }
 
     if (!isPasswordValid) {
       emit(SignupError('Password does not meet the strength requirements.'));
-      return;
+      return false;
     }
 
     if (!isTermsAccepted()) {
@@ -104,7 +103,7 @@ class SignupCubit extends Cubit<SignupState> {
           type: SignupErrorType.termsNotAccepted,
         ),
       );
-      return;
+      return false;
     }
 
     emit(SignupLoading());
@@ -130,7 +129,7 @@ class SignupCubit extends Cubit<SignupState> {
 
       if (response.body.isEmpty) {
         emit(SignupError('No response from server.'));
-        return;
+        return false;
       }
 
       final responseData = jsonDecode(response.body);
@@ -144,13 +143,17 @@ class SignupCubit extends Cubit<SignupState> {
           final user = UserModel.fromJson(responseData['data']);
           await TokenStorage.saveToken(user.token);
           emit(SignupSuccess(user));
+          return true;
         } else {
           emit(SignupError('Unexpected response structure.'));
+          return false;
         }
       } else if (statusCode == 400 || statusCode == 422) {
         emit(SignupError(responseData['message'] ?? 'Validation failed.'));
+        return false;
       } else {
         emit(SignupError(responseData['message'] ?? 'Signup failed.'));
+        return false;
       }
     } catch (e) {
       emit(
@@ -158,6 +161,7 @@ class SignupCubit extends Cubit<SignupState> {
           'Something went wrong. Please check your internet connection.',
         ),
       );
+      return false;
     }
   }
 }

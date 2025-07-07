@@ -9,6 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../core/config/api_config.dart';
 import '../../../../core/config/token_storage.dart';
+import '../../../../core/utils/helpers/loaders.dart';
 
 part 'create_pet_profile_state.dart';
 
@@ -103,7 +104,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
 
       if (picked != null) {
         imageFile = picked;
-        emit(ImageUploadedSuccessfully(picked.path));
         await uploadImage();
       } else {
         emit(ImagePickCancelled());
@@ -213,39 +213,92 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   }
 
   void clearImage() {
-  imageFile = null;
-  emit(ImagePickCancelled());
-}
+    imageFile = null;
+    emit(ImagePickCancelled());
+  }
 
-  Future<void> createPetProfile() async {
-    print("🔁 Starting createPetProfile...");
-
+  Future<bool> createPetProfile(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
-      print("❌ Form validation failed.");
+      Loaders.warningSnackBar(
+        context: context,
+        title: "Form Error",
+        message: "Please fill all required fields.",
+      );
       emit(ValidationFailed("Please fill all required fields."));
-      return;
+      return false;
     }
 
     if (!validateSelections()) {
-      print("❌ Gender or neuter status not selected.");
-      return;
+      // يتم عرض الرسالة بالفعل من داخل validateSelections
+      return false;
+    }
+
+    if (birthdayController.text.trim().isEmpty) {
+      Loaders.warningSnackBar(
+        context: context,
+        title: "Missing Date",
+        message: "Please select your pet's birth date.",
+      );
+      emit(ValidationFailed("Please select your pet's birth date."));
+      return false;
+    }
+
+    if (selectedColor == null || selectedColor!.isEmpty) {
+      Loaders.warningSnackBar(
+        context: context,
+        title: "Missing Color",
+        message: "Please select your pet's color.",
+      );
+      emit(ValidationFailed("Please select your pet's color."));
+      return false;
+    }
+
+    if (weightController.text.trim().isEmpty ||
+        int.tryParse(weightController.text) == null) {
+      Loaders.warningSnackBar(
+        context: context,
+        title: "Invalid Weight",
+        message: "Please enter a valid weight.",
+      );
+      emit(ValidationFailed("Please enter a valid weight."));
+      return false;
+    }
+
+    if (selectedType == null || selectedType!.isEmpty) {
+      Loaders.warningSnackBar(
+        context: context,
+        title: "Missing Type",
+        message: "Please select your pet's type.",
+      );
+      emit(ValidationFailed("Please select your pet's type."));
+      return false;
+    }
+
+    if (selectedBreed == null || selectedBreed!.isEmpty) {
+      Loaders.warningSnackBar(
+        context: context,
+        title: "Missing Breed",
+        message: "Please select your pet's breed.",
+      );
+      emit(ValidationFailed("Please select your pet's breed."));
+      return false;
     }
 
     emit(CreatingPetProfile());
-    print("📦 Form is valid. Creating pet profile...");
 
     final petType = selectedType?.toLowerCase() == 'dog' ? 1 : 0;
     final uri = Uri.parse('${ApiConfig.baseUrl}/api/Pet?petType=$petType');
 
-    print("📍 Selected Type: $selectedType → petType = $petType");
-    print("📤 Sending request to: $uri");
-
     final token = await TokenStorage.getToken();
 
     if (token == null || token.isEmpty) {
-      print("❌ Token is missing. Please login again.");
+      Loaders.errorSnackBar(
+        context: context,
+        title: "Authentication Error",
+        message: "Token is missing. Please login again.",
+      );
       emit(ProfileCreationFailed("Authentication token not found."));
-      return;
+      return false;
     }
 
     final headers = {
@@ -266,8 +319,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       "photoUrl": imageFile?.name,
     };
 
-    print("📄 Request Body: ${jsonEncode(bodyMap)}");
-
     try {
       final response = await http.post(
         uri,
@@ -275,22 +326,34 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
         body: jsonEncode(bodyMap),
       );
 
-      print("✅ Response Status Code: ${response.statusCode}");
-      print("🧾 Response Body: ${response.body}");
-
       if (response.statusCode == 200 || response.statusCode == 201) {
+        Loaders.successSnackBar(
+          context: context,
+          title: "Success",
+          message: "Pet profile created successfully.",
+        );
         emit(ProfileCreatedSuccessfully());
-        print("🎉 Pet profile created successfully.");
+        return true;
       } else {
         final message = response.body.isNotEmpty
             ? jsonDecode(response.body)['message'] ?? 'Unknown error'
             : 'Unauthorized or empty response';
+        Loaders.errorSnackBar(
+          context: context,
+          title: "Failed to Create Profile",
+          message: message,
+        );
         emit(ProfileCreationFailed('Failed: $message'));
-        print("⚠️ Failed to create profile: $message");
+        return false;
       }
     } catch (e) {
+      Loaders.errorSnackBar(
+        context: context,
+        title: "Network Error",
+        message: "Something went wrong. Please try again.",
+      );
       emit(ProfileCreationFailed('Exception: $e'));
-      print("❗ Exception during profile creation: $e");
+      return false;
     }
   }
 

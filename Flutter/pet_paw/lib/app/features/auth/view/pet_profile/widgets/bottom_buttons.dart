@@ -23,7 +23,7 @@ class BottomButtons extends StatelessWidget {
         CustomLightButton(
           text: 'add another pet',
           onPressed: () {
-            controller.createPetProfile();
+            controller.createPetProfile(context);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -36,65 +36,71 @@ class BottomButtons extends StatelessWidget {
         SizedBox(height: Sizes.spaceBetweenItems),
         RegisterButton(
           isLoading: isLoading,
-          onPressed: () {
-            signupCubit.signup();
-            controller.createPetProfile();
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                contentPadding: const EdgeInsets.all(24),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.check_circle_outline,
-                      color: Colors.green,
-                      size: 64,
-                    ),
-                    SizedBox(height: 16.h),
-                    Text(
-                      'profile created successfully',
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
+          onPressed: () async {
+            final signupSuccess = await signupCubit.signup();
+            if (!signupSuccess) return;
+
+            final profileCreated = await controller.createPetProfile(context);
+            if (!profileCreated) return;
+
+            if (context.mounted) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  contentPadding: const EdgeInsets.all(24),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.check_circle_outline,
+                        color: Colors.green,
+                        size: 64,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 8.h),
-                    const Text(
-                      'your pet profile has been created successfully.',
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 24.h),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoginScreen(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                      SizedBox(height: 16.h),
+                      Text(
+                        'profile created successfully',
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
                         ),
-                        child: const Text('OK'),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 8.h),
+                      const Text(
+                        'your pet profile has been created successfully.',
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 24.h),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Text('OK'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           },
           buttonText: 'Create Profile',
           shimmerButtonText: 'Creating Profile...',
