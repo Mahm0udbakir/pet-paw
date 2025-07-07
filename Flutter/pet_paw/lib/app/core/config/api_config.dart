@@ -2,6 +2,8 @@ class ApiConfig {
   static const String baseUrl = 'http://petcare.runasp.net';
 
   // Endpoints
+
+  // auth
   static const String login = '/api/Account/Login';
   static const String signup = '/api/Account/signup';
 

@@ -4,9 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/core/utils/validators/validation.dart';
-
 import '../../../../../core/utils/constants/app_colors.dart';
-import '../../../../reset_password/view/reset_password_screen.dart';
+import '../../../../reset_new_password/view/email_forgot_password/email_forgot_password_screen.dart';
 import '../../../controller/login/login_cubit.dart';
 import '../../../controller/login/login_state.dart';
 import 'register_button.dart';
@@ -60,12 +59,11 @@ class LoginForm extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: TextButton(
               onPressed: () {
-                Navigator.pushAndRemoveUntil(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ResetPasswordScreen(),
+                    builder: (context) => const EmailForgotPasswordScreen(),
                   ),
-                  (route) => false,
                 );
               },
               child: Text(

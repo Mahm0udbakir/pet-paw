@@ -18,7 +18,7 @@ class CustomDarkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 56.h,
+      height: 40.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(
@@ -40,7 +40,12 @@ class CustomDarkButton extends StatelessWidget {
             color: Colors.white,
           ),
         )
-            : Text(text),
+            : Text(text,
+          style: TextStyle(
+            color: AppColors.white,
+            fontWeight: FontWeight.w400,
+            fontSize: 16.sp,
+          ),),
       ),
     );
   }
