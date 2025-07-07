@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 import 'package:petpaw/app/features/auth/controller/signup/signup_cubit.dart';
 import 'package:petpaw/app/features/auth/view/login/login_screen.dart';
@@ -28,22 +29,22 @@ class SignupBody extends StatelessWidget {
               'Create new account',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w600,
-                fontSize: 24,
+                fontSize: 24.sp,
                 color: AppColors.buttonMainColor,
               ),
             ),
-            const SizedBox(height: Sizes.spaceBetweenSections),
+            SizedBox(height: Sizes.spaceBetweenSections.h),
             BlocProvider(
               create: (context) => SignupCubit(),
               child: SignupForm(),
             ),
-            const SizedBox(height: Sizes.spaceBetweenItems * 2),
+            SizedBox(height: Sizes.spaceBetweenItems * 2.h),
             Text.rich(
               TextSpan(
                 text: 'Already have an account? ',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w400,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   color: AppColors.grey,
                 ),
                 children: [
@@ -51,7 +52,7 @@ class SignupBody extends StatelessWidget {
                     text: 'Sign in',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       color: AppColors.buttonMainColor,
                       decoration: TextDecoration.underline,
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/images_strings.dart';
@@ -13,8 +14,8 @@ class SocialButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: 56,
-          height: 56,
+          width: 56.w,
+          height: 56.h,
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(100),
@@ -28,17 +29,17 @@ class SocialButtons extends StatelessWidget {
           ),
           child: IconButton(
             onPressed: () {},
-            icon: const Image(
+            icon: Image(
               image: AssetImage(ImagesStrings.google),
-              width: Sizes.mdIcon,
-              height: Sizes.mdIcon,
+              width: Sizes.mdIcon.w,
+              height: Sizes.mdIcon.h,
             ),
           ),
         ),
-        const SizedBox(width: Sizes.spaceBetweenItems * 2),
+        SizedBox(width: Sizes.spaceBetweenItems * 2.w),
         Container(
-          width: 56,
-          height: 56,
+          width: 56.w,
+          height: 56.h,
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(100),
@@ -50,12 +51,12 @@ class SocialButtons extends StatelessWidget {
               ),
             ],
           ),
-          child: const IconButton(
+          child: IconButton(
             onPressed: null,
             icon: Image(
               image: AssetImage(ImagesStrings.facebook),
-              width: Sizes.mdIcon,
-              height: Sizes.mdIcon,
+              width: Sizes.mdIcon.w,
+              height: Sizes.mdIcon.h,
             ),
           ),
         ),

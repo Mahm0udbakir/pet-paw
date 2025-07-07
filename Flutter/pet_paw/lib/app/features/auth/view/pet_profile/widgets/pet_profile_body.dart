@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/features/auth/controller/create_pet_profile/create_pet_profile_cubit.dart';
 import 'package:petpaw/app/features/auth/view/pet_profile/widgets/pet_profile_form.dart';
@@ -39,7 +40,7 @@ class PetProfileBody extends StatelessWidget {
                 }
               },
             ),
-            const SizedBox(height: Sizes.spaceBetweenItems),
+            SizedBox(height: Sizes.spaceBetweenItems.h),
             PetProfileForm(),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/core/utils/validators/validation.dart';
@@ -16,7 +17,6 @@ class SignupForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final isLoading = context.watch<SignupCubit>().state is SignupLoading;
     final signupCubit = context.read<SignupCubit>();
     final customTextFields = [
       CustomTextField(
@@ -73,23 +73,17 @@ class SignupForm extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => customTextFields[index],
-            separatorBuilder: (context, index) => SizedBox(height: Sizes.md),
+            separatorBuilder: (context, index) => SizedBox(height: Sizes.md.h),
             itemCount: customTextFields.length,
           ),
-          SizedBox(height: Sizes.spaceBetweenSections * 1.5),
+          SizedBox(height: Sizes.spaceBetweenSections * 1.5.h),
 
           TermsAndConditions(),
 
-          SizedBox(height: Sizes.spaceBetweenSections),
-          // RegisterButton(
-          //   isLoading: isLoading,
-          //   buttonText: 'Create Account',
-          //   shimmerButtonText: 'Creating Account...',
-          //   onPressed: () => signupCubit.signup(),
-          // ),
+          SizedBox(height: Sizes.spaceBetweenSections.h),
           SizedBox(
             width: double.infinity,
-            height: 56,
+            height: 56.h,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
@@ -103,7 +97,6 @@ class SignupForm extends StatelessWidget {
               ),
               onPressed: () {
                 if (signupCubit.signupFormKey.currentState!.validate()) {
-                  signupCubit.signup();
                   Navigator.push(
                     context,
                     CupertinoPageRoute(

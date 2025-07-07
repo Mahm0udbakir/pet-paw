@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/features/auth/view/signup/widgets/password_cloud.dart';
+import '../../../../../common/custom_label.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../controller/signup/signup_cubit.dart';
 import 'password_strength_label.dart';
@@ -25,15 +27,8 @@ class CustomPassword extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Password",
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: AppColors.greyColor,
-            fontWeight: FontWeight.w400,
-            fontSize: 16,
-          ),
-        ),
-        const SizedBox(height: 5),
+        customLabel('Password', context),
+        SizedBox(height: 5.h),
         Stack(
           children: [
             TextFormField(
@@ -42,7 +37,7 @@ class CustomPassword extends StatelessWidget {
               onChanged: cubit.validatePassword,
               validator: validator,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: 16,
+                fontSize: 16.sp,
                 color: Colors.brown.shade500,
                 fontWeight: FontWeight.w500,
               ),
@@ -73,34 +68,34 @@ class CustomPassword extends StatelessWidget {
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.iconColor,
                   fontWeight: FontWeight.w400,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.brown.shade100,
-                    width: 1,
+                    width: 1.w,
                   ),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.red.shade300,
-                    width: 1.2,
+                    width: 1.2.w,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.brown.shade200,
-                    width: 1,
+                    width: 1.w,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.brown.shade100,
-                    width: 1,
+                    width: 1.w,
                   ),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
@@ -114,10 +109,10 @@ class CustomPassword extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h),
         Row(
           children: [
-            SizedBox(width: 15),
+            SizedBox(width: 15.w),
             if(controller.text.isNotEmpty && !isValid)
             PasswordStrengthLabel(passedCount: cubit.passwordStrengthCount),
           ],

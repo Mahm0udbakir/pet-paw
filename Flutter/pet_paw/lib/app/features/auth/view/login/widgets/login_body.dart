@@ -28,7 +28,7 @@ class LoginBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             LoginHeader(),
-            const SizedBox(height: Sizes.spaceBetweenSections),
+            SizedBox(height: Sizes.spaceBetweenSections.h),
             BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
                 if (state is LoginSuccess) {
@@ -54,7 +54,7 @@ class LoginBody extends StatelessWidget {
               'Or Sign in with',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w400,
-                fontSize: 14,
+                fontSize: 14.sp,
                 color: AppColors.buttonMainColor,
               ),
             ),

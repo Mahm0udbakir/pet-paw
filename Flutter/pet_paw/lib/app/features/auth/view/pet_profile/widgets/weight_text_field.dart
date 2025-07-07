@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 
@@ -16,12 +17,12 @@ class WeightTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         customLabel('Weight (Kg.)', context),
-        const SizedBox(height: 5),
+        SizedBox(height: 5.h),
         BlocBuilder<CreatePetProfileCubit, CreatePetProfileState>(
           buildWhen: (previous, current) => current is WeightUpdated,
           builder: (context, state) {
             return TextFormField(
-              readOnly: true,
+              readOnly: false,
               keyboardType: TextInputType.number,
               controller: controller.weightController,
               decoration: InputDecoration(
@@ -31,7 +32,7 @@ class WeightTextField extends StatelessWidget {
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.iconColor,
                   fontWeight: FontWeight.w400,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                 ),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -69,28 +70,28 @@ class WeightTextField extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.brown.shade100,
-                    width: 1,
+                    width: 1.w,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.brown.shade100,
-                    width: 1,
+                    width: 1.w,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.brown.shade200,
-                    width: 1.2,
+                    width: 1.2.w,
                   ),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.red.shade300,
-                    width: 1.2,
+                    width: 1.2.w,
                   ),
                 ),
               ),

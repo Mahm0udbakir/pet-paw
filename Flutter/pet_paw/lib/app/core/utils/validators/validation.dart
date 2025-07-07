@@ -14,7 +14,7 @@ class Validator {
       r'^[\w.-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|icloud\.com)$',
     );
     if (!emailRegExp.hasMatch(email)) {
-      return 'Please enter a valid email address from Gmail, Yahoo, Outlook, or Hotmail, or iCloud';
+      return 'Please enter a valid email address from Gmail, Yahoo, Outlook, Hotmail or iCloud';
     }
     return null;
   }

@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../core/config/api_config.dart';
@@ -18,6 +19,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final birthdayController = TextEditingController();
+  final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
   final colorController = TextEditingController();
   final weightController = TextEditingController();
   final petTypeController = TextEditingController();
@@ -112,7 +114,8 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     );
 
     if (pickedDate != null) {
-      birthdayController.text = '${pickedDate.toLocal()}'.split(' ')[0];
+      final formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+      birthdayController.text = formattedDate;
       emit(BirthdaySelected(pickedDate));
     }
   }

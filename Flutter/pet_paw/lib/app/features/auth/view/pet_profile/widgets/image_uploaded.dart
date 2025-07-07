@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -12,10 +13,7 @@ import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 import 'show_pick_image_bottom_sheet.dart';
 
 class ImageUploaded extends StatelessWidget {
-  const ImageUploaded({
-    super.key,
-    required this.imageFile,
-  });
+  const ImageUploaded({super.key, required this.imageFile});
 
   final XFile imageFile;
 
@@ -25,7 +23,7 @@ class ImageUploaded extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          height: 325,
+          height: 325.h,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
@@ -33,53 +31,56 @@ class ImageUploaded extends StatelessWidget {
               File(imageFile.path),
               fit: BoxFit.cover,
               width: double.infinity,
-              height: 325,
+              height: 325.h,
             ),
           ),
         ),
-        SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ListTile(
-              leading: Icon(Iconsax.edit, color: AppColors.success),
-              title: Text(
-                'Change the pet image',
-                style: TextStyle(
-                  color: AppColors.success,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w400,
-                  decoration: TextDecoration.underline,
+        SizedBox(height: 8.h),
+        SizedBox(
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ListTile(
+                leading: Icon(Iconsax.edit, color: AppColors.success),
+                title: Text(
+                  'Change the pet image',
+                  style: TextStyle(
+                    color: AppColors.success,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w400,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
+                onTap: () {
+                  final cubit = context.read<CreatePetProfileCubit>();
+                  Navigator.pop(context);
+                  showPickImageBottomSheet(context, cubit);
+                },
               ),
-              onTap: () {
-                final cubit = context.read<CreatePetProfileCubit>();
-                Navigator.pop(context);
-                showPickImageBottomSheet(context, cubit);
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.delete_outline_outlined,
-                color: AppColors.error,
-              ),
-              title: Text(
-                'Delete',
-                style: TextStyle(
+              ListTile(
+                leading: Icon(
+                  Icons.delete_outline_outlined,
                   color: AppColors.error,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w400,
-                  decoration: TextDecoration.underline,
                 ),
+                title: Text(
+                  'Delete',
+                  style: TextStyle(
+                    color: AppColors.error,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w400,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+                onTap: () {
+                  final cubit = context.read<CreatePetProfileCubit>();
+                  Navigator.pop(context);
+                  cubit.imageFile = null;
+                  cubit.emit(ImagePickCancelled());
+                },
               ),
-              onTap: () {
-                final cubit = context.read<CreatePetProfileCubit>();
-                Navigator.pop(context);
-                cubit.imageFile = null;
-                cubit.emit(ImagePickCancelled());
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

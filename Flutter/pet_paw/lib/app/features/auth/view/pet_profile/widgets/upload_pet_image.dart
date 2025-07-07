@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 
@@ -19,7 +20,7 @@ class UploadPetImage extends StatelessWidget {
       },
       child: Container(
         width: double.infinity,
-        height: 325,
+        height: 325.h,
         decoration: BoxDecoration(
           color: Color(0xffD8CEB0),
           borderRadius: BorderRadius.circular(12),
@@ -28,13 +29,13 @@ class UploadPetImage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(ImagesStrings.uploadPetImage),
-            SizedBox(height: Sizes.spaceBetweenItems),
+            SizedBox(height: Sizes.spaceBetweenItems.h),
             Text(
               'Upload your pet image',
               style: TextStyle(
                 color: AppColors.buttonMainColor,
                 fontWeight: FontWeight.w600,
-                fontSize: 24,
+                fontSize: 24.sp,
               ),
             ),
           ],

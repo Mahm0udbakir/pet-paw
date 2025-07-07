@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/utils/constants/app_colors.dart';
 
 class CustomLightButton extends StatelessWidget {
@@ -17,23 +18,23 @@ class CustomLightButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 56,
+      height: 56.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
           backgroundColor: AppColors.primaryBackground,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100),
-            side: BorderSide(color: AppColors.buttonMainColor, width: 1),
+            side: BorderSide(color: AppColors.buttonMainColor, width: 1.w),
           ),
         ),
         onPressed: isLoading ? null : onPressed,
         child: isLoading
-            ? const SizedBox(
-                height: 20,
-                width: 20,
+            ? SizedBox(
+                height: 20.h,
+                width: 20.w,
                 child: CircularProgressIndicator(
-                  strokeWidth: 2,
+                  strokeWidth: 2.w,
                   color: Colors.white,
                 ),
               )
@@ -42,7 +43,7 @@ class CustomLightButton extends StatelessWidget {
                 style: TextStyle(
                   color: AppColors.buttonMainColor,
                   fontWeight: FontWeight.w400,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                 ),
               ),
       ),

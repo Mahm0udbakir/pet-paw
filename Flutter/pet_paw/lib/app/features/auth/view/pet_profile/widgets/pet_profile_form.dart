@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 import 'package:petpaw/app/core/utils/validators/validation.dart';
@@ -33,20 +34,20 @@ class PetProfileForm extends StatelessWidget {
                 controller: controller.nameController,
                 validator: (value) => Validator.validateName(value),
               ),
-              SizedBox(height: Sizes.spaceBetweenInputFields),
+              SizedBox(height: Sizes.spaceBetweenInputFields.h),
               BirthdayAndColor(),
-              SizedBox(height: Sizes.spaceBetweenInputFields),
+              SizedBox(height: Sizes.spaceBetweenInputFields.h),
               WeightTextField(),
-              SizedBox(height: Sizes.spaceBetweenInputFields),
+              SizedBox(height: Sizes.spaceBetweenInputFields.h),
               SelectableOptionsRow(
                 options: ['Intact', 'Neutered'],
                 selectedValue: controller.neuterStatus,
                 onSelect: (value) =>
                     controller.selectOption(group: 'neuter', value: value),
               ),
-              SizedBox(height: Sizes.spaceBetweenInputFields),
+              SizedBox(height: Sizes.spaceBetweenInputFields.h),
               PetTypeAndBreed(),
-              SizedBox(height: Sizes.spaceBetweenInputFields),
+              SizedBox(height: Sizes.spaceBetweenInputFields.h),
               SelectableOptionsRow(
                 options: ['Male', 'Female'],
                 selectedValue: controller.gender,
@@ -55,9 +56,9 @@ class PetProfileForm extends StatelessWidget {
                 onSelect: (value) =>
                     controller.selectOption(group: 'gender', value: value),
               ),
-              SizedBox(height: Sizes.spaceBetweenInputFields),
+              SizedBox(height: Sizes.spaceBetweenInputFields.h),
               MedicalTextField(),
-              SizedBox(height: Sizes.spaceBetweenItems),
+              SizedBox(height: Sizes.spaceBetweenItems.h),
               BottomButtons(),
             ],
           );

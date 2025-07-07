@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/utils/constants/app_colors.dart';
 
 class CustomDarkButton extends StatelessWidget {
@@ -17,7 +18,7 @@ class CustomDarkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 56,
+      height: 56.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(
@@ -31,9 +32,9 @@ class CustomDarkButton extends StatelessWidget {
         ),
         onPressed: isLoading ? null : onPressed,
         child: isLoading
-            ? const SizedBox(
-          height: 20,
-          width: 20,
+            ? SizedBox(
+          height: 20.h,
+          width: 20.w,
           child: CircularProgressIndicator(
             strokeWidth: 2,
             color: Colors.white,

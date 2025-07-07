@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
@@ -21,7 +22,7 @@ class RegisterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 56,
+      height: 56.h,
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
@@ -38,7 +39,7 @@ class RegisterButton extends StatelessWidget {
                 child: Text(
                   shimmerButtonText,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -47,7 +48,7 @@ class RegisterButton extends StatelessWidget {
             : Text(
                 buttonText,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

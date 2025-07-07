@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../controller/signup/signup_cubit.dart';
 
 class ValidationPopoverIcon extends StatelessWidget {
@@ -21,13 +22,13 @@ class ValidationPopoverIcon extends StatelessWidget {
         if (showBubble)
           Positioned(
             top: -170,
-            right:-41,
+            right: -41,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 // Bubble box
                 Container(
-                  width: 320,
+                  width: 320.w,
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -70,12 +71,9 @@ class ValidationPopoverIcon extends StatelessWidget {
                   offset: Offset(-38, -3),
                   child: CustomPaint(
                     size: Size(30, 40),
-                    painter: TrianglePainter(
-                      color: Colors.white,
-                    ),
+                    painter: TrianglePainter(color: Colors.white),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -93,11 +91,11 @@ class ValidationPopoverIcon extends StatelessWidget {
             color: condition ? Colors.green : Colors.red,
             size: 16,
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8.w),
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w300),
+              style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w300),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -120,7 +118,7 @@ class TrianglePainter extends CustomPainter {
       ..lineTo(size.width, 0)
       ..close();
 
-    canvas.drawShadow(path, Colors.black38,16, true);
+    canvas.drawShadow(path, Colors.black38, 16, true);
 
     final Paint paint = Paint()..color = color;
     canvas.drawPath(path, paint);
@@ -129,4 +127,3 @@ class TrianglePainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
-

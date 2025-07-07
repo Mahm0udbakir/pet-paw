@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 
@@ -26,11 +27,11 @@ class CustomDropDownTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         customLabel(title, context),
-        SizedBox(height: 5),
+        SizedBox(height: 5.h),
         DropdownButtonFormField<String>(
           value: items.isEmpty ? null : value,
-          itemHeight: 50,
-          menuMaxHeight: 250,
+          itemHeight: 50.h,
+          menuMaxHeight: 250.h,
           items: items.isEmpty
               ? []
               : items
@@ -74,19 +75,22 @@ class CustomDropDownTextField extends StatelessWidget {
             contentPadding: EdgeInsets.symmetric(horizontal: 12),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.brown.shade100, width: 1),
+              borderSide: BorderSide(color: Colors.brown.shade100, width: 1.w),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.brown.shade100, width: 1),
+              borderSide: BorderSide(color: Colors.brown.shade100, width: 1.w),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.brown.shade200, width: 1.2),
+              borderSide: BorderSide(
+                color: Colors.brown.shade200,
+                width: 1.2.w,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.red.shade300, width: 1.2),
+              borderSide: BorderSide(color: Colors.red.shade300, width: 1.2.w),
             ),
           ),
         ),

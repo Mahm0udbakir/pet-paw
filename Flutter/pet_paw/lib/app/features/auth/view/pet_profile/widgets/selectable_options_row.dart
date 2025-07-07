@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 
 import 'option.dart';
@@ -25,12 +26,18 @@ class SelectableOptionsRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (haveLabel) customLabel(label, context),
-        const SizedBox(height: 5),
+        SizedBox(height: 5.h),
         Row(
           children: options
               .map(
-                (option) =>
-                    Expanded(child: buildOption(option, context, onSelect , selectedValue == option,)),
+                (option) => Expanded(
+                  child: buildOption(
+                    option,
+                    context,
+                    onSelect,
+                    selectedValue == option,
+                  ),
+                ),
               )
               .toList(),
         ),

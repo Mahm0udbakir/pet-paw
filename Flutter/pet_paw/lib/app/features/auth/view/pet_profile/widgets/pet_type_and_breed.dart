@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../common/custom_drop_down_text_field.dart';
 import '../../../../../core/utils/constants/sizes.dart';
@@ -22,7 +23,7 @@ class PetTypeAndBreed extends StatelessWidget {
               value: cubit.selectedType,
               onChanged: (value) => cubit.chooseType(value),
             ),
-            const SizedBox(height: Sizes.spaceBetweenInputFields),
+            SizedBox(height: Sizes.spaceBetweenInputFields.h),
             CustomDropDownTextField(
               hintText: 'Choose your pet breed',
               title: 'Breed',

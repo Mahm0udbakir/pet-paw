@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 
@@ -24,8 +26,8 @@ class BirthdayAndColor extends StatelessWidget {
             flex: 2,
             child: CustomTextField(
               title: 'Birthday',
-              hintText: '',
-              readOnly: true,
+              hintText: 'yyyy-MM-dd',
+              readOnly: false,
               icon: Image.asset(ImagesStrings.petIcon),
               suffixIcon: InkWell(
                 onTap: () => controller.chooseCalendarDate(context),
@@ -35,9 +37,26 @@ class BirthdayAndColor extends StatelessWidget {
                 ),
               ),
               controller: controller.birthdayController,
+              onChanged: (value) {
+                try {
+                  final date = DateFormat('yyyy-MM-dd').parseStrict(value);
+                  controller.emit(BirthdaySelected(date));
+                } catch (_) {}
+              },
+              onEditingComplete: () {
+                try {
+                  final input = controller.birthdayController.text.trim();
+                  final parsedDate = DateFormat(
+                    'yyyy-MM-dd',
+                  ).parseStrict(input);
+                  final formatted = DateFormat('yyyy-MM-dd').format(parsedDate);
+                  controller.birthdayController.text = formatted;
+                  controller.emit(BirthdaySelected(parsedDate));
+                } catch (_) {}
+              },
             ),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10.w),
 
           // Color
           Expanded(
@@ -46,7 +65,7 @@ class BirthdayAndColor extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 customLabel('Color', context),
-                SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 DropdownButtonFormField(
                   value: context.read<CreatePetProfileCubit>().selectedColor,
                   dropdownColor: Colors.white,
@@ -57,9 +76,9 @@ class BirthdayAndColor extends StatelessWidget {
                     color: AppColors.buttonMainColor,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 12),
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.buttonMainColor,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                   ),
                   items: context.read<CreatePetProfileCubit>().colorOptions.map(
                     (color) {
@@ -78,28 +97,28 @@ class BirthdayAndColor extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50),
                       borderSide: BorderSide(
                         color: Colors.brown.shade100,
-                        width: 1,
+                        width: 1.w,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide: BorderSide(
                         color: Colors.brown.shade100,
-                        width: 1,
+                        width: 1.w,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide: BorderSide(
                         color: Colors.brown.shade200,
-                        width: 1.2,
+                        width: 1.2.w,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide: BorderSide(
                         color: Colors.red.shade300,
-                        width: 1.2,
+                        width: 1.2.w,
                       ),
                     ),
                   ),

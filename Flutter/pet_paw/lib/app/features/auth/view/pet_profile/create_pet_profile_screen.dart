@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/features/auth/view/pet_profile/widgets/pet_profile_body.dart';
 
 import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../controller/create_pet_profile/create_pet_profile_cubit.dart';
+import '../../controller/signup/signup_cubit.dart';
 
 class CreatePetProfileScreen extends StatelessWidget {
   const CreatePetProfileScreen({super.key, required this.isFirstTime});
@@ -21,7 +23,7 @@ class CreatePetProfileScreen extends StatelessWidget {
           style: TextStyle(
             color: AppColors.buttonMainColor,
             fontWeight: FontWeight.w600,
-            fontSize: 24,
+            fontSize: 24.sp,
           ),
         ),
         centerTitle: true,
@@ -35,8 +37,11 @@ class CreatePetProfileScreen extends StatelessWidget {
           },
         ),
       ),
-      body: BlocProvider(
-        create: (context) => CreatePetProfileCubit(),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => CreatePetProfileCubit()),
+          BlocProvider(create: (context) => SignupCubit()),
+        ],
         child: PetProfileBody(),
       ),
     );

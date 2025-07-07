@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/core/utils/validators/validation.dart';
@@ -47,10 +48,9 @@ class LoginForm extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => customTextFields[index],
-            separatorBuilder: (context, index) => SizedBox(height: Sizes.md),
+            separatorBuilder: (context, index) => SizedBox(height: Sizes.md.h),
             itemCount: customTextFields.length,
           ),
-          // SizedBox(height: Sizes.spaceBetweenItems),
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
@@ -67,14 +67,14 @@ class LoginForm extends StatelessWidget {
                 'Forgot Password?',
                 style: TextStyle(
                   color: AppColors.buttonMainColor,
-                  fontSize: 13,
+                  fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
                   decoration: TextDecoration.underline,
                 ),
               ),
             ),
           ),
-          SizedBox(height: Sizes.spaceBetweenItems / 2),
+          SizedBox(height: Sizes.spaceBetweenItems / 2 .h),
           RegisterButton(
             isLoading: isLoading,
             buttonText: 'Sign in',

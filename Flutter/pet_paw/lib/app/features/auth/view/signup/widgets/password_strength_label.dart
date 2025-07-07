@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PasswordStrengthLabel extends StatelessWidget {
   final int passedCount;
@@ -24,7 +25,7 @@ class PasswordStrengthLabel extends StatelessWidget {
     return Text(
       strengthText,
       style: TextStyle(
-        fontSize: 14,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w600,
         color: strengthColor,
       ),

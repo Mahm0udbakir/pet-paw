@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 
@@ -17,6 +18,9 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final int maxLines;
+  final Function(String)? onChanged;
+  final VoidCallback? onEditingComplete;
+
   const CustomTextField({
     super.key,
     required this.title,
@@ -33,6 +37,8 @@ class CustomTextField extends StatefulWidget {
     this.readOnly = false,
     this.suffixIcon,
     this.maxLines = 1,
+    this.onChanged,
+    this.onEditingComplete,
   });
 
   @override
@@ -58,7 +64,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         _titleBool == true
             ? customLabel(widget.title, context)
             : SizedBox.shrink(),
-        SizedBox(height: 5),
+        SizedBox(height: 5.h),
         TextFormField(
           maxLines: widget.maxLines,
           readOnly: widget.readOnly,
@@ -66,8 +72,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
           validator: widget.validator,
           keyboardType: widget.keyboardType,
           obscureText: _isObscure,
+          onChanged: widget.onChanged,
+          onEditingComplete: widget.onEditingComplete,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            fontSize: 16,
+            fontSize: 16.sp,
             color: Colors.brown.shade500,
             fontWeight: FontWeight.w500,
           ),
@@ -101,27 +109,27 @@ class _CustomTextFieldState extends State<CustomTextField> {
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: AppColors.iconColor,
               fontWeight: FontWeight.w400,
-              fontSize: 16,
+              fontSize: 16.sp,
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.brown.shade100, width: 1),
+              borderSide: BorderSide(color: Colors.brown.shade100, width: 1.w),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.brown.shade100, width: 1),
+              borderSide: BorderSide(color: Colors.brown.shade100, width: 1.w),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.brown.shade200, width: 1.2),
+              borderSide: BorderSide(color: Colors.brown.shade200, width: 1.2.w),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.red.shade300, width: 1.2),
+              borderSide: BorderSide(color: Colors.red.shade300, width: 1.2.w),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.red.shade300, width: 1.2),
+              borderSide: BorderSide(color: Colors.red.shade300, width: 1.2.w),
             ),
           ),
         ),

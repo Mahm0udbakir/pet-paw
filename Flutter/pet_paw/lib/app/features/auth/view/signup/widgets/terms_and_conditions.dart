@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../controller/signup/signup_cubit.dart';
@@ -34,7 +35,7 @@ class TermsAndConditions extends StatelessWidget {
                   'By creating your account you agree to our ',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w400,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     color: AppColors.grey,
                   ),
                 ),
@@ -43,7 +44,7 @@ class TermsAndConditions extends StatelessWidget {
                     text: 'Terms & Conditions',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       color: AppColors.buttonMainColor,
                       decoration: TextDecoration.underline,
                     ),
@@ -53,7 +54,7 @@ class TermsAndConditions extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               fontWeight: FontWeight.w400,
-                              fontSize: 16,
+                              fontSize: 16.sp,
                               color: AppColors.grey,
                             ),
                       ),
@@ -62,7 +63,7 @@ class TermsAndConditions extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               fontWeight: FontWeight.w400,
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               color: AppColors.buttonMainColor,
                               decoration: TextDecoration.underline,
                             ),
