@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +28,9 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   final breedController = TextEditingController();
   final medicalController = TextEditingController();
 
+  final petTypeDropdownController = SingleSelectController<String>(null);
+  final breedDropdownController = SingleSelectController<String>(null);
+
   final nameFocus = FocusNode();
   final birthdayFocus = FocusNode();
   final colorFocus = FocusNode();
@@ -44,9 +48,9 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   String? gender;
   String? neuterStatus;
 
-  int weight = 0;
-  int minWeight = 0;
-  int maxWeight = 100;
+  double weight = 0.0;
+  double minWeight = 0.0;
+  double maxWeight = 200.0;
 
   // Lists
   List<String> colorOptions = ['Black', 'White', 'Brown', 'Golden', 'Gray'];
@@ -57,14 +61,17 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     'Siamese Cat',
   ];
 
+  //----------- [Functions] Functions -----------
   void decrementWeight() {
-    if (weight > minWeight) weight--;
+    if (weight > minWeight) weight -= 0.1;
+    weight = double.parse(weight.toStringAsFixed(1));
     weightController.text = weight.toString();
     emit(WeightUpdated());
   }
 
   void incrementWeight() {
-    if (weight < maxWeight) weight++;
+    if (weight < maxWeight) weight += 0.1;
+    weight = double.parse(weight.toStringAsFixed(1));
     weightController.text = weight.toString();
     emit(WeightUpdated());
   }
@@ -105,8 +112,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       if (picked != null) {
         imageFile = picked;
         await uploadImage();
-      } else {
-        emit(ImagePickCancelled());
       }
     } catch (e) {
       emit(ImagePickFailed(e.toString()));
@@ -137,6 +142,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   void chooseType(String? type) {
     selectedType = type;
     petTypeController.text = type ?? '';
+    petTypeDropdownController.value = type;
 
     if (type == 'Dog') {
       breedOptions = ['Golden Retriever', 'German Shepherd', 'Bulldog'];
@@ -148,13 +154,14 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
 
     selectedBreed = null;
     breedController.clear();
+    breedDropdownController.value = null;
 
     emit(PetTypeSelected(type));
   }
 
   void chooseBreed(String? breed) {
     selectedBreed = breed;
-    breedController.text = breed ?? '';
+    breedDropdownController.value = null;
     emit(BreedSelected(breed));
   }
 
@@ -184,7 +191,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   }
 
   void validateWeightInput(BuildContext context, String value) {
-    final parsed = int.tryParse(value);
+    final parsed = double.tryParse(value);
     if (parsed == null) {
       weightController.text = weight.toString();
       return;
@@ -201,7 +208,8 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       emit(WeightUpdated());
       _showError(context, 'the weight cannot be less than $minWeight');
     } else {
-      weight = parsed;
+      weight = double.parse(parsed.toStringAsFixed(1));
+      weightController.text = weight.toString();
       emit(WeightUpdated());
     }
   }
@@ -229,7 +237,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     }
 
     if (!validateSelections()) {
-      // يتم عرض الرسالة بالفعل من داخل validateSelections
       return false;
     }
 
@@ -287,6 +294,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     emit(CreatingPetProfile());
 
     final petType = selectedType?.toLowerCase() == 'dog' ? 1 : 0;
+
     final uri = Uri.parse('${ApiConfig.baseUrl}/api/Pet?petType=$petType');
 
     final token = await TokenStorage.getToken();
@@ -366,6 +374,8 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     petTypeController.dispose();
     breedController.dispose();
     medicalController.dispose();
+    petTypeDropdownController.dispose();
+    breedDropdownController.dispose();
     return super.close();
   }
 }

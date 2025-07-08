@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -39,11 +40,17 @@ class BirthdayAndColor extends StatelessWidget {
               controller: controller.birthdayController,
               currentFocusNode: controller.birthdayFocus,
               nextFocusNode: controller.colorFocus,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9\-]')),
+                LengthLimitingTextInputFormatter(10),
+              ],
               onChanged: (value) {
-                try {
-                  final date = DateFormat('yyyy-MM-dd').parseStrict(value);
-                  controller.emit(BirthdaySelected(date));
-                } catch (_) {}
+                if (value.length == 10) {
+                  try {
+                    final date = DateFormat('yyyy-MM-dd').parseStrict(value);
+                    controller.emit(BirthdaySelected(date));
+                  } catch (_) {}
+                }
               },
               onEditingComplete: () {
                 try {

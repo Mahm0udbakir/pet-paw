@@ -21,12 +21,14 @@ class PetTypeAndBreed extends StatelessWidget {
               title: 'Pet Type',
               items: cubit.petTypeOptions,
               value: cubit.selectedType,
+              controller: cubit.petTypeDropdownController,
               onChanged: (value) => cubit.chooseType(value),
             ),
             SizedBox(height: Sizes.spaceBetweenInputFields.h),
             CustomDropDownTextField(
               hintText: 'Choose your pet breed',
               title: 'Breed',
+              controller: cubit.breedDropdownController,
               items: cubit.selectedType == null ? [] : cubit.breedOptions,
               value: cubit.selectedBreed,
               onChanged: cubit.selectedType == null

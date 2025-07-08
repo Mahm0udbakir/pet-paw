@@ -116,6 +116,7 @@ class SignupForm extends StatelessWidget {
               ),
               onPressed: () {
                 if (signupCubit.signupFormKey.currentState!.validate()) {
+                  signupCubit.signup();
                   Navigator.push(
                     context,
                     CupertinoPageRoute(

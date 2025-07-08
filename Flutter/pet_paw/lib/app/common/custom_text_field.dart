@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
@@ -24,6 +25,7 @@ class CustomTextField extends StatefulWidget {
   final FocusNode? nextFocusNode;
   final bool isLast;
   final VoidCallback? onSubmit;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextField({
     super.key,
@@ -47,6 +49,7 @@ class CustomTextField extends StatefulWidget {
     this.nextFocusNode,
     this.isLast = false,
     this.onSubmit,
+    this.inputFormatters,
   });
 
   @override
@@ -82,6 +85,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           obscureText: _isObscure,
           onChanged: widget.onChanged,
           textInputAction: widget.isLast ? TextInputAction.done : TextInputAction.next,
+          inputFormatters: widget.inputFormatters,
           onFieldSubmitted: (_) {
             if (widget.isLast) {
               widget.onSubmit?.call();

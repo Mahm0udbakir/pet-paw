@@ -6,7 +6,6 @@ import 'package:petpaw/app/features/auth/view/pet_profile/widgets/pet_profile_bo
 import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../controller/create_pet_profile/create_pet_profile_cubit.dart';
-import '../../controller/signup/signup_cubit.dart';
 
 class CreatePetProfileScreen extends StatelessWidget {
   const CreatePetProfileScreen({super.key, required this.isFirstTime});
@@ -37,11 +36,8 @@ class CreatePetProfileScreen extends StatelessWidget {
           },
         ),
       ),
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => CreatePetProfileCubit()),
-          BlocProvider(create: (context) => SignupCubit()),
-        ],
+      body: BlocProvider(
+        create: (context) => CreatePetProfileCubit(),
         child: PetProfileBody(),
       ),
     );

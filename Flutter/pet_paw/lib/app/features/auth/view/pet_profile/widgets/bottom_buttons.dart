@@ -6,7 +6,6 @@ import 'package:petpaw/app/features/auth/view/login/login_screen.dart';
 import '../../../../../common/custom_light_button.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
-import '../../../controller/signup/signup_cubit.dart';
 import '../../login/widgets/register_button.dart';
 import '../create_pet_profile_screen.dart';
 
@@ -16,8 +15,8 @@ class BottomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.read<CreatePetProfileCubit>();
-    final signupCubit = context.read<SignupCubit>();
     final isLoading = controller.state is CreatePetProfileLoading;
+
     return Column(
       children: [
         CustomLightButton(
@@ -37,9 +36,6 @@ class BottomButtons extends StatelessWidget {
         RegisterButton(
           isLoading: isLoading,
           onPressed: () async {
-            final signupSuccess = await signupCubit.signup();
-            if (!signupSuccess) return;
-
             final profileCreated = await controller.createPetProfile(context);
             if (!profileCreated) return;
 
