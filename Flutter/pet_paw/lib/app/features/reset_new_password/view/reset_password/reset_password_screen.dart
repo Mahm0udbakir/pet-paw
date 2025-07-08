@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'widgets/otp_verification_body.dart';
+import 'package:petpaw/app/features/reset_new_password/view/reset_password/widgets/reset_password_body.dart';
 import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 
-class OtpVerificationScreen extends StatelessWidget {
-  const OtpVerificationScreen({super.key});
+class ResetPasswordScreen extends StatelessWidget {
+  const ResetPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class OtpVerificationScreen extends StatelessWidget {
       backgroundColor: AppColors.primaryBackground,
       appBar: AppBar(
         title: const Text(
-          "OTP verification",
+          "Reset your password",
           style: TextStyle(
             color: AppColors.buttonMainColor,
             fontWeight: FontWeight.w600,
@@ -29,7 +29,7 @@ class OtpVerificationScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: const SafeArea(child: OtpVerificationBody()),
+      body: const SafeArea(child: ResetPasswordBody()),
     );
   }
 }

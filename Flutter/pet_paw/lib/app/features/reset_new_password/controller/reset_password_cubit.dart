@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import '../../../core/config/api_config.dart';
+import '../../../core/utils/validators/password_validator.dart';
 import 'reset_password_state.dart';
 
 class ResetPasswordCubit extends Cubit<ResetPasswordState> {
@@ -15,17 +16,56 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   final newPasswordController = TextEditingController();
   final confirmNewPasswordController = TextEditingController();
 
+  bool triedToSubmit = false;
+  bool terms = true;
+
   final emailFocus = FocusNode();
   final phoneFocus = FocusNode();
+  final confirmNewPasswordFocus = FocusNode();
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool get hasMinLength => PasswordValidator.hasMinLength(newPasswordController.text);
+  bool get hasNumber => PasswordValidator.hasNumber(newPasswordController.text);
+  bool get hasUpper => PasswordValidator.hasUpper(newPasswordController.text);
+  bool get hasLower => PasswordValidator.hasLower(newPasswordController.text);
+  bool get hasSpecial => PasswordValidator.hasSpecial(newPasswordController.text);
+  bool get isPasswordValid => PasswordValidator.isValid(newPasswordController.text);
+  int get passwordStrengthCount =>
+      PasswordValidator.countValidations(newPasswordController.text);
+
+  void toggleTerms() {
+    terms = !terms;
+    emit(TermsToggled());
+  }
+
+  void togglePasswordVisibility() {
+    isPasswordObscured = !isPasswordObscured;
+    emit(PasswordVisibilityToggled());
+  }
+
+  bool isPasswordObscured = true;
+
+  void validatePassword(String password) {
+    newPasswordController.text = password;
+    emit(PasswordValidationChanged());
+  }
+
+  // bool isFormValid() => formKeyReset.currentState?.validate() ?? false;
+
+  bool isPasswordConfirmed(String password, String confirmPassword) =>
+      password == confirmPassword;
 
   @override
   Future<void> close() {
     emailController.dispose();
+    phoneController.dispose();
     otpController.dispose();
     newPasswordController.dispose();
     confirmNewPasswordController.dispose();
+
+    emailFocus.dispose();
+    phoneFocus.dispose();
+    confirmNewPasswordFocus.dispose();
+
     return super.close();
   }
 

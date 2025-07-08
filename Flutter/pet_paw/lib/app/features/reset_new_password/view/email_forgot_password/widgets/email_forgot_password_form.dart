@@ -10,9 +10,10 @@ class EmailForgotPasswordForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ResetPasswordCubit>();
+    final GlobalKey<FormState> formKeyForgot = GlobalKey<FormState>();
 
     return Form(
-      key: cubit.formKey,
+      key: formKeyForgot,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

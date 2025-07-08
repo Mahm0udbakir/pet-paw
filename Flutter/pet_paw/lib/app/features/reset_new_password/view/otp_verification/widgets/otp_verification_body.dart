@@ -6,6 +6,7 @@ import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/reset_password_cubit.dart';
 import '../../../controller/reset_password_state.dart';
+import '../../reset_password/reset_password_screen.dart';
 import 'countdown_timer_text.dart';
 import 'no_receive_otp.dart';
 import 'otp_verification_form.dart';
@@ -43,12 +44,16 @@ class OtpVerificationBody extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => const ResetPasswordScreen(),
-                  //     )
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BlocProvider.value(
+                        value: context.read<ResetPasswordCubit>(),
+                        child: ResetPasswordScreen(),
+                      ),
+                    ),
+                  );
+
 
                 } else if (state is ResetPasswordError) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -64,7 +69,6 @@ class OtpVerificationBody extends StatelessWidget {
                   height: MediaQuery.of(context).size.height - 240,
                   child: Column(
                     children: [
-
                       CountdownTimerText(
                         seconds: 180, // 3 minutes
                         style: const TextStyle(
@@ -86,17 +90,8 @@ class OtpVerificationBody extends StatelessWidget {
                       const Spacer(),
                       CustomDarkButton(
                         text: 'Submit',
-                        onPressed: isLoading ? null : cubit.forgetPassword,
-                        child: isLoading
-                            ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                            : const Text("Submit"),
+                        onPressed: isLoading ? null : cubit.forgetPassword, // have to be : cubit.verifyOtp
+                        child: () {},
                       ),
                     ],
                   ),

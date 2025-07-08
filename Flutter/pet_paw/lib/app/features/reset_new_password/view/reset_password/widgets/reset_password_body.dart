@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petpaw/app/features/reset_new_password/view/reset_password/widgets/reset_password_form.dart';
+
 import '../../../../../common/custom_dark_button.dart';
-import '../../../../../common/custom_light_button.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/reset_password_cubit.dart';
 import '../../../controller/reset_password_state.dart';
-import '../../otp_verification/otp_verification_screen.dart';
-import '../../phone_forgot_password/phone_forgot_password_screen.dart';
-import 'email_forgot_password_form.dart';
 
-class EmailForgotPasswordBody extends StatelessWidget {
-  const EmailForgotPasswordBody({super.key});
+class ResetPasswordBody extends StatelessWidget {
+  const ResetPasswordBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,7 @@ class EmailForgotPasswordBody extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: Sizes.xxl),
               child: Text(
-                "Enter your email address and we will send you an OTP to reset password.",
+                "Enter your new  password.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.smallTextColor,
@@ -43,17 +41,6 @@ class EmailForgotPasswordBody extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => BlocProvider.value(
-                        value: context.read<ResetPasswordCubit>(),
-                        child: const OtpVerificationScreen(),
-                      ),
-                    ),
-                  );
-
-
                 } else if (state is ResetPasswordError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
@@ -65,34 +52,16 @@ class EmailForgotPasswordBody extends StatelessWidget {
                 final isLoading = state is ResetPasswordLoading;
 
                 return SizedBox(
-                  height: MediaQuery.of(context).size.height - 260,
+                  height: MediaQuery.of(context).size.height - 220,
                   child: Column(
                     children: [
-                      const EmailForgotPasswordForm(),
+                      const ResetPasswordForm(),
                       const Spacer(),
                       CustomDarkButton(
                         text: 'Continue',
-                        onPressed: isLoading ? null : cubit.forgetPassword, child: (){},
-                        // child: isLoading
-                        //     ? const SizedBox(
-                        //   height: 20,
-                        //   width: 20,
-                        //   child: CircularProgressIndicator(
-                        //     strokeWidth: 2,
-                        //     color: Colors.white,
-                        //   ),
-                        // )
-                        //     : const Text("Continue.."),
-                      ),
-                      const SizedBox(height: Sizes.spaceBetweenSections),
-                      CustomLightButton(
-                        text: 'Reset using mobile number',
-                        onPressed: () => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PhoneForgotPasswordScreen(),
-                          ),
-                        ),
+                        onPressed: () {},
+                       //isLoading ? null : cubit.forgetPassword,
+                        child: (){}
                       ),
                     ],
                   ),

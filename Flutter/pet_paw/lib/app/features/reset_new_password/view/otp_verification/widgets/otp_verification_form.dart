@@ -42,9 +42,9 @@ class _OtpVerificationFormState extends State<OtpVerificationForm> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ResetPasswordCubit>();
-
+    final GlobalKey<FormState> formKeyOTP = GlobalKey<FormState>();
     return Form(
-      key: cubit.formKey,
+      key: formKeyOTP,
       child: Column(
         children: [
           Row(
@@ -62,6 +62,13 @@ class _OtpVerificationFormState extends State<OtpVerificationForm> {
                       color: AppColors.borderOtp,
                       width: 2,
                     ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 6,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
                   alignment: Alignment.center,
                   child: TextField(

@@ -7,6 +7,7 @@ import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/reset_password_cubit.dart';
 import '../../../controller/reset_password_state.dart';
 import '../../email_forgot_password/email_forgot_password_screen.dart';
+import '../../otp_verification/otp_verification_screen.dart';
 import 'phone_forgot_password_form.dart';
 
 class PhoneForgotPasswordBody extends StatelessWidget {
@@ -42,6 +43,16 @@ class PhoneForgotPasswordBody extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BlocProvider.value(
+                        value: context.read<ResetPasswordCubit>(),
+                        child: const OtpVerificationScreen(),
+                      ),
+                    ),
+                  );
+
                 } else if (state is ResetPasswordError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
@@ -70,7 +81,7 @@ class PhoneForgotPasswordBody extends StatelessWidget {
                             color: Colors.white,
                           ),
                         )
-                            : const Text("Continue"),
+                            : const Text("Continue.."),
                       ),
                       const SizedBox(height: Sizes.spaceBetweenSections),
                       CustomLightButton(
