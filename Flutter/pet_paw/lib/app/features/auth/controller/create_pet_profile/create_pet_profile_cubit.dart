@@ -77,20 +77,13 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   }
 
   Future<void> uploadImage() async {
-    if (imageFile == null) {
-      emit(ImageUploadFailed('No image selected.'));
-      return;
-    }
-
     try {
       emit(ImageUploading());
 
       await Future.delayed(const Duration(seconds: 1));
 
       emit(ImageUploadedSuccessfully(imageFile!.path));
-    } catch (e) {
-      emit(ImageUploadFailed(e.toString()));
-    }
+    } catch (_) {}
   }
 
   Future<void> pickImage(ImageSource source) async {
@@ -161,7 +154,8 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
 
   void chooseBreed(String? breed) {
     selectedBreed = breed;
-    breedDropdownController.value = null;
+    breedController.text = breed ?? '';
+    breedDropdownController.value = breed ?? '';
     emit(BreedSelected(breed));
   }
 
@@ -207,10 +201,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       weightController.text = minWeight.toString();
       emit(WeightUpdated());
       _showError(context, 'the weight cannot be less than $minWeight');
-    } else {
-      weight = double.parse(parsed.toStringAsFixed(1));
-      weightController.text = weight.toString();
-      emit(WeightUpdated());
     }
   }
 
@@ -261,13 +251,12 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     }
 
     if (weightController.text.trim().isEmpty ||
-        int.tryParse(weightController.text) == null) {
+        double.tryParse(weightController.text) == null) {
       Loaders.warningSnackBar(
         context: context,
         title: "Invalid Weight",
         message: "Please enter a valid weight.",
       );
-      emit(ValidationFailed("Please enter a valid weight."));
       return false;
     }
 
@@ -293,7 +282,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
 
     emit(CreatingPetProfile());
 
-    final petType = selectedType?.toLowerCase() == 'dog' ? 1 : 0;
+    final petType = selectedType?.toLowerCase();
 
     final uri = Uri.parse('${ApiConfig.baseUrl}/api/Pet?petType=$petType');
 

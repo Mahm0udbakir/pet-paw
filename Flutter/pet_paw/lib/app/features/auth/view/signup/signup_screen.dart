@@ -18,13 +18,7 @@ class SignupScreen extends StatelessWidget {
         body: SafeArea(
           child: BlocListener<SignupCubit, SignupState>(
             listener: (context, state) {
-              if (state is SignupSuccess) {
-                Loaders.successSnackBar(
-                  context: context,
-                  title: 'Signup Successful',
-                  message: 'Welcome',
-                );
-              } else if (state is SignupError) {
+              if (state is SignupError) {
                 Loaders.errorSnackBar(
                   context: context,
                   title: 'Signup Failed',

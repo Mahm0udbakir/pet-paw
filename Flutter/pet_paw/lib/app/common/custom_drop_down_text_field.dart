@@ -26,7 +26,6 @@ class CustomDropDownTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -38,9 +37,19 @@ class CustomDropDownTextField extends StatelessWidget {
           items: items,
           controller: controller,
           decoration: CustomDropdownDecoration(
+            searchFieldDecoration: SearchFieldDecoration(
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: BorderSide(
+                  color: Colors.brown.shade100,
+                  width: 1.w,
+                ),
+              ),
+            ),
             closedFillColor: Colors.white,
             closedBorder: Border.all(color: Colors.brown.shade100, width: 1.w),
-            closedBorderRadius: BorderRadius.circular(50),
+            closedBorderRadius: BorderRadius.circular(12),
             closedSuffixIcon: const Icon(
               Iconsax.arrow_down_1,
               size: 20,
@@ -56,8 +65,21 @@ class CustomDropDownTextField extends StatelessWidget {
               fontSize: 14.sp,
             ),
             expandedBorderRadius: BorderRadius.circular(12),
+            closedErrorBorderRadius: BorderRadius.circular(50),
           ),
           onChanged: (val) => onChanged?.call(val),
+          disabledDecoration: CustomDropdownDisabledDecoration(
+            borderRadius: BorderRadius.circular(50),
+            hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: AppColors.iconColor,
+              fontSize: 14.sp,
+            ),
+            headerStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Colors.brown.shade500,
+              fontWeight: FontWeight.w500,
+              fontSize: 14.sp,
+            ),
+          ),
         ),
       ],
     );
