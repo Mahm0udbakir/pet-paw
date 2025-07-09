@@ -55,11 +55,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   // Lists
   List<String> colorOptions = ['Black', 'White', 'Brown', 'Golden', 'Gray'];
   List<String> petTypeOptions = ['Dog', 'Cat'];
-  List<String> breedOptions = [
-    'Golden Retriever',
-    'Persian Cat',
-    'Siamese Cat',
-  ];
+  List<String> breedOptions = [];
 
   //----------- [Functions] Functions -----------
   void decrementWeight() {
@@ -138,9 +134,71 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     petTypeDropdownController.value = type;
 
     if (type == 'Dog') {
-      breedOptions = ['Golden Retriever', 'German Shepherd', 'Bulldog'];
+      breedOptions = [
+        'Akita',
+        'American Pit Bull Terrier',
+        'Australian Shepherd',
+        'Beagle',
+        'Bernese Mountain Dog',
+        'Bichon Frise',
+        'Border Collie',
+        'Boxer',
+        'Brittany',
+        'Bulldog (English)',
+        'Bull Terrier',
+        'Cane Corso',
+        'Cavalier King Charles Spaniel',
+        'Chihuahua',
+        'Collie',
+        'Cocker Spaniel',
+        'Dachshund',
+        'Doberman Pinscher',
+        'English Springer Spaniel',
+        'French Bulldog',
+        'German Shepherd',
+        'German Shorthaired Pointer',
+        'Golden Retriever',
+        'Great Dane',
+        'Havanese',
+        'Labrador Retriever',
+        'Maltese',
+        'Mastiff',
+        'Miniature American Shepherd',
+        'Miniature Schnauzer',
+        'Newfoundland',
+        'Papillon',
+        'Pembroke Welsh Corgi',
+        'Poodle (Standard)',
+        'Portuguese Water Dog',
+        'Rottweiler',
+        'Shiba Inu',
+        'Shih Tzu',
+        'Shetland Sheepdog',
+        'Siberian Husky',
+        'St. Bernard',
+        'Vizsla',
+        'Weimaraner',
+        'West Highland White Terrier',
+        'Yorkshire Terrier',
+      ];
     } else if (type == 'Cat') {
-      breedOptions = ['Persian Cat', 'Siamese Cat', 'Maine Coon'];
+      breedOptions = [
+        'Abyssinian',
+        'American Shorthair',
+        'Arabian Mau',
+        'Bengal',
+        'British Shorthair',
+        'Egyptian Mau',
+        'Maine Coon',
+        'Nile Valley Cat',
+        'Persian',
+        'Ragdoll',
+        'Russian Blue',
+        'Scottish Fold',
+        'Siamese',
+        'Siberian',
+        'Sphynx',
+      ];
     } else {
       breedOptions = [];
     }
@@ -340,7 +398,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
           title: "Failed to Create Profile",
           message: message,
         );
-        emit(ProfileCreationFailed('Failed: $message'));
         return false;
       }
     } catch (e) {

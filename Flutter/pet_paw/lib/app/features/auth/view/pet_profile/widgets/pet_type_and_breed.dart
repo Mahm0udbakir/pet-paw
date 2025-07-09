@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../common/custom_drop_down_text_field.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
+import 'breed_dropdown.dart';
 
 class PetTypeAndBreed extends StatelessWidget {
   const PetTypeAndBreed({super.key});
@@ -12,28 +13,29 @@ class PetTypeAndBreed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CreatePetProfileCubit>();
+
     return BlocBuilder<CreatePetProfileCubit, CreatePetProfileState>(
       builder: (context, state) {
         return Column(
           children: [
+            // Pet Type Dropdown
             CustomDropDownTextField(
               hintText: 'Choose your pet',
               title: 'Pet Type',
               items: cubit.petTypeOptions,
               value: cubit.selectedType,
               controller: cubit.petTypeDropdownController,
-              onChanged: (value) => cubit.chooseType(value),
+              onChanged: (value) {
+                cubit.chooseType(value);
+              },
             ),
             SizedBox(height: Sizes.spaceBetweenInputFields.h),
-            CustomDropDownTextField(
-              hintText: 'Choose your pet breed',
-              title: 'Breed',
-              controller: cubit.breedDropdownController,
-              items: cubit.selectedType == null ? [] : cubit.breedOptions,
-              value: cubit.selectedBreed,
-              onChanged: cubit.selectedType == null
-                  ? null
-                  : (value) => cubit.chooseBreed(value),
+
+            BreedDropdown(
+              key: ValueKey('breed_${cubit.selectedType}'),
+              options: cubit.breedOptions,
+              selectedBreed: cubit.selectedBreed,
+              onChanged: cubit.chooseBreed,
             ),
           ],
         );

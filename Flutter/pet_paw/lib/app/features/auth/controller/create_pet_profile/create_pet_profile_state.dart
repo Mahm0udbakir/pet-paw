@@ -48,6 +48,8 @@ class PetTypeSelected extends CreatePetProfileState {
   PetTypeSelected(this.petType);
 }
 
+class BreedCleared extends CreatePetProfileState {}
+
 class BreedSelected extends CreatePetProfileState {
   final String? breed;
   BreedSelected(this.breed);
