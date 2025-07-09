@@ -21,6 +21,8 @@ class ImagePickFailed extends CreatePetProfileState {
 
 class ImagePickCancelled extends CreatePetProfileState {}
 
+class FormReset extends CreatePetProfileState {}
+
 class ImageUploading extends CreatePetProfileState {}
 
 class ImageUploadedSuccessfully extends CreatePetProfileState {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petpaw/app/features/auth/controller/login/login_cubit.dart';
 import 'package:petpaw/app/features/auth/view/login/login_screen.dart';
 
 import '../../../../../common/custom_light_button.dart';
@@ -21,15 +22,21 @@ class BottomButtons extends StatelessWidget {
       children: [
         CustomLightButton(
           text: 'add another pet',
-          onPressed: () {
-            controller.createPetProfile(context);
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    const CreatePetProfileScreen(isFirstTime: false),
-              ),
-            );
+          onPressed: () async {
+            final created = await controller.createPetProfile(context);
+            if (!created) return;
+
+            controller.resetForm();
+
+            if (context.mounted) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const CreatePetProfileScreen(isFirstTime: false),
+                ),
+              );
+            }
           },
         ),
         SizedBox(height: Sizes.spaceBetweenItems),
@@ -79,7 +86,10 @@ class BottomButtons extends StatelessWidget {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
+                                builder: (context) => BlocProvider(
+                                  create: (context) => LoginCubit(),
+                                  child: const LoginScreen(),
+                                ),
                               ),
                             );
                           },

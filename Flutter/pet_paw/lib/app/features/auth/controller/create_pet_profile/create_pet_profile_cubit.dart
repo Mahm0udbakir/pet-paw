@@ -273,6 +273,29 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     emit(ImagePickCancelled());
   }
 
+  void resetForm() {
+    nameController.clear();
+    birthdayController.clear();
+    colorController.clear();
+    weightController.clear();
+    petTypeController.clear();
+    breedController.clear();
+    medicalController.clear();
+
+    selectedColor = null;
+    selectedType = null;
+    selectedBreed = null;
+    gender = null;
+    neuterStatus = null;
+    weight = 0.0;
+    imageFile = null;
+
+    petTypeDropdownController.value = null;
+    breedDropdownController.value = null;
+
+    emit(FormReset());
+  }
+
   Future<bool> createPetProfile(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
       Loaders.warningSnackBar(
@@ -284,9 +307,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       return false;
     }
 
-    if (!validateSelections()) {
-      return false;
-    }
+    if (!validateSelections()) return false;
 
     if (birthdayController.text.trim().isEmpty) {
       Loaders.warningSnackBar(
@@ -340,10 +361,8 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
 
     emit(CreatingPetProfile());
 
-    final petType = selectedType?.toLowerCase();
-
+    final petType = selectedType?.toLowerCase(); // مثال: dog / cat
     final uri = Uri.parse('${ApiConfig.baseUrl}/api/Pet?petType=$petType');
-
     final token = await TokenStorage.getToken();
 
     if (token == null || token.isEmpty) {
@@ -356,30 +375,40 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       return false;
     }
 
-    final headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
-    final bodyMap = {
-      "name": nameController.text,
-      "breed": selectedBreed,
-      "birthDay": birthdayController.text,
-      "color": selectedColor,
-      "weight": weight,
-      "gender": gender,
-      "medicalCondidtions": medicalController.text,
-      "isInBreedingPeriod": neuterStatus == "Yes",
-      "photoUrl": imageFile?.name,
-    };
-
     try {
-      final response = await http.post(
-        uri,
-        headers: headers,
-        body: jsonEncode(bodyMap),
-      );
+      final request = http.MultipartRequest('POST', uri)
+        ..headers.addAll({
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        })
+        ..fields['Name'] = nameController.text.trim()
+        ..fields['Breed'] = selectedBreed!
+        ..fields['BirthDay'] = birthdayController.text.trim()
+        ..fields['Color'] = selectedColor!
+        ..fields['Weight'] = (double.tryParse(
+          weightController.text.trim(),
+        )).toString()
+        ..fields['Gender'] = gender!
+        ..fields['MedicalConditions'] = medicalController.text.trim()
+        ..fields['IsInBreedingPeriod'] = (neuterStatus == "Intact") == 'intact'
+            ? 'true'
+            : 'false'
+        // ..fields['IsInBreedingPeriod'] = neuterStatus!
+        ..fields['petType'] = petType!;
+
+      if (imageFile != null) {
+        request.files.add(
+          await http.MultipartFile.fromPath('Photo', imageFile!.path),
+        );
+      }
+
+      request.fields.forEach((k, v) => print('$k: $v'));
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+
+      print('✅ Status code: ${response.statusCode}');
+      print('✅ Raw response: $responseBody');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         Loaders.successSnackBar(
@@ -390,14 +419,24 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
         emit(ProfileCreatedSuccessfully());
         return true;
       } else {
-        final message = response.body.isNotEmpty
-            ? jsonDecode(response.body)['message'] ?? 'Unknown error'
-            : 'Unauthorized or empty response';
+        final decoded = jsonDecode(responseBody);
+        String message = 'Something went wrong.';
+
+        if (decoded is Map && decoded.containsKey('errors')) {
+          final errors = decoded['errors'] as Map<String, dynamic>;
+          message = errors.entries
+              .map((e) => "${e.key}: ${(e.value as List).join(', ')}")
+              .join('\n');
+        } else if (decoded['message'] != null) {
+          message = decoded['message'];
+        }
+
         Loaders.errorSnackBar(
           context: context,
           title: "Failed to Create Profile",
           message: message,
         );
+        emit(ProfileCreationFailed(message));
         return false;
       }
     } catch (e) {

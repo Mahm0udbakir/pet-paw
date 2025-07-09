@@ -49,6 +49,9 @@ class _SplashScreenState extends State<SplashScreen> {
       if (!mounted) return;
       setState(() => _currentIndex = i);
     }
+
+    await Future.delayed(const Duration(milliseconds: 1000));
+
     if (mounted) {
       Navigator.pushReplacement(
         context,
