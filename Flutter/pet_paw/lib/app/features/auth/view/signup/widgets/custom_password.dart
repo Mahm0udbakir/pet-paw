@@ -5,6 +5,7 @@ import 'package:petpaw/app/features/auth/view/signup/widgets/password_cloud.dart
 import '../../../../../common/custom_label.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../controller/signup/signup_cubit.dart';
+import '../../../model/validation_status_model.dart';
 import 'password_strength_label.dart';
 
 class CustomPassword extends StatelessWidget {
@@ -53,7 +54,14 @@ class CustomPassword extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (controller.text.isNotEmpty && !isValid)
-                      ValidationPopoverIcon(cubit: cubit, showBubble: true),
+                      ValidationPopoverIcon( validation: ValidationStatus(
+                        hasMinLength: cubit.hasMinLength,
+                        hasNumber: cubit.hasNumber,
+                        hasUpper: cubit.hasUpper,
+                        hasLower: cubit.hasLower,
+                        hasSpecial: cubit.hasSpecial,
+                      ),
+                          showBubble: true),
                     IconButton(
                       onPressed: cubit.togglePasswordVisibility,
                       icon: Icon(

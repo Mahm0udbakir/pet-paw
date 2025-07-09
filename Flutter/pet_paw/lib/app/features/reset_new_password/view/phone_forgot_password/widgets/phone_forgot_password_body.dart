@@ -39,7 +39,7 @@ class PhoneForgotPasswordBody extends StatelessWidget {
             const SizedBox(height: 46),
             BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
               listener: (context, state) {
-                if (state is ResetPasswordSuccess) {
+                if (state is ForgotPasswordSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
@@ -53,7 +53,7 @@ class PhoneForgotPasswordBody extends StatelessWidget {
                     ),
                   );
 
-                } else if (state is ResetPasswordError) {
+                } else if (state is ForgotPasswordError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
@@ -61,7 +61,7 @@ class PhoneForgotPasswordBody extends StatelessWidget {
               },
               builder: (context, state) {
                 final cubit = context.read<ResetPasswordCubit>();
-                final isLoading = state is ResetPasswordLoading;
+                final isLoading = state is ForgotPasswordLoading;
 
                 return SizedBox(
                   height: MediaQuery.of(context).size.height - 260,
@@ -72,16 +72,6 @@ class PhoneForgotPasswordBody extends StatelessWidget {
                       CustomDarkButton(
                         text: 'Continue',
                         onPressed: isLoading ? null : cubit.forgetPassword,
-                        child: isLoading
-                            ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                            : const Text("Continue.."),
                       ),
                       const SizedBox(height: Sizes.spaceBetweenSections),
                       CustomLightButton(

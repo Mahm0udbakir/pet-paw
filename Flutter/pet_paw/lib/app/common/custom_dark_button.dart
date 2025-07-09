@@ -11,7 +11,7 @@ class CustomDarkButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    this.isLoading = false, required child,
+    this.isLoading = false,
   });
 
   @override

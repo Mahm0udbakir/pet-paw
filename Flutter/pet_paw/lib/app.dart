@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:petpaw/app/splash_screen.dart';
-
 import 'app/core/utils/theme/theme.dart';
 import 'app/domain/app_language_cubit/change_language_cubit.dart';
 import 'app/domain/app_theme_cubit/apptheme_cubit.dart';

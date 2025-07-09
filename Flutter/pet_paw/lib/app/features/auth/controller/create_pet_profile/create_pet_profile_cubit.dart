@@ -390,10 +390,10 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
         )).toString()
         ..fields['Gender'] = gender!
         ..fields['MedicalConditions'] = medicalController.text.trim()
-        ..fields['IsInBreedingPeriod'] = (neuterStatus == "Intact") == 'intact'
-            ? 'true'
-            : 'false'
-        // ..fields['IsInBreedingPeriod'] = neuterStatus!
+        // ..fields['IsInBreedingPeriod'] = (neuterStatus == "Intact") == 'intact'
+        //     ? 'true'
+        //     : 'false'
+        ..fields['breedingRequestStatus'] = 'Neutered'!
         ..fields['petType'] = petType!;
 
       if (imageFile != null) {

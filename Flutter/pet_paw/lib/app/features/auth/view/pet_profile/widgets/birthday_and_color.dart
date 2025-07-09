@@ -65,7 +65,7 @@ class BirthdayAndColor extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(width: 10.w),
+          SizedBox(width: 9.w),
 
           // Color
           Expanded(

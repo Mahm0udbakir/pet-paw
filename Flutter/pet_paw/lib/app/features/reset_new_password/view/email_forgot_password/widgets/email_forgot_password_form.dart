@@ -5,15 +5,16 @@ import '../../../../../core/utils/validators/validation.dart';
 import '../../../controller/reset_password_cubit.dart';
 
 class EmailForgotPasswordForm extends StatelessWidget {
-  const EmailForgotPasswordForm({super.key});
+  final GlobalKey<FormState> formKey;
+
+  const EmailForgotPasswordForm({super.key, required this.formKey});
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ResetPasswordCubit>();
-    final GlobalKey<FormState> formKeyForgot = GlobalKey<FormState>();
 
     return Form(
-      key: formKeyForgot,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

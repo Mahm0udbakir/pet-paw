@@ -5,6 +5,7 @@ import 'package:petpaw/app/features/auth/controller/login/login_cubit.dart';
 import 'package:petpaw/app/features/auth/view/login/login_screen.dart';
 
 import '../../../../../common/custom_light_button.dart';
+import '../../../../../common/done_screen.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 import '../../login/widgets/register_button.dart';
@@ -47,64 +48,75 @@ class BottomButtons extends StatelessWidget {
             if (!profileCreated) return;
 
             if (context.mounted) {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (_) => AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  contentPadding: const EdgeInsets.all(24),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.check_circle_outline,
-                        color: Colors.green,
-                        size: 64,
-                      ),
-                      SizedBox(height: 16.h),
-                      Text(
-                        'profile created successfully',
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 8.h),
-                      const Text(
-                        'your pet profile has been created successfully.',
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 24.h),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BlocProvider(
-                                  create: (context) => LoginCubit(),
-                                  child: const LoginScreen(),
-                                ),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: const Text('OK'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              // showDialog(
+              //   context: context,
+              //   barrierDismissible: false,
+              //   builder: (_) => AlertDialog(
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(16),
+              //     ),
+              //     contentPadding: const EdgeInsets.all(24),
+              //     content: Column(
+              //       mainAxisSize: MainAxisSize.min,
+              //       children: [
+              //         const Icon(
+              //           Icons.check_circle_outline,
+              //           color: Colors.green,
+              //           size: 64,
+              //         ),
+              //         SizedBox(height: 16.h),
+              //         Text(
+              //           'profile created successfully',
+              //           style: TextStyle(
+              //             fontSize: 18.sp,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //           textAlign: TextAlign.center,
+              //         ),
+              //         SizedBox(height: 8.h),
+              //         const Text(
+              //           'your pet profile has been created successfully.',
+              //           textAlign: TextAlign.center,
+              //         ),
+              //         SizedBox(height: 24.h),
+              //         SizedBox(
+              //           width: double.infinity,
+              //           child: ElevatedButton(
+              //             onPressed: () {
+              //               Navigator.of(context).pop();
+              //               Navigator.pushReplacement(
+              //                 context,
+              //                 MaterialPageRoute(
+              //                   builder: (context) => BlocProvider(
+              //                     create: (context) => LoginCubit(),
+              //                     child: const LoginScreen(),
+              //                   ),
+              //                 ),
+              //               );
+              //             },
+              //             style: ElevatedButton.styleFrom(
+              //               backgroundColor: Colors.green,
+              //               shape: RoundedRectangleBorder(
+              //                 borderRadius: BorderRadius.circular(12),
+              //               ),
+              //             ),
+              //             child: const Text('OK'),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // );
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) =>  DoneScreen(
+                  message: "Welcome to PetPaw",
+                  imageAsset: "assets/images/carecter/carecter_success.svg",
+                  description: "You are one of our family!",
+                  buttonText: "Home",
+                  nextScreen: LoginScreen(),
+                )),
+                    (route) => false,
               );
             }
           },

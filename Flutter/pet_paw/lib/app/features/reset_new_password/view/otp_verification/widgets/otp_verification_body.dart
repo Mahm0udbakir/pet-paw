@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../../common/custom_dark_button.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/sizes.dart';
@@ -16,6 +15,7 @@ class OtpVerificationBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: Sizes.defaultSpace,
@@ -40,7 +40,7 @@ class OtpVerificationBody extends StatelessWidget {
             const SizedBox(height: 46),
             BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
               listener: (context, state) {
-                if (state is ResetPasswordSuccess) {
+                if (state is OtpVerificationSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
@@ -53,9 +53,7 @@ class OtpVerificationBody extends StatelessWidget {
                       ),
                     ),
                   );
-
-
-                } else if (state is ResetPasswordError) {
+                } else if (state is OtpVerificationError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
@@ -63,7 +61,7 @@ class OtpVerificationBody extends StatelessWidget {
               },
               builder: (context, state) {
                 final cubit = context.read<ResetPasswordCubit>();
-                final isLoading = state is ResetPasswordLoading;
+                final isLoading = state is OtpVerificationLoading;
 
                 return SizedBox(
                   height: MediaQuery.of(context).size.height - 240,
@@ -90,9 +88,19 @@ class OtpVerificationBody extends StatelessWidget {
                       const Spacer(),
                       CustomDarkButton(
                         text: 'Submit',
-                        onPressed: isLoading ? null : cubit.forgetPassword, // have to be : cubit.verifyOtp
-                        child: () {},
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                          if (cubit.otpController.text.length < 6) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Please enter all 6 digits')),
+                            );
+                          } else {
+                            cubit.verifyOtp();
+                          }
+                        },
                       ),
+
                     ],
                   ),
                 );
