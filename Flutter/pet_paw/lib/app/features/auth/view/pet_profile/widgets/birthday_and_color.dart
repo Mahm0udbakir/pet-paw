@@ -30,7 +30,7 @@ class BirthdayAndColor extends StatelessWidget {
               hintText: 'yyyy-MM-dd',
               readOnly: false,
               icon: Image.asset(ImagesStrings.petIcon),
-              suffixIcon: InkWell(
+              suffixIcon: GestureDetector(
                 onTap: () => controller.chooseCalendarDate(context),
                 child: const Icon(
                   Icons.calendar_today,
@@ -45,13 +45,31 @@ class BirthdayAndColor extends StatelessWidget {
                 LengthLimitingTextInputFormatter(10),
               ],
               onChanged: (value) {
-                if (value.length == 10) {
+                String newValue = value;
+
+                if (value.length == 4 && !value.contains('-')) {
+                  newValue = '$value-';
+                }
+
+                if (value.length == 7 && value.split('-').length == 2) {
+                  newValue = '$value-';
+                }
+
+                if (newValue != value) {
+                  controller.birthdayController.value = TextEditingValue(
+                    text: newValue,
+                    selection: TextSelection.collapsed(offset: newValue.length),
+                  );
+                }
+
+                if (newValue.length == 10) {
                   try {
-                    final date = DateFormat('yyyy-MM-dd').parseStrict(value);
+                    final date = DateFormat('yyyy-MM-dd').parseStrict(newValue);
                     controller.emit(BirthdaySelected(date));
                   } catch (_) {}
                 }
               },
+
               onEditingComplete: () {
                 try {
                   final input = controller.birthdayController.text.trim();
@@ -65,7 +83,8 @@ class BirthdayAndColor extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(width: 10.w),
+
+          SizedBox(width: 9.w),
 
           // Color
           Expanded(

@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petpaw/app/core/utils/constants/images_strings.dart';
+import 'package:petpaw/app/features/auth/controller/login/login_cubit.dart';
 import 'package:petpaw/app/features/reset_new_password/view/reset_password/widgets/reset_password_form.dart';
 
 import '../../../../../common/custom_dark_button.dart';
+import '../../../../../common/done_screen.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/sizes.dart';
+import '../../../../auth/view/login/login_screen.dart';
 import '../../../controller/reset_password_cubit.dart';
 import '../../../controller/reset_password_state.dart';
 
-class ResetPasswordBody extends StatelessWidget {
+class ResetPasswordBody extends StatefulWidget {
   const ResetPasswordBody({super.key});
+
+  @override
+  State<ResetPasswordBody> createState() => _ResetPasswordBodyState();
+}
+
+class _ResetPasswordBodyState extends State<ResetPasswordBody> {
+  final GlobalKey<FormState> formKeyReset = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +36,7 @@ class ResetPasswordBody extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: Sizes.xxl),
               child: Text(
-                "Enter your new  password.",
+                "Enter your new password.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.smallTextColor,
@@ -38,13 +49,29 @@ class ResetPasswordBody extends StatelessWidget {
             BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
               listener: (context, state) {
                 if (state is ResetPasswordSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.message)),
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.message)));
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DoneScreen(
+                        message: "Password Updated",
+                        imageAsset: ImagesStrings.successCharacter,
+                        description: "Your password has been updated ",
+                        buttonText: "Login",
+                        nextScreen: BlocProvider(
+                          create: (context) => LoginCubit(),
+                          child: LoginScreen(),
+                        ),
+                      ),
+                    ),
+                    (route) => false,
                   );
                 } else if (state is ResetPasswordError) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.message)),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.message)));
                 }
               },
               builder: (context, state) {
@@ -55,13 +82,18 @@ class ResetPasswordBody extends StatelessWidget {
                   height: MediaQuery.of(context).size.height - 220,
                   child: Column(
                     children: [
-                      const ResetPasswordForm(),
+                      ResetPasswordForm(formKey: formKeyReset),
                       const Spacer(),
                       CustomDarkButton(
                         text: 'Continue',
-                        onPressed: () {},
-                       //isLoading ? null : cubit.forgetPassword,
-                        child: (){}
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                FocusScope.of(context).unfocus();
+                                if (formKeyReset.currentState!.validate()) {
+                                  cubit.resetPassword();
+                                }
+                              },
                       ),
                     ],
                   ),

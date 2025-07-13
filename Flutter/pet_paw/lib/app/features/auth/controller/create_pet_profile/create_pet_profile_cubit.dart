@@ -2,11 +2,15 @@ import 'dart:convert';
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:bloc/bloc.dart';
+import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 
 import '../../../../core/config/api_config.dart';
 import '../../../../core/config/token_storage.dart';
@@ -15,7 +19,9 @@ import '../../../../core/utils/helpers/loaders.dart';
 part 'create_pet_profile_state.dart';
 
 class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
-  CreatePetProfileCubit() : super(CreatePetProfileInitial());
+  CreatePetProfileCubit() : super(CreatePetProfileInitial()) {
+    birthdayController.addListener(autoFormatBirthdayDate);
+  }
 
   // Variables
   final formKey = GlobalKey<FormState>();
@@ -28,9 +34,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   final breedController = TextEditingController();
   final medicalController = TextEditingController();
 
-  final petTypeDropdownController = SingleSelectController<String>(null);
-  final breedDropdownController = SingleSelectController<String>(null);
-
   final nameFocus = FocusNode();
   final birthdayFocus = FocusNode();
   final colorFocus = FocusNode();
@@ -39,6 +42,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   final breedFocus = FocusNode();
   final medicalFocus = FocusNode();
 
+  String previousBirthdayText = '';
   String? selected;
   String? selectedColor;
   String? selectedType;
@@ -108,18 +112,32 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   }
 
   Future<void> chooseCalendarDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
+    final DateTime? pickedDate = await showDatePickerDialog(
       context: context,
+      minDate: DateTime(2000),
+      maxDate: DateTime.now(),
       initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime.now(),
     );
 
     if (pickedDate != null) {
-      final formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+      final formattedDate = dateFormat.format(pickedDate);
       birthdayController.text = formattedDate;
       emit(BirthdaySelected(pickedDate));
     }
+  }
+
+  void autoFormatBirthdayDate() {
+    final text = birthdayController.text;
+    if (text.length > previousBirthdayText.length) {
+      if (text.length == 4 && !previousBirthdayText.endsWith('-')) {
+        birthdayController.text = '$text-';
+        birthdayController.selection = TextSelection.collapsed(offset: 5);
+      } else if (text.length == 7 && !previousBirthdayText.endsWith('-')) {
+        birthdayController.text = '$text-';
+        birthdayController.selection = TextSelection.collapsed(offset: 8);
+      }
+    }
+    previousBirthdayText = birthdayController.text;
   }
 
   void chooseColor(String? color) {
@@ -131,7 +149,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   void chooseType(String? type) {
     selectedType = type;
     petTypeController.text = type ?? '';
-    petTypeDropdownController.value = type;
 
     if (type == 'Dog') {
       breedOptions = [
@@ -205,7 +222,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
 
     selectedBreed = null;
     breedController.clear();
-    breedDropdownController.value = null;
 
     emit(PetTypeSelected(type));
   }
@@ -213,7 +229,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   void chooseBreed(String? breed) {
     selectedBreed = breed;
     breedController.text = breed ?? '';
-    breedDropdownController.value = breed ?? '';
     emit(BreedSelected(breed));
   }
 
@@ -290,19 +305,11 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     weight = 0.0;
     imageFile = null;
 
-    petTypeDropdownController.value = null;
-    breedDropdownController.value = null;
-
     emit(FormReset());
   }
 
   Future<bool> createPetProfile(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
-      Loaders.warningSnackBar(
-        context: context,
-        title: "Form Error",
-        message: "Please fill all required fields.",
-      );
       emit(ValidationFailed("Please fill all required fields."));
       return false;
     }
@@ -310,21 +317,11 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     if (!validateSelections()) return false;
 
     if (birthdayController.text.trim().isEmpty) {
-      Loaders.warningSnackBar(
-        context: context,
-        title: "Missing Date",
-        message: "Please select your pet's birth date.",
-      );
       emit(ValidationFailed("Please select your pet's birth date."));
       return false;
     }
 
     if (selectedColor == null || selectedColor!.isEmpty) {
-      Loaders.warningSnackBar(
-        context: context,
-        title: "Missing Color",
-        message: "Please select your pet's color.",
-      );
       emit(ValidationFailed("Please select your pet's color."));
       return false;
     }
@@ -340,28 +337,18 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     }
 
     if (selectedType == null || selectedType!.isEmpty) {
-      Loaders.warningSnackBar(
-        context: context,
-        title: "Missing Type",
-        message: "Please select your pet's type.",
-      );
       emit(ValidationFailed("Please select your pet's type."));
       return false;
     }
 
     if (selectedBreed == null || selectedBreed!.isEmpty) {
-      Loaders.warningSnackBar(
-        context: context,
-        title: "Missing Breed",
-        message: "Please select your pet's breed.",
-      );
       emit(ValidationFailed("Please select your pet's breed."));
       return false;
     }
 
     emit(CreatingPetProfile());
 
-    final petType = selectedType?.toLowerCase(); // مثال: dog / cat
+    final petType = selectedType?.toLowerCase();
     final uri = Uri.parse('${ApiConfig.baseUrl}/api/Pet?petType=$petType');
     final token = await TokenStorage.getToken();
 
@@ -389,17 +376,23 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
           weightController.text.trim(),
         )).toString()
         ..fields['Gender'] = gender!
-        ..fields['MedicalConditions'] = medicalController.text.trim()
-        ..fields['IsInBreedingPeriod'] = (neuterStatus == "Intact") == 'intact'
-            ? 'false'
-            : 'true'
-        // ..fields['IsInBreedingPeriod'] = neuterStatus!
+        ..fields['IsInBreedingPeriod'] = neuterStatus!
         ..fields['petType'] = petType!;
+      request.fields['MedicalConditions'] = medicalController.text.trim();
 
       if (imageFile != null) {
         request.files.add(
           await http.MultipartFile.fromPath('Photo', imageFile!.path),
         );
+      } else {
+        final bytes = await rootBundle.load(ImagesStrings.appIcon);
+        final multipartFile = http.MultipartFile.fromBytes(
+          'Photo',
+          bytes.buffer.asUint8List(),
+          filename: 'default_pet.png',
+          contentType: MediaType('image', 'png'),
+        );
+        request.files.add(multipartFile);
       }
 
       request.fields.forEach((k, v) => print('$k: $v'));
@@ -459,8 +452,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     petTypeController.dispose();
     breedController.dispose();
     medicalController.dispose();
-    petTypeDropdownController.dispose();
-    breedDropdownController.dispose();
     return super.close();
   }
 }

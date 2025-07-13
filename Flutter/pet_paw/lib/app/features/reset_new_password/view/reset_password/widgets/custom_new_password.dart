@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:petpaw/app/features/auth/view/signup/widgets/password_cloud.dart';
 import '../../../../../common/custom_label.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../auth/view/signup/widgets/password_strength_label.dart';
 import '../../../controller/reset_password_cubit.dart';
-
 
 class CustomNewPassword extends StatelessWidget {
   final TextEditingController controller;
@@ -46,6 +44,10 @@ class CustomNewPassword extends StatelessWidget {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white.withOpacity(0.5),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 14,
+                ),
                 prefixIcon: Icon(
                   Icons.lock_outline,
                   color: AppColors.iconColor,
@@ -53,8 +55,14 @@ class CustomNewPassword extends StatelessWidget {
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (controller.text.isNotEmpty && !isValid)
-                      // ValidationPopoverIcon(cubit: cubit, showBubble: true),
+                    // if (controller.text.isNotEmpty && !isValid)
+                       // ValidationPopoverIcon(validation: ValidationStatus(
+                       //   hasMinLength: cubit.hasMinLength,
+                       //   hasNumber: cubit.hasNumber,
+                       //   hasUpper: cubit.hasUpper,
+                       //   hasLower: cubit.hasLower,
+                       //   hasSpecial: cubit.hasSpecial,
+                       // ), showBubble: true),
                     IconButton(
                       onPressed: cubit.togglePasswordVisibility,
                       icon: Icon(

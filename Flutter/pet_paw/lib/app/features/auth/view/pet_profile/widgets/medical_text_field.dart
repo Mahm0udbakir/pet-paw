@@ -16,7 +16,8 @@ class MedicalTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        customLabel('Medical conditions/Special needs', context),
+        customLabel('Medical conditions/Special needs (optional)', context),
+
         SizedBox(height: 5.h),
         TextFormField(
           controller: context.read<CreatePetProfileCubit>().medicalController,

@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
+import 'package:petpaw/app/core/utils/helpers/loaders.dart';
 import 'package:petpaw/app/core/utils/validators/validation.dart';
+import 'package:petpaw/app/features/auth/controller/signup/signup_state.dart';
 import 'package:petpaw/app/features/auth/view/pet_profile/create_pet_profile_screen.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
@@ -65,71 +67,105 @@ class SignupForm extends StatelessWidget {
         icon: Icon(Icons.lock_outline),
         keyboardType: TextInputType.text,
         controller: signupCubit.confirmPasswordController,
-        validator: (value) => Validator.validatePassword(value),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please confirm your password';
+          }
+          if (value != signupCubit.passwordController.text.trim()) {
+            return 'Passwords do not match';
+          }
+          return null;
+        },
+
         obscure: true,
         currentFocusNode: signupCubit.confirmPasswordFocus,
         isLast: true,
-        onSubmit: () {
-          if (signupCubit.signupFormKey.currentState!.validate()) {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => CreatePetProfileScreen(isFirstTime: true),
-              ),
-            );
+        onSubmit: () async {
+          if (signupCubit.signupFormKey.currentState!.validate() &&
+              signupCubit.isPasswordConfirmed(
+                signupCubit.passwordController.text.trim(),
+                signupCubit.confirmPasswordController.text.trim(),
+              )) {
+            final success = await signupCubit.signup();
+            if (success) {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) =>
+                      CreatePetProfileScreen(isFirstTime: true),
+                ),
+              );
+            }
           }
         },
       ),
     ];
 
-    return Form(
-      key: signupCubit.signupFormKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ListView.separated(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => customTextFields[index],
-            separatorBuilder: (context, index) =>
-                SizedBox(height: Sizes.spaceBetweenInputFields.h),
-            itemCount: customTextFields.length,
-          ),
-          SizedBox(height: Sizes.spaceBetweenSections.h),
-
-          TermsAndConditions(),
-
-          SizedBox(height: Sizes.spaceBetweenSections.h),
-          SizedBox(
-            width: double.infinity,
-            height: 40.h,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                  vertical: 14,
-                ),
-                backgroundColor: AppColors.buttonMainColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100),
-                ),
-              ),
-              onPressed: () {
-                if (signupCubit.signupFormKey.currentState!.validate()) {
-                  signupCubit.signup();
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) =>
-                          CreatePetProfileScreen(isFirstTime: true),
-                    ),
-                  );
-                }
-              },
-              child: Text('Next'),
+    return BlocListener<SignupCubit, SignupState>(
+      listener: (context, state) {
+        if (state is SignupError) {
+          Loaders.errorSnackBar(context: context, title: state.message);
+        }
+        if (state is DetailedSignupError) {
+          Loaders.errorSnackBar(context: context, title: state.message);
+        }
+      },
+      child: Form(
+        key: signupCubit.signupFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ListView.separated(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => customTextFields[index],
+              separatorBuilder: (context, index) =>
+                  SizedBox(height: Sizes.spaceBetweenInputFields.h),
+              itemCount: customTextFields.length,
             ),
-          ),
-        ],
+            SizedBox(height: Sizes.spaceBetweenSections.h),
+
+            TermsAndConditions(),
+
+            SizedBox(height: Sizes.spaceBetweenSections.h),
+            SizedBox(
+              width: double.infinity,
+              height: 40.h,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 14,
+                  ),
+                  backgroundColor: AppColors.buttonMainColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+                onPressed: () async {
+                  if (signupCubit.signupFormKey.currentState!.validate() &&
+                      signupCubit.isPasswordConfirmed(
+                        signupCubit.passwordController.text.trim(),
+                        signupCubit.confirmPasswordController.text.trim(),
+                      )) {
+                    final success = await signupCubit.signup();
+                    if (success) {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) =>
+                              CreatePetProfileScreen(isFirstTime: true),
+                        ),
+                      );
+                    }
+                  }
+                },
+
+                child: Text('Next'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

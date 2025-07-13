@@ -7,7 +7,7 @@ import '../../../core/utils/validators/password_validator.dart';
 import 'reset_password_state.dart';
 
 class ResetPasswordCubit extends Cubit<ResetPasswordState> {
-  ResetPasswordCubit() : super(ResetPasswordInitial());
+  ResetPasswordCubit() : super(ForgotPasswordInitial());
 
   // Controllers
   final emailController = TextEditingController();
@@ -49,10 +49,10 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     emit(PasswordValidationChanged());
   }
 
-  // bool isFormValid() => formKeyReset.currentState?.validate() ?? false;
-
   bool isPasswordConfirmed(String password, String confirmPassword) =>
       password == confirmPassword;
+
+  String? resetToken;
 
   @override
   Future<void> close() {
@@ -72,11 +72,11 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   /// 1) Forget Password: Send email to get OTP
   Future<void> forgetPassword() async {
     if (emailController.text.trim().isEmpty) {
-      emit(ResetPasswordError('Email is required.'));
+      emit(ForgotPasswordError('Email is required.'));
       return;
     }
 
-    emit(ResetPasswordLoading());
+    emit(ForgotPasswordLoading());
 
     final url = Uri.parse('${ApiConfig.baseUrl}${ApiConfig.forgetPassword}');
     final body = {'email': emailController.text.trim()};
@@ -92,7 +92,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
       );
 
       if (response.body.isEmpty) {
-        emit(ResetPasswordError('No response from server.'));
+        emit(ForgotPasswordError('No response from server.'));
         return;
       }
 
@@ -100,13 +100,14 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
 
       if (response.statusCode == 200 && data['success'] == true) {
         final message = data['message'] ?? 'OTP sent to your email.';
-        emit(ResetPasswordSuccess(message));
+        resetToken = data['data']?.toString();
+        emit(ForgotPasswordSuccess(message));
       } else {
         final error = data['message'] ?? 'Failed to send OTP.';
-        emit(ResetPasswordError(error));
+        emit(ForgotPasswordError(error));
       }
     } catch (e) {
-      emit(ResetPasswordError('Error: ${e.toString()}'));
+      emit(ForgotPasswordError('Error: ${e.toString()}'));
     }
   }
 
@@ -115,17 +116,24 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     final email = emailController.text.trim();
     final otp = otpController.text.trim();
 
-    if (email.isEmpty || otp.isEmpty) {
-      emit(ResetPasswordError('Email and OTP are required.'));
+    if (email.isEmpty && otp.isEmpty) {
+      emit(OtpVerificationError('Email and OTP are required.'));
+      return;
+    } else if (email.isEmpty) {
+      emit(OtpVerificationError('Email is required.'));
+      return;
+    } else if (otp.isEmpty) {
+      emit(OtpVerificationError('OTP is required.'));
       return;
     }
 
-    emit(ResetPasswordLoading());
+    emit(OtpVerificationLoading());
 
     final url = Uri.parse('${ApiConfig.baseUrl}${ApiConfig.verifyOTP}');
     final body = {'email': email, 'codeOTP': otp};
 
     try {
+      print(body);
       final response = await http.post(
         url,
         headers: {
@@ -136,28 +144,28 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
       );
 
       if (response.body.isEmpty) {
-        emit(ResetPasswordError('No response from server.'));
+        emit(OtpVerificationError('No response from server.'));
         return;
       }
-
+print(response.body);
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200 && data['success'] == true) {
         final message = data['message'] ?? 'OTP verified successfully.';
-        emit(ResetPasswordSuccess(message));
+        emit(OtpVerificationSuccess(message));
       } else {
         final error = data['message'] ?? 'OTP verification failed.';
-        emit(ResetPasswordError(error));
+        emit(OtpVerificationError(error));
       }
     } catch (e) {
-      emit(ResetPasswordError('Error: ${e.toString()}'));
+      emit(OtpVerificationError('Error: ${e.toString()}'));
     }
   }
 
   /// 3) Reset Password
   Future<void> resetPassword() async {
     final email = emailController.text.trim();
-    final token = otpController.text.trim();
+    final token = resetToken?.trim() ?? '';
     final newPassword = newPasswordController.text.trim();
     final confirmPassword = confirmNewPasswordController.text.trim();
 
@@ -185,7 +193,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     };
 
     try {
-      final response = await http.post(
+      final response = await http.put(
         url,
         headers: {
           'Content-Type': 'application/json',
@@ -194,12 +202,10 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
         body: jsonEncode(body),
       );
 
-      if (response.body.isEmpty) {
-        emit(ResetPasswordError('No response from server.'));
-        return;
-      }
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
-      final data = jsonDecode(response.body);
+      final data = response.body.isNotEmpty ? jsonDecode(response.body) : {};
 
       if (response.statusCode == 200 && data['success'] == true) {
         final message = data['message'] ?? 'Password reset successfully.';

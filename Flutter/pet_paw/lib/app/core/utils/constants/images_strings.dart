@@ -1,11 +1,12 @@
 class ImagesStrings {
   // App Logo and Splash Screens
+  static const String appIcon = 'assets/images/logos/app_icon.png';
   static const String appLogo = 'assets/images/logos/app_logo.svg';
-  static const String constPart = 'assets/images/logos/const_part.svg';
-  static const String splash1Logo = 'assets/images/logos/splash1.svg';
-  static const String splash2Logo = 'assets/images/logos/splash2.svg';
-  static const String splash3Logo = 'assets/images/logos/splash3.svg';
-  static const String splash4Logo = 'assets/images/logos/splash4.svg';
+  static const String constPart = 'assets/images/logos/splash/const_part.svg';
+  static const String splash1Logo = 'assets/images/logos/splash/splash1.svg';
+  static const String splash2Logo = 'assets/images/logos/splash/splash2.svg';
+  static const String splash3Logo = 'assets/images/logos/splash/splash3.svg';
+  static const String splash4Logo = 'assets/images/logos/splash/splash4.svg';
 
   // Social Media Icons
   static const String google =
@@ -19,4 +20,7 @@ class ImagesStrings {
   static const String colorIcon = 'assets/images/logos/color_icon.jpg';
   static const String weightIcon = 'assets/images/logos/weight_icon.jpg';
   static const String medicalIcon = 'assets/images/logos/medical_icon.jpg';
+
+  static const String successCharacter =
+      'assets/images/character/character_success.svg';
 }

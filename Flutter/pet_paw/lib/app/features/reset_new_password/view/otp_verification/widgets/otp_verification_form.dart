@@ -11,8 +11,11 @@ class OtpVerificationForm extends StatefulWidget {
 }
 
 class _OtpVerificationFormState extends State<OtpVerificationForm> {
-  final List<FocusNode> _focusNodes = List.generate(5, (_) => FocusNode());
-  final List<TextEditingController> _controllers = List.generate(5, (_) => TextEditingController());
+  final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+  final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
+  String getOtp() {
+    return _controllers.map((c) => c.text).join();
+  }
 
   @override
   void dispose() {
@@ -27,7 +30,7 @@ class _OtpVerificationFormState extends State<OtpVerificationForm> {
 
   void _onChanged(String value, int index) {
     if (value.isNotEmpty) {
-      if (index < 4) {
+      if (index < 5) {
         _focusNodes[index + 1].requestFocus();
       } else {
         _focusNodes[index].unfocus();
@@ -37,6 +40,10 @@ class _OtpVerificationFormState extends State<OtpVerificationForm> {
         _focusNodes[index - 1].requestFocus();
       }
     }
+
+    // Update the Cubit controller with the combined OTP
+    final cubit = context.read<ResetPasswordCubit>();
+    cubit.otpController.text = _controllers.map((c) => c.text).join();
   }
 
   @override
@@ -49,7 +56,7 @@ class _OtpVerificationFormState extends State<OtpVerificationForm> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(5, (index) {
+            children: List.generate(6, (index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: Container(

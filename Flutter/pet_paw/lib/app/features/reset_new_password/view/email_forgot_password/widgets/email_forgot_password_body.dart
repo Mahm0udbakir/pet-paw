@@ -15,6 +15,8 @@ class EmailForgotPasswordBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: Sizes.defaultSpace,
@@ -39,7 +41,7 @@ class EmailForgotPasswordBody extends StatelessWidget {
             const SizedBox(height: 46),
             BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
               listener: (context, state) {
-                if (state is ResetPasswordSuccess) {
+                if (state is ForgotPasswordSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
@@ -52,9 +54,7 @@ class EmailForgotPasswordBody extends StatelessWidget {
                       ),
                     ),
                   );
-
-
-                } else if (state is ResetPasswordError) {
+                } else if (state is ForgotPasswordError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
@@ -62,27 +62,24 @@ class EmailForgotPasswordBody extends StatelessWidget {
               },
               builder: (context, state) {
                 final cubit = context.read<ResetPasswordCubit>();
-                final isLoading = state is ResetPasswordLoading;
+                final isLoading = state is ForgotPasswordLoading;
 
                 return SizedBox(
                   height: MediaQuery.of(context).size.height - 260,
                   child: Column(
                     children: [
-                      const EmailForgotPasswordForm(),
+                      EmailForgotPasswordForm(formKey: formKey),
                       const Spacer(),
                       CustomDarkButton(
                         text: 'Continue',
-                        onPressed: isLoading ? null : cubit.forgetPassword, child: (){},
-                        // child: isLoading
-                        //     ? const SizedBox(
-                        //   height: 20,
-                        //   width: 20,
-                        //   child: CircularProgressIndicator(
-                        //     strokeWidth: 2,
-                        //     color: Colors.white,
-                        //   ),
-                        // )
-                        //     : const Text("Continue.."),
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                          FocusScope.of(context).unfocus();
+                          if (formKey.currentState!.validate()) {
+                            cubit.forgetPassword();
+                          }
+                        },
                       ),
                       const SizedBox(height: Sizes.spaceBetweenSections),
                       CustomLightButton(
@@ -90,7 +87,8 @@ class EmailForgotPasswordBody extends StatelessWidget {
                         onPressed: () => Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const PhoneForgotPasswordScreen(),
+                            builder: (context) =>
+                            const PhoneForgotPasswordScreen(),
                           ),
                         ),
                       ),

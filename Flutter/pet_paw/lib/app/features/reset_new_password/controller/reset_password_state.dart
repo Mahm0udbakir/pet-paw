@@ -1,7 +1,34 @@
 abstract class ResetPasswordState {}
 
-class ResetPasswordInitial extends ResetPasswordState {}
+/// Forgot Password States
+class ForgotPasswordInitial extends ResetPasswordState {}
 
+class ForgotPasswordLoading extends ResetPasswordState {}
+
+class ForgotPasswordSuccess extends ResetPasswordState {
+  final String message;
+  ForgotPasswordSuccess(this.message);
+}
+
+class ForgotPasswordError extends ResetPasswordState {
+  final String message;
+  ForgotPasswordError(this.message);
+}
+
+/// OTP Verification States
+class OtpVerificationLoading extends ResetPasswordState {}
+
+class OtpVerificationSuccess extends ResetPasswordState {
+  final String message;
+  OtpVerificationSuccess(this.message);
+}
+
+class OtpVerificationError extends ResetPasswordState {
+  final String message;
+  OtpVerificationError(this.message);
+}
+
+/// Reset Password States
 class ResetPasswordLoading extends ResetPasswordState {}
 
 class ResetPasswordSuccess extends ResetPasswordState {

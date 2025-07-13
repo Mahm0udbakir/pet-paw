@@ -15,6 +15,7 @@ class CreatePetProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.primaryBackground,
       appBar: AppBar(
         title: Text(

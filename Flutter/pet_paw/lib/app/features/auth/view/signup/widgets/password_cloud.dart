@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../controller/signup/signup_cubit.dart';
+import '../../../model/validation_status_model.dart';
 
 class ValidationPopoverIcon extends StatelessWidget {
-  final SignupCubit cubit;
+  final ValidationStatus validation;
   final bool showBubble;
 
   const ValidationPopoverIcon({
     super.key,
-    required this.cubit,
+    required this.validation,
     this.showBubble = true,
   });
 
@@ -45,23 +45,23 @@ class ValidationPopoverIcon extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildPopoverCheck(
-                        cubit.hasMinLength,
+                        validation.hasMinLength,
                         'Must be at 8-20 characters.',
                       ),
                       _buildPopoverCheck(
-                        cubit.hasNumber,
+                        validation.hasNumber,
                         'Must include at least 1 number.',
                       ),
                       _buildPopoverCheck(
-                        cubit.hasUpper,
+                        validation.hasUpper,
                         'Must contain at least 1 uppercase letter.',
                       ),
                       _buildPopoverCheck(
-                        cubit.hasLower,
+                        validation.hasLower,
                         'Must contain at least 1 lowercase letter.',
                       ),
                       _buildPopoverCheck(
-                        cubit.hasSpecial,
+                        validation.hasSpecial,
                         'Must include at least 1 special character (e.g.!,@,#).',
                       ),
                     ],

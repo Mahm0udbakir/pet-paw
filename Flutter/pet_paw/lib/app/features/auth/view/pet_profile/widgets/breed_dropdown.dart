@@ -1,7 +1,7 @@
+import 'package:drop_down_list/drop_down_list.dart';
+import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 
 import '../../../../../common/custom_label.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
@@ -23,97 +23,101 @@ class BreedDropdown extends StatefulWidget {
 }
 
 class _BreedDropdownState extends State<BreedDropdown> {
-  late SingleSelectController<String> _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = SingleSelectController<String>(null);
-    _syncController();
-  }
-
-  @override
-  void didUpdateWidget(BreedDropdown oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.options != widget.options ||
-        oldWidget.selectedBreed != widget.selectedBreed) {
-      _syncController();
-    }
-  }
-
-  void _syncController() {
-    if (widget.selectedBreed != null &&
-        widget.options.contains(widget.selectedBreed)) {
-      _controller.value = widget.selectedBreed;
-    } else {
-      _controller.value = null;
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  String? customBreed;
+  bool showCustomInput = false;
 
   @override
   Widget build(BuildContext context) {
+    final displayedText = showCustomInput
+        ? (customBreed?.isNotEmpty == true ? customBreed! : 'Enter breed')
+        : (widget.selectedBreed ?? 'Choose your pet breed');
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         customLabel('Pet Breed', context),
         SizedBox(height: 5.h),
 
-        CustomDropdown<String>.search(
-          hintText: 'Choose your pet breed',
-          controller: _controller,
-          items: widget.options,
-          onChanged: widget.onChanged,
-          decoration: CustomDropdownDecoration(
-            searchFieldDecoration: SearchFieldDecoration(
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-                borderSide: BorderSide(
-                  color: Colors.brown.shade100,
-                  width: 1.w,
+        InkWell(
+          onTap: () => _showDropDown(context),
+          child: Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.brown.shade100, width: 1.w),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    displayedText,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: (widget.selectedBreed == null && !showCustomInput)
+                          ? AppColors.iconColor
+                          : Colors.black,
+                      fontSize: 14.sp,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-            ),
-            closedFillColor: Colors.white,
-            closedBorder: Border.all(color: Colors.brown.shade100, width: 1.w),
-            closedBorderRadius: BorderRadius.circular(12),
-            closedSuffixIcon: const Icon(
-              Iconsax.arrow_down_1,
-              size: 20,
-              color: AppColors.buttonMainColor,
-            ),
-            hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: AppColors.iconColor,
-              fontSize: 14.sp,
-            ),
-            headerStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Colors.brown.shade500,
-              fontWeight: FontWeight.w500,
-              fontSize: 14.sp,
-            ),
-            expandedBorderRadius: BorderRadius.circular(12),
-            closedErrorBorderRadius: BorderRadius.circular(50),
-          ),
-          disabledDecoration: CustomDropdownDisabledDecoration(
-            borderRadius: BorderRadius.circular(50),
-            hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: AppColors.iconColor,
-              fontSize: 14.sp,
-            ),
-            headerStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Colors.brown.shade500,
-              fontWeight: FontWeight.w500,
-              fontSize: 14.sp,
+                Icon(Icons.arrow_drop_down, color: AppColors.iconColor),
+              ],
             ),
           ),
         ),
+
+        if (showCustomInput) ...[
+          SizedBox(height: 8.h),
+          TextFormField(
+            initialValue: customBreed,
+            onChanged: (value) {
+              setState(() {
+                customBreed = value;
+              });
+              widget.onChanged(value.isNotEmpty ? value : null);
+            },
+            decoration: InputDecoration(
+              hintText: 'Enter breed',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 10.h,
+              ),
+            ),
+          ),
+        ],
       ],
     );
   }
+
+  void _showDropDown(BuildContext context) {
+  final options = widget.options.map((e) => SelectedListItem(data: e)).toList();
+
+  DropDownState(
+    dropDown: DropDown(
+      data: options,
+      bottomSheetTitle: Text(
+        'Choose your pet breed',
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
+      onSelected: (selectedItems) {
+        if (selectedItems.isNotEmpty) {
+          final selected = selectedItems.first.data;
+
+          setState(() {
+            showCustomInput = false;
+            customBreed = null;
+            widget.onChanged(selected);
+          });
+        }
+      },
+    ),
+  ).showModal(context);
+}
+
 }
