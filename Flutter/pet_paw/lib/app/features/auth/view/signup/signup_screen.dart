@@ -38,6 +38,11 @@ class SignupScreen extends StatelessWidget {
                     message: state.message,
                   );
                 }
+              } else if (state is SignupLoading) {
+                CircularProgressIndicator(
+                  backgroundColor: Colors.transparent,
+                  color: AppColors.buttonMainColor,
+                );
               }
             },
             child: const SignupBody(),
