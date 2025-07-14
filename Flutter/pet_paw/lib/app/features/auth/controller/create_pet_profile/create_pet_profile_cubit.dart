@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:bloc/bloc.dart';
 import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,7 @@ import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 import '../../../../core/config/api_config.dart';
 import '../../../../core/config/token_storage.dart';
 import '../../../../core/utils/helpers/loaders.dart';
+import '../../model/pet_profile_model.dart';
 
 part 'create_pet_profile_state.dart';
 
@@ -51,6 +51,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   XFile? imageFile;
   String? gender;
   String? neuterStatus;
+  bool hasMedicalCondition = false;
 
   double weight = 0.0;
   double minWeight = 0.0;
@@ -150,75 +151,11 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     selectedType = type;
     petTypeController.text = type ?? '';
 
-    if (type == 'Dog') {
-      breedOptions = [
-        'Akita',
-        'American Pit Bull Terrier',
-        'Australian Shepherd',
-        'Beagle',
-        'Bernese Mountain Dog',
-        'Bichon Frise',
-        'Border Collie',
-        'Boxer',
-        'Brittany',
-        'Bulldog (English)',
-        'Bull Terrier',
-        'Cane Corso',
-        'Cavalier King Charles Spaniel',
-        'Chihuahua',
-        'Collie',
-        'Cocker Spaniel',
-        'Dachshund',
-        'Doberman Pinscher',
-        'English Springer Spaniel',
-        'French Bulldog',
-        'German Shepherd',
-        'German Shorthaired Pointer',
-        'Golden Retriever',
-        'Great Dane',
-        'Havanese',
-        'Labrador Retriever',
-        'Maltese',
-        'Mastiff',
-        'Miniature American Shepherd',
-        'Miniature Schnauzer',
-        'Newfoundland',
-        'Papillon',
-        'Pembroke Welsh Corgi',
-        'Poodle (Standard)',
-        'Portuguese Water Dog',
-        'Rottweiler',
-        'Shiba Inu',
-        'Shih Tzu',
-        'Shetland Sheepdog',
-        'Siberian Husky',
-        'St. Bernard',
-        'Vizsla',
-        'Weimaraner',
-        'West Highland White Terrier',
-        'Yorkshire Terrier',
-      ];
-    } else if (type == 'Cat') {
-      breedOptions = [
-        'Abyssinian',
-        'American Shorthair',
-        'Arabian Mau',
-        'Bengal',
-        'British Shorthair',
-        'Egyptian Mau',
-        'Maine Coon',
-        'Nile Valley Cat',
-        'Persian',
-        'Ragdoll',
-        'Russian Blue',
-        'Scottish Fold',
-        'Siamese',
-        'Siberian',
-        'Sphynx',
-      ];
-    } else {
-      breedOptions = [];
-    }
+    breedOptions = type == 'Dog'
+        ? dogBreeds
+        : type == 'Cat'
+        ? catBreeds
+        : [];
 
     selectedBreed = null;
     breedController.clear();
@@ -308,41 +245,23 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     emit(FormReset());
   }
 
+  void toggleMedicalCondition(bool value) {
+    hasMedicalCondition = value;
+    if (!value) medicalController.clear();
+    emit(MedicalConditionVisibilityChanged(hasMedicalCondition));
+  }
+
   Future<bool> createPetProfile(BuildContext context) async {
-    if (!formKey.currentState!.validate()) {
-      emit(ValidationFailed("Please fill all required fields."));
-      return false;
-    }
-
-    if (!validateSelections()) return false;
-
-    if (birthdayController.text.trim().isEmpty) {
-      emit(ValidationFailed("Please select your pet's birth date."));
-      return false;
-    }
-
-    if (selectedColor == null || selectedColor!.isEmpty) {
-      emit(ValidationFailed("Please select your pet's color."));
-      return false;
-    }
-
-    if (weightController.text.trim().isEmpty ||
+    if (!formKey.currentState!.validate() ||
+        selectedType == null ||
+        selectedBreed == null ||
+        selectedColor == null ||
+        gender == null ||
+        neuterStatus == null ||
+        birthdayController.text.isEmpty ||
+        weightController.text.isEmpty ||
         double.tryParse(weightController.text) == null) {
-      Loaders.warningSnackBar(
-        context: context,
-        title: "Invalid Weight",
-        message: "Please enter a valid weight.",
-      );
-      return false;
-    }
-
-    if (selectedType == null || selectedType!.isEmpty) {
-      emit(ValidationFailed("Please select your pet's type."));
-      return false;
-    }
-
-    if (selectedBreed == null || selectedBreed!.isEmpty) {
-      emit(ValidationFailed("Please select your pet's breed."));
+      emit(ValidationFailed("Please fill all required fields correctly."));
       return false;
     }
 
@@ -363,45 +282,50 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     }
 
     try {
+      final model = PetProfileModel(
+        name: nameController.text,
+        breed: selectedBreed!,
+        birthday: birthdayController.text.trim(),
+        color: selectedColor!,
+        weight: double.tryParse(weightController.text.trim())!,
+        gender: gender!,
+        neuterStatus: neuterStatus!,
+        petType: selectedType!.toLowerCase(),
+        medicalConditions: medicalController.text.trim().isNotEmpty
+            ? medicalController.text.trim()
+            : null,
+        photoPath: imageFile?.path,
+      );
+
       final request = http.MultipartRequest('POST', uri)
         ..headers.addAll({
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
         })
-        ..fields['Name'] = nameController.text.trim()
-        ..fields['Breed'] = selectedBreed!
-        ..fields['BirthDay'] = birthdayController.text.trim()
-        ..fields['Color'] = selectedColor!
-        ..fields['Weight'] = (double.tryParse(
-          weightController.text.trim(),
-        )).toString()
-        ..fields['Gender'] = gender!
-        ..fields['IsInBreedingPeriod'] = neuterStatus!
-        ..fields['petType'] = petType!;
-      request.fields['MedicalConditions'] = medicalController.text.trim();
+        ..fields.addAll(model.toFields());
 
-      if (imageFile != null) {
+      if (model.photoPath != null) {
         request.files.add(
-          await http.MultipartFile.fromPath('Photo', imageFile!.path),
+          await http.MultipartFile.fromPath('Photo', model.photoPath!),
         );
       } else {
         final bytes = await rootBundle.load(ImagesStrings.appIcon);
         final multipartFile = http.MultipartFile.fromBytes(
           'Photo',
           bytes.buffer.asUint8List(),
-          filename: 'default_pet.png',
+          filename: ImagesStrings.appIcon,
           contentType: MediaType('image', 'png'),
         );
         request.files.add(multipartFile);
       }
 
-      request.fields.forEach((k, v) => print('$k: $v'));
+      request.fields.forEach((k, v) => debugPrint('$k: $v'));
 
       final response = await request.send();
       final responseBody = await response.stream.bytesToString();
 
-      print('✅ Status code: ${response.statusCode}');
-      print('✅ Raw response: $responseBody');
+      debugPrint('Status code: ${response.statusCode}');
+      debugPrint('Raw response: $responseBody');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         Loaders.successSnackBar(
@@ -424,11 +348,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
           message = decoded['message'];
         }
 
-        Loaders.errorSnackBar(
-          context: context,
-          title: "Failed to Create Profile",
-          message: message,
-        );
         emit(ProfileCreationFailed(message));
         return false;
       }
@@ -454,4 +373,69 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     medicalController.dispose();
     return super.close();
   }
+
+  List<String> get dogBreeds => [
+    'Akita',
+    'American Pit Bull Terrier',
+    'Australian Shepherd',
+    'Beagle',
+    'Bernese Mountain Dog',
+    'Bichon Frise',
+    'Border Collie',
+    'Boxer',
+    'Brittany',
+    'Bulldog (English)',
+    'Bull Terrier',
+    'Cane Corso',
+    'Cavalier King Charles Spaniel',
+    'Chihuahua',
+    'Collie',
+    'Cocker Spaniel',
+    'Dachshund',
+    'Doberman Pinscher',
+    'English Springer Spaniel',
+    'French Bulldog',
+    'German Shepherd',
+    'German Shorthaired Pointer',
+    'Golden Retriever',
+    'Great Dane',
+    'Havanese',
+    'Labrador Retriever',
+    'Maltese',
+    'Mastiff',
+    'Miniature American Shepherd',
+    'Miniature Schnauzer',
+    'Newfoundland',
+    'Papillon',
+    'Pembroke Welsh Corgi',
+    'Poodle (Standard)',
+    'Portuguese Water Dog',
+    'Rottweiler',
+    'Shiba Inu',
+    'Shih Tzu',
+    'Shetland Sheepdog',
+    'Siberian Husky',
+    'St. Bernard',
+    'Vizsla',
+    'Weimaraner',
+    'West Highland White Terrier',
+    'Yorkshire Terrier',
+  ];
+  List<String> get catBreeds => [
+    'Abyssinian',
+    'American Shorthair',
+    'Arabian Mau',
+    'Bengal',
+    'British Shorthair',
+    'Egyptian Mau',
+    'Maine Coon',
+    'Nile Valley Cat',
+    'Persian',
+    'Ragdoll',
+    'Russian Blue',
+    'Scottish Fold',
+    'Siamese',
+    'Siberian',
+    'Sphynx',
+  ];
 }

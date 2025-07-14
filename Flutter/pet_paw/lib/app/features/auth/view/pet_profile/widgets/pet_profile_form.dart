@@ -8,6 +8,7 @@ import 'package:petpaw/app/features/auth/view/pet_profile/widgets/bottom_buttons
 import 'package:petpaw/app/features/auth/view/pet_profile/widgets/medical_text_field.dart';
 import 'package:petpaw/app/features/auth/view/pet_profile/widgets/weight_text_field.dart';
 
+import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 import 'birthday_and_color.dart';
@@ -59,7 +60,32 @@ class PetProfileForm extends StatelessWidget {
                     controller.selectOption(group: 'gender', value: value),
               ),
               SizedBox(height: Sizes.spaceBetweenInputFields.h),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Does your pet have any medical conditions?",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  Checkbox(
+                    value: context
+                        .watch<CreatePetProfileCubit>()
+                        .hasMedicalCondition,
+                    onChanged: (val) {
+                      context
+                          .read<CreatePetProfileCubit>()
+                          .toggleMedicalCondition(val ?? false);
+                    },
+                    activeColor: AppColors.buttonMainColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ],
+              ),
               MedicalTextField(),
+
               SizedBox(height: Sizes.spaceBetweenItems.h),
               BottomButtons(),
             ],

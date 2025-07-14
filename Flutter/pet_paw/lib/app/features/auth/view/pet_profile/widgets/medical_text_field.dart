@@ -13,14 +13,17 @@ class MedicalTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<CreatePetProfileCubit>();
+
+    if (!cubit.hasMedicalCondition) return const SizedBox.shrink();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         customLabel('Medical conditions/Special needs (optional)', context),
-
         SizedBox(height: 5.h),
         TextFormField(
-          controller: context.read<CreatePetProfileCubit>().medicalController,
+          controller: cubit.medicalController,
           keyboardType: TextInputType.multiline,
           minLines: 4,
           maxLength: 500,
@@ -51,7 +54,6 @@ class MedicalTextField extends StatelessWidget {
             ),
             filled: true,
             fillColor: Colors.white,
-
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(24),
               borderSide: BorderSide(color: Colors.brown.shade100, width: 1.w),

@@ -128,8 +128,8 @@ class SignupCubit extends Cubit<SignupState> {
       final responseData = jsonDecode(response.body);
       final statusCode = response.statusCode;
 
-      print('[SignupCubit] Raw response: ${response.body}');
-      print('[SignupCubit] Status code: ${response.statusCode}');
+      debugPrint('[SignupCubit] Raw response: ${response.body}');
+      debugPrint('[SignupCubit] Status code: ${response.statusCode}');
 
       if (statusCode == 200 && responseData['success'] == true) {
         if (responseData.containsKey('data')) {

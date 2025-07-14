@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -138,11 +137,10 @@ class Loaders {
     required String message,
     required Color backgroundColor,
     required IconData icon,
-    int duration = 3,
+    int duration = 5,
   }) {
     final theme = Theme.of(context);
     final scaffoldMessenger = ScaffoldMessenger.of(context);
-    final curve = Curves.fastEaseInToSlowEaseOut;
 
     final snackBar = SnackBar(
       duration: Duration(seconds: duration),
@@ -154,20 +152,24 @@ class Loaders {
       content: TweenAnimationBuilder<double>(
         tween: Tween(begin: 0.0, end: 1.0),
         duration: const Duration(milliseconds: 600),
-        curve: curve,
+        curve: Curves.fastEaseInToSlowEaseOut,
         builder: (context, value, child) {
-          return Transform(
-            transform: Matrix4.identity()
-              ..translate(0.0, 30 * (1 - value))
-              ..scale(value),
-            alignment: Alignment.bottomCenter,
-            child: Opacity(opacity: value, child: child),
+          double opacity = value < 0.2 ? value * 5 : 1.0;
+
+          return Transform.translate(
+            offset: Offset(0, 40 * (1 - value)),
+            child: Opacity(
+              opacity: opacity,
+              child: Transform.scale(
+                scale: 0.95 + (0.05 * value),
+                child: child,
+              ),
+            ),
           );
         },
         child: Stack(
           clipBehavior: Clip.none,
           children: [
-            // Main content
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -192,7 +194,6 @@ class Loaders {
               ),
               child: Row(
                 children: [
-                  // Icon with shine effect
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
@@ -251,15 +252,16 @@ class Loaders {
                 ],
               ),
             ),
+
             // Progress indicator
             Positioned(
-              bottom: 0,
+              top: 0,
               left: 0,
               right: 0,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
                 ),
                 child: TweenAnimationBuilder<double>(
                   tween: Tween(begin: 1.0, end: 0.0),
@@ -269,13 +271,14 @@ class Loaders {
                     value: value,
                     backgroundColor: Colors.transparent,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.white.withOpacity(0.3),
+                      Colors.white.withOpacity(0.9),
                     ),
-                    minHeight: 3,
+                    minHeight: 4,
                   ),
                 ),
               ),
             ),
+
             // Shine effect
             Positioned(
               top: -10,

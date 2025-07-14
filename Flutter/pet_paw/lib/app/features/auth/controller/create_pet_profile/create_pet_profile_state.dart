@@ -23,6 +23,11 @@ class ImagePickCancelled extends CreatePetProfileState {}
 
 class FormReset extends CreatePetProfileState {}
 
+class MedicalConditionVisibilityChanged extends CreatePetProfileState {
+  final bool visible;
+  MedicalConditionVisibilityChanged(this.visible);
+}
+
 class ImageUploading extends CreatePetProfileState {}
 
 class ImageUploadedSuccessfully extends CreatePetProfileState {
