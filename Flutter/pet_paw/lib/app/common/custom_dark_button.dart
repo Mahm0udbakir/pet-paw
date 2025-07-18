@@ -17,7 +17,6 @@ class CustomDarkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
       height: 40.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(

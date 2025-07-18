@@ -3,8 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 import 'package:petpaw/app/core/utils/constants/images_strings.dart';
-import 'package:petpaw/app/features/auth/controller/login/login_cubit.dart';
-import 'package:petpaw/app/features/auth/view/login/login_screen.dart';
+import 'package:petpaw/app/features/onboarding_and_getstarted/controller/on_boarding_cubit.dart';
+
+import 'features/onboarding_and_getstarted/view/onboarding/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -57,8 +58,8 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (_) => LoginCubit(),
-            child: const LoginScreen(),
+            create: (_) => OnBoardingCubit(),
+            child: const OnboardingScreen(),
           ),
         ),
       );
