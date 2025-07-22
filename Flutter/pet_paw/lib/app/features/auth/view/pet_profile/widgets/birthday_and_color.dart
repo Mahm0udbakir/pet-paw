@@ -8,6 +8,7 @@ import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/images_strings.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 
@@ -26,8 +27,8 @@ class BirthdayAndColor extends StatelessWidget {
           Expanded(
             flex: 2,
             child: CustomTextField(
-              title: 'Birthday',
-              hintText: 'yyyy-MM-dd',
+              title: AppStrings.birthdayLabel,
+              hintText: AppStrings.birthdayHintText,
               readOnly: false,
               icon: Image.asset(ImagesStrings.petIcon),
               suffixIcon: GestureDetector(
@@ -92,7 +93,7 @@ class BirthdayAndColor extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                customLabel('Color', context),
+                customLabel(AppStrings.colorLabel, context),
                 SizedBox(height: 5.h),
                 DropdownButtonFormField(
                   value: context.read<CreatePetProfileCubit>().selectedColor,
@@ -103,7 +104,7 @@ class BirthdayAndColor extends StatelessWidget {
                     size: 25,
                     color: AppColors.buttonMainColor,
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 11),
                   style: TextStyle(
                     color: AppColors.buttonMainColor,
                     fontSize: 16.sp,

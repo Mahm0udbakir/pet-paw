@@ -7,6 +7,7 @@ import 'package:petpaw/app/features/reset_new_password/view/reset_password/widge
 import '../../../../../common/custom_dark_button.dart';
 import '../../../../../common/done_screen.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../../auth/view/login/login_screen.dart';
 import '../../../controller/reset_password_cubit.dart';
@@ -33,10 +34,10 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: Sizes.xxl),
               child: Text(
-                "Enter your new password.",
+                AppStrings.enterNewPassword,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.smallTextColor,
@@ -56,10 +57,10 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => DoneScreen(
-                        message: "Password Updated",
+                        message: AppStrings.passwordUpdated,
                         imageAsset: ImagesStrings.successCharacter,
-                        description: "Your password has been updated ",
-                        buttonText: "Login",
+                        description: AppStrings.passwordUpdatedDesc,
+                        buttonText: AppStrings.login,
                         nextScreen: BlocProvider(
                           create: (context) => LoginCubit(),
                           child: LoginScreen(),
@@ -85,7 +86,7 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody> {
                       ResetPasswordForm(formKey: formKeyReset),
                       const Spacer(),
                       CustomDarkButton(
-                        text: 'Continue',
+                        text: AppStrings.continueButton,
                         onPressed: isLoading
                             ? null
                             : () {

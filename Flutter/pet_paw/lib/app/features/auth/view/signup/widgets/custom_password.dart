@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/features/auth/view/signup/widgets/password_cloud.dart';
 import '../../../../../common/custom_label.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../controller/signup/signup_cubit.dart';
 import '../../../model/validation_status_model.dart';
 import 'password_strength_label.dart';
@@ -28,7 +29,7 @@ class CustomPassword extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        customLabel('Password', context),
+        customLabel(AppStrings.passwordTitle, context),
         SizedBox(height: 5.h),
         Stack(
           children: [
@@ -54,14 +55,16 @@ class CustomPassword extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (controller.text.isNotEmpty && !isValid)
-                      ValidationPopoverIcon( validation: ValidationStatus(
-                        hasMinLength: cubit.hasMinLength,
-                        hasNumber: cubit.hasNumber,
-                        hasUpper: cubit.hasUpper,
-                        hasLower: cubit.hasLower,
-                        hasSpecial: cubit.hasSpecial,
+                      ValidationPopoverIcon(
+                        validation: ValidationStatus(
+                          hasMinLength: cubit.hasMinLength,
+                          hasNumber: cubit.hasNumber,
+                          hasUpper: cubit.hasUpper,
+                          hasLower: cubit.hasLower,
+                          hasSpecial: cubit.hasSpecial,
+                        ),
+                        showBubble: true,
                       ),
-                          showBubble: true),
                     IconButton(
                       onPressed: cubit.togglePasswordVisibility,
                       icon: Icon(
@@ -73,7 +76,7 @@ class CustomPassword extends StatelessWidget {
                     ),
                   ],
                 ),
-                hintText: "Enter your password",
+                hintText: AppStrings.passwordHint,
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.iconColor,
                   fontWeight: FontWeight.w400,

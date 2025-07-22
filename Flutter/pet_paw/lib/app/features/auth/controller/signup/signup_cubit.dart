@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import '../../../../core/config/api_config.dart';
 import '../../../../core/config/token_storage.dart';
+import '../../../../core/utils/constants/app_strings.dart';
 import '../../../../core/utils/validators/password_validator.dart';
 import '../../model/user_model.dart';
 import 'signup_state.dart';
@@ -80,19 +81,19 @@ class SignupCubit extends Cubit<SignupState> {
     final confirmPassword = confirmPasswordController.text.trim();
 
     if (!isPasswordConfirmed(password, confirmPassword)) {
-      emit(SignupError('Passwords do not match.'));
+      emit(SignupError(AppStrings.passwordMismatch));
       return false;
     }
 
     if (!isPasswordValid) {
-      emit(SignupError('Password does not meet the strength requirements.'));
+      emit(SignupError(AppStrings.passwordMismatch));
       return false;
     }
 
     if (!isTermsAccepted()) {
       emit(
         DetailedSignupError(
-          'Please accept the terms and conditions.',
+          AppStrings.termsNotAccepted,
           type: SignupErrorType.termsNotAccepted,
         ),
       );
@@ -121,7 +122,7 @@ class SignupCubit extends Cubit<SignupState> {
       );
 
       if (response.body.isEmpty) {
-        emit(SignupError('No response from server.'));
+        emit(SignupError(AppStrings.loginNoResponseMessage));
         return false;
       }
 
@@ -138,22 +139,20 @@ class SignupCubit extends Cubit<SignupState> {
           emit(SignupSuccess(user));
           return true;
         } else {
-          emit(SignupError('Unexpected response structure.'));
+          // emit(SignupError(AppStrings.unexpectedResponse));
           return false;
         }
       } else if (statusCode == 400 || statusCode == 422) {
-        emit(SignupError(responseData['message'] ?? 'Validation failed.'));
+        emit(
+          SignupError(responseData['message'] ?? AppStrings.validationFailed),
+        );
         return false;
       } else {
-        emit(SignupError(responseData['message'] ?? 'Signup failed.'));
+        emit(SignupError(responseData['message'] ?? AppStrings.networkError));
         return false;
       }
     } catch (e) {
-      emit(
-        SignupError(
-          'Something went wrong. Please check your internet connection.',
-        ),
-      );
+      // emit(SignupError('${AppStrings.loginErrorMessagePrefix}${e.toString()}'));
       return false;
     }
   }

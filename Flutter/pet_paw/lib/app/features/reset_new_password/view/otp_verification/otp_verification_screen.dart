@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/constants/app_strings.dart';
 import 'widgets/otp_verification_body.dart';
 import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
@@ -11,8 +12,8 @@ class OtpVerificationScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.primaryBackground,
       appBar: AppBar(
-        title: const Text(
-          "OTP verification",
+        title: Text(
+          AppStrings.otpVerificationTitle,
           style: TextStyle(
             color: AppColors.buttonMainColor,
             fontWeight: FontWeight.w600,

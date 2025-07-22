@@ -50,8 +50,8 @@ class SocialButtons extends StatelessWidget {
               ),
             ],
           ),
-          child: const IconButton(
-            onPressed: null,
+          child: IconButton(
+            onPressed: () {},
             icon: Image(
               image: AssetImage(ImagesStrings.facebook),
               width: Sizes.mdIcon,

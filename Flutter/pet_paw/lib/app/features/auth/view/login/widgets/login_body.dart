@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/helpers/loaders.dart';
 import '../../signup/signup_screen.dart';
 import 'social_buttons.dart';
@@ -34,13 +35,13 @@ class LoginBody extends StatelessWidget {
                 if (state is LoginSuccess) {
                   Loaders.successSnackBar(
                     context: context,
-                    title: 'Login Successful',
-                    message: 'Welcome back',
+                    title: AppStrings.loginSuccessTitle,
+                    message: AppStrings.loginSuccessMessage,
                   );
                 } else if (state is LoginError) {
                   Loaders.errorSnackBar(
                     context: context,
-                    title: 'Login Failed',
+                    title: AppStrings.loginFailedTitle,
                     message: state.message,
                   );
                 }
@@ -51,7 +52,7 @@ class LoginBody extends StatelessWidget {
             ),
             SizedBox(height: Sizes.spaceBetweenItems.h),
             Text(
-              'Or Sign in with',
+              AppStrings.orSignInWith,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w400,
                 fontSize: 14.sp,
@@ -63,7 +64,7 @@ class LoginBody extends StatelessWidget {
             SizedBox(height: Sizes.spaceBetweenItems.h),
             Text.rich(
               TextSpan(
-                text: 'No account yet? ',
+                text: AppStrings.noAccountYet,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w400,
                   fontSize: 16.sp,
@@ -71,7 +72,7 @@ class LoginBody extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: 'Create one',
+                    text: AppStrings.createOne,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w400,
                       fontSize: 14.sp,

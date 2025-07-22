@@ -29,9 +29,9 @@ class AppColors {
   static const Color black = Color(0xFF232323);
   static const Color greyColor = Color(0xFF939393);
   static const Color grey = Color(0xFF757575);
+  static const Color lightGray = Color(0xFFD3D3D7);
   static const Color white = Color(0xFFFFFFFF);
 
   // border
   static const Color borderOtp = Color(0x402E201A);
-
 }

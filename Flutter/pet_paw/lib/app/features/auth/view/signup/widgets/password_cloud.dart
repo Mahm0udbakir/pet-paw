@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../model/validation_status_model.dart';
 
 class ValidationPopoverIcon extends StatelessWidget {
@@ -14,17 +15,22 @@ class ValidationPopoverIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
+
     return Stack(
       clipBehavior: Clip.none,
-      alignment: Alignment.topRight,
+      alignment: isRtl ? Alignment.topLeft : Alignment.topRight,
       children: [
         Icon(Icons.error, color: Colors.red),
         if (showBubble)
           Positioned(
             top: -170,
-            right: -41,
+            right: isRtl ? null : -41,
+            left: isRtl ? -41 : null,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: isRtl
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.end,
               children: [
                 // Bubble box
                 Container(
@@ -46,29 +52,29 @@ class ValidationPopoverIcon extends StatelessWidget {
                     children: [
                       _buildPopoverCheck(
                         validation.hasMinLength,
-                        'Must be at 8-20 characters.',
+                        AppStrings.passwordMinLength,
                       ),
                       _buildPopoverCheck(
                         validation.hasNumber,
-                        'Must include at least 1 number.',
+                        AppStrings.passwordHasNumber,
                       ),
                       _buildPopoverCheck(
                         validation.hasUpper,
-                        'Must contain at least 1 uppercase letter.',
+                        AppStrings.passwordHasUpper,
                       ),
                       _buildPopoverCheck(
                         validation.hasLower,
-                        'Must contain at least 1 lowercase letter.',
+                        AppStrings.passwordHasLower,
                       ),
                       _buildPopoverCheck(
                         validation.hasSpecial,
-                        'Must include at least 1 special character (e.g.!,@,#).',
+                        AppStrings.passwordHasSpecial,
                       ),
                     ],
                   ),
                 ),
                 Transform.translate(
-                  offset: Offset(-38, -3),
+                  offset: Offset(isRtl ? 38 : -38, -3),
                   child: CustomPaint(
                     size: Size(30, 40),
                     painter: TrianglePainter(color: Colors.white),

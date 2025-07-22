@@ -12,8 +12,9 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onboardingCubit = context.watch<OnBoardingCubit>();
+    final onboardingCubit = context.read<OnBoardingCubit>();
     final onboardingList = onboardingCubit.onboardingList;
+    
 
     return Scaffold(
       backgroundColor: AppColors.primaryBackground,
@@ -22,6 +23,7 @@ class OnboardingScreen extends StatelessWidget {
         child: Column(
           children: [
             Align(alignment: Alignment.centerRight, child: SkipButton()),
+
             Expanded(
               child: PageView.builder(
                 itemBuilder: (context, index) =>
@@ -38,7 +40,8 @@ class OnboardingScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: SafeArea(
-        child: Padding(
+        child: Container(
+          height: 100,
           padding: const EdgeInsets.all(Sizes.defaultSpace),
           child: NextPreviousButtons(),
         ),

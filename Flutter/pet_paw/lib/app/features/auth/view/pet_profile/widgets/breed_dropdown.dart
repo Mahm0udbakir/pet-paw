@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../common/custom_label.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 
 class BreedDropdown extends StatefulWidget {
   final List<String> options;
@@ -29,13 +30,15 @@ class _BreedDropdownState extends State<BreedDropdown> {
   @override
   Widget build(BuildContext context) {
     final displayedText = showCustomInput
-        ? (customBreed?.isNotEmpty == true ? customBreed! : 'Enter breed')
-        : (widget.selectedBreed ?? 'Choose your pet breed');
+        ? (customBreed?.isNotEmpty == true
+              ? customBreed!
+              : AppStrings.enterBreedHint)
+        : (widget.selectedBreed ?? AppStrings.choosePetBreed);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        customLabel('Pet Breed', context),
+        customLabel(AppStrings.petBreedLabel, context),
         SizedBox(height: 5.h),
 
         InkWell(
@@ -80,7 +83,7 @@ class _BreedDropdownState extends State<BreedDropdown> {
               widget.onChanged(value.isNotEmpty ? value : null);
             },
             decoration: InputDecoration(
-              hintText: 'Enter breed',
+              hintText: AppStrings.enterBreedHint,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -96,28 +99,29 @@ class _BreedDropdownState extends State<BreedDropdown> {
   }
 
   void _showDropDown(BuildContext context) {
-  final options = widget.options.map((e) => SelectedListItem(data: e)).toList();
+    final options = widget.options
+        .map((e) => SelectedListItem(data: e))
+        .toList();
 
-  DropDownState(
-    dropDown: DropDown(
-      data: options,
-      bottomSheetTitle: Text(
-        'Choose your pet breed',
-        style: Theme.of(context).textTheme.titleMedium,
+    DropDownState(
+      dropDown: DropDown(
+        data: options,
+        bottomSheetTitle: Text(
+          AppStrings.choosePetBreed,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        onSelected: (selectedItems) {
+          if (selectedItems.isNotEmpty) {
+            final selected = selectedItems.first.data;
+
+            setState(() {
+              showCustomInput = false;
+              customBreed = null;
+              widget.onChanged(selected);
+            });
+          }
+        },
       ),
-      onSelected: (selectedItems) {
-        if (selectedItems.isNotEmpty) {
-          final selected = selectedItems.first.data;
-
-          setState(() {
-            showCustomInput = false;
-            customBreed = null;
-            widget.onChanged(selected);
-          });
-        }
-      },
-    ),
-  ).showModal(context);
-}
-
+    ).showModal(context);
+  }
 }

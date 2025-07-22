@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../common/custom_drop_down_text_field.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 import 'breed_dropdown.dart';
@@ -20,8 +21,8 @@ class PetTypeAndBreed extends StatelessWidget {
           children: [
             // Pet Type Dropdown
             CustomDropDownTextField(
-              hintText: 'Choose your pet',
-              title: 'Pet Type',
+              hintText: AppStrings.petTypeHint,
+              title: AppStrings.petTypeTitle,
               items: cubit.petTypeOptions,
               value: cubit.selectedType,
               // controller: cubit.petTypeDropdownController,

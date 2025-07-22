@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/utils/constants/app_strings.dart';
 import 'widgets/email_forgot_password_body.dart';
 import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
@@ -15,8 +16,8 @@ class EmailForgotPasswordScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.primaryBackground,
         appBar: AppBar(
-          title: const Text(
-            "Forgot password?",
+          title: Text(
+            AppStrings.forgotPasswordTitle,
             style: TextStyle(
               color: AppColors.buttonMainColor,
               fontWeight: FontWeight.w600,
@@ -27,7 +28,10 @@ class EmailForgotPasswordScreen extends StatelessWidget {
           leading: IconButton(
             icon: const Padding(
               padding: EdgeInsets.symmetric(horizontal: Sizes.md),
-              child: Icon(Icons.arrow_back_ios, color: AppColors.buttonMainColor),
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: AppColors.buttonMainColor,
+              ),
             ),
             onPressed: () => Navigator.pop(context),
           ),

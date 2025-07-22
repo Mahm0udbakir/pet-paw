@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 import 'show_pick_image_bottom_sheet.dart';
@@ -32,7 +33,7 @@ class UploadPetImage extends StatelessWidget {
             Image.asset(ImagesStrings.uploadPetImage),
             SizedBox(height: Sizes.spaceBetweenItems.h),
             Text(
-              'Upload your pet image',
+              AppStrings.uploadYourPetImage,
               style: TextStyle(
                 color: AppColors.buttonMainColor,
                 fontWeight: FontWeight.w600,

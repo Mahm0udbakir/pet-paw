@@ -18,8 +18,8 @@ class PageIndicator extends StatelessWidget {
           controller: cubit.pageController,
           count: cubit.onboardingList.length,
           effect: ExpandingDotsEffect(
-            dotHeight: 16.h,
-            dotWidth: 16.w,
+            dotHeight: 11.h,
+            dotWidth: 11.w,
             activeDotColor: AppColors.buttonMainColor,
             dotColor: Color(0xffD8CEB0),
           ),

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/images_strings.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 
@@ -20,7 +21,7 @@ class MedicalTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        customLabel('Medical conditions/Special needs (optional)', context),
+        customLabel(AppStrings.medicalConditionLabel, context),
         SizedBox(height: 5.h),
         TextFormField(
           controller: cubit.medicalController,
@@ -32,7 +33,7 @@ class MedicalTextField extends StatelessWidget {
           maxLines: 10,
           textInputAction: TextInputAction.done,
           decoration: InputDecoration(
-            hintText: "Enter any medical conditions or special needs",
+            hintText: AppStrings.medicalConditionHint,
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: AppColors.iconColor,
               fontWeight: FontWeight.w400,

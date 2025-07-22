@@ -17,13 +17,10 @@ class OnboardingPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(
-          flex: 5,
-          child: SvgPicture.asset(
-            onboardingModel.image,
-            width: 0.8.sw,
-            fit: BoxFit.contain,
-          ),
+        SvgPicture.asset(
+          onboardingModel.image,
+          width: 0.8.sw,
+          fit: BoxFit.contain,
         ),
 
         SizedBox(height: Sizes.defaultSpace.h),
@@ -57,7 +54,6 @@ class OnboardingPage extends StatelessWidget {
           ),
         ),
 
-        const Spacer(),
       ],
     );
   }

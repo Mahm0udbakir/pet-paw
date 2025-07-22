@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/features/auth/view/pet_profile/widgets/pet_profile_body.dart';
 
 import '../../../../core/utils/constants/app_colors.dart';
+import '../../../../core/utils/constants/app_strings.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 
@@ -19,7 +20,9 @@ class CreatePetProfileScreen extends StatelessWidget {
       backgroundColor: AppColors.primaryBackground,
       appBar: AppBar(
         title: Text(
-          isFirstTime ? 'Create Pet Profile' : 'Add another pet',
+          isFirstTime
+              ? AppStrings.createPetProfileTitle
+              : AppStrings.addAnotherPetTitle,
           style: TextStyle(
             color: AppColors.buttonMainColor,
             fontWeight: FontWeight.w600,

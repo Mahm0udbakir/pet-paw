@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../common/custom_dark_button.dart';
 import '../../../../../common/custom_light_button.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/reset_password_cubit.dart';
 import '../../../controller/reset_password_state.dart';
@@ -24,10 +25,10 @@ class PhoneForgotPasswordBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: Sizes.xxl),
               child: Text(
-                "Enter your mobile number and we will send you an OTP to reset password.",
+                AppStrings.otpVerificationTitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.smallTextColor,
@@ -40,9 +41,9 @@ class PhoneForgotPasswordBody extends StatelessWidget {
             BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
               listener: (context, state) {
                 if (state is ForgotPasswordSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.message)),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.message)));
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -52,11 +53,10 @@ class PhoneForgotPasswordBody extends StatelessWidget {
                       ),
                     ),
                   );
-
                 } else if (state is ForgotPasswordError) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.message)),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.message)));
                 }
               },
               builder: (context, state) {
@@ -69,17 +69,24 @@ class PhoneForgotPasswordBody extends StatelessWidget {
                     children: [
                       const PhoneForgotPasswordForm(),
                       const Spacer(),
-                      CustomDarkButton(
-                        text: 'Continue',
-                        onPressed: isLoading ? null : cubit.forgetPassword,
+                      SizedBox(
+                        width: double.infinity,
+                        child: CustomDarkButton(
+                          text: AppStrings.continueButton,
+                          onPressed: isLoading ? null : cubit.forgetPassword,
+                        ),
                       ),
                       const SizedBox(height: Sizes.spaceBetweenSections),
-                      CustomLightButton(
-                        text: 'Reset using email',
-                        onPressed: () => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EmailForgotPasswordScreen(),
+                      SizedBox(
+                        width: double.infinity,
+                        child: CustomLightButton(
+                          text: AppStrings.resetUsingEmail,
+                          onPressed: () => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const EmailForgotPasswordScreen(),
+                            ),
                           ),
                         ),
                       ),

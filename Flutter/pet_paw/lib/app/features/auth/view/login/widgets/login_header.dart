@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/images_strings.dart';
 
 class LoginHeader extends StatelessWidget {
@@ -15,7 +16,7 @@ class LoginHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'Welcome Back to',
+          AppStrings.loginWelcomeBack,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.greyColor,
@@ -25,7 +26,7 @@ class LoginHeader extends StatelessWidget {
         SvgPicture.asset(ImagesStrings.appLogo, height: 160.h),
         SizedBox(height: Sizes.spaceBetweenItems.h),
         Text(
-          'sign in to your account',
+          AppStrings.loginTitle,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.buttonMainColor,

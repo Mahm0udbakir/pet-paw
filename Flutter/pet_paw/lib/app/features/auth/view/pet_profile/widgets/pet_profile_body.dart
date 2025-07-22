@@ -6,6 +6,7 @@ import 'package:petpaw/app/features/auth/controller/create_pet_profile/create_pe
 import 'package:petpaw/app/features/auth/view/pet_profile/widgets/pet_profile_form.dart';
 import 'package:petpaw/app/features/auth/view/pet_profile/widgets/shimmer_image_loader.dart';
 
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/helpers/loaders.dart';
 import 'image_uploaded.dart';
 import 'upload_pet_image.dart';
@@ -20,7 +21,7 @@ class PetProfileBody extends StatelessWidget {
         if (state is ImagePickFailed) {
           Loaders.errorSnackBar(
             context: context,
-            title: 'Image Selection Failed',
+            title: AppStrings.imageSelectionFailedTitle,
             message: state.error,
           );
         }
@@ -28,7 +29,7 @@ class PetProfileBody extends StatelessWidget {
         if (state is ImageUploadFailed) {
           Loaders.errorSnackBar(
             context: context,
-            title: 'Image Upload Failed',
+            title: AppStrings.imageUploadFailedTitle,
             message: state.error,
           );
         }
@@ -36,7 +37,7 @@ class PetProfileBody extends StatelessWidget {
         if (state is ProfileCreationFailed) {
           Loaders.errorSnackBar(
             context: context,
-            title: 'Profile Creation Failed',
+            title: AppStrings.profileCreationFailedTitle,
             message: state.error,
           );
         }
@@ -44,7 +45,7 @@ class PetProfileBody extends StatelessWidget {
         if (state is ValidationFailed) {
           Loaders.warningSnackBar(
             context: context,
-            title: 'Validation Error',
+            title: AppStrings.validationErrorTitle,
             message: state.message,
           );
         }
@@ -52,16 +53,16 @@ class PetProfileBody extends StatelessWidget {
         if (state is ImageUploadedSuccessfully) {
           Loaders.successSnackBar(
             context: context,
-            title: 'Image Uploaded',
-            message: 'Your pet image was uploaded successfully.',
+            title: AppStrings.imageUploadedTitle,
+            message: AppStrings.imageUploadedSuccessMsg,
           );
         }
 
         if (state is ProfileCreatedSuccessfully) {
           Loaders.successSnackBar(
             context: context,
-            title: 'Profile Created',
-            message: 'Your pet profile has been created.',
+            title: AppStrings.profileCreatedTitle,
+            message: AppStrings.profileCreatedMsg,
           );
 
           // Navigator.pushReplacement(...);

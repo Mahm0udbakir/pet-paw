@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (_) => OnBoardingCubit(),
+            create: (_) => OnBoardingCubit()..initO(),
             child: const OnboardingScreen(),
           ),
         ),

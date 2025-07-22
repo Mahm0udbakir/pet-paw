@@ -7,6 +7,7 @@ import 'package:petpaw/app/features/auth/view/login/login_screen.dart';
 
 import '../../../../../common/custom_light_button.dart';
 import '../../../../../common/done_screen.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 import '../../login/widgets/register_button.dart';
@@ -22,24 +23,27 @@ class BottomButtons extends StatelessWidget {
 
     return Column(
       children: [
-        CustomLightButton(
-          text: 'add another pet',
-          onPressed: () async {
-            final created = await controller.createPetProfile(context);
-            if (!created) return;
+        SizedBox(
+          width: double.infinity,
+          child: CustomLightButton(
+            text: AppStrings.addAnotherPet,
+            onPressed: () async {
+              final created = await controller.createPetProfile(context);
+              if (!created) return;
 
-            controller.resetForm();
+              controller.resetForm();
 
-            if (context.mounted) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      const CreatePetProfileScreen(isFirstTime: false),
-                ),
-              );
-            }
-          },
+              if (context.mounted) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const CreatePetProfileScreen(isFirstTime: false),
+                  ),
+                );
+              }
+            },
+          ),
         ),
         SizedBox(height: Sizes.spaceBetweenItems.h),
         RegisterButton(
@@ -53,10 +57,10 @@ class BottomButtons extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => DoneScreen(
-                    message: "Welcome to PetPaw",
+                    message: AppStrings.welcomeMessage,
                     imageAsset: ImagesStrings.successCharacter,
-                    description: "You are one of our family!",
-                    buttonText: "Login",
+                    description: AppStrings.welcomeDescription,
+                    buttonText: AppStrings.loginButtonText,
                     nextScreen: BlocProvider(
                       create: (context) => LoginCubit(),
                       child: LoginScreen(),
@@ -67,8 +71,8 @@ class BottomButtons extends StatelessWidget {
               );
             }
           },
-          buttonText: 'Create Profile',
-          shimmerButtonText: 'Creating Profile...',
+          buttonText: AppStrings.createProfile,
+          shimmerButtonText: AppStrings.creatingProfileShimmer,
         ),
       ],
     );

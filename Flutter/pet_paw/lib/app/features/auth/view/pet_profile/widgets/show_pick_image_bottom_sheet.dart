@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 
 void showPickImageBottomSheet(
@@ -30,7 +31,7 @@ void showPickImageBottomSheet(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Select Image',
+                  AppStrings.selectImageTitle,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -48,8 +49,8 @@ void showPickImageBottomSheet(
               context,
               icon: Icons.camera_alt_rounded,
               color: Colors.blue,
-              title: 'Take Photo',
-              subtitle: 'Use your camera to take a new photo',
+              title: AppStrings.takePhotoTitle,
+              subtitle: AppStrings.takePhotoSubtitle,
               onTap: () {
                 cubit.pickImage(ImageSource.camera);
                 Navigator.pop(context);
@@ -66,8 +67,8 @@ void showPickImageBottomSheet(
               context,
               icon: Icons.photo_library_rounded,
               color: Colors.purple,
-              title: 'Choose from Gallery',
-              subtitle: 'Select an existing photo from your gallery',
+              title: AppStrings.chooseFromGalleryTitle,
+              subtitle: AppStrings.chooseFromGallerySubtitle,
               onTap: () {
                 cubit.pickImage(ImageSource.gallery);
                 Navigator.pop(context);

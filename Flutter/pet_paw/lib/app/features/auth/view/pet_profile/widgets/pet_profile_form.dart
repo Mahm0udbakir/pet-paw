@@ -9,6 +9,7 @@ import 'package:petpaw/app/features/auth/view/pet_profile/widgets/medical_text_f
 import 'package:petpaw/app/features/auth/view/pet_profile/widgets/weight_text_field.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 import 'birthday_and_color.dart';
@@ -28,8 +29,8 @@ class PetProfileForm extends StatelessWidget {
           return Column(
             children: [
               CustomTextField(
-                title: 'Pet\'s name',
-                hintText: 'Enter your pet\'s name',
+                title: AppStrings.petNameLabel,
+                hintText: AppStrings.petNameHint,
                 icon: Image.asset(ImagesStrings.petIcon),
                 keyboardType: TextInputType.text,
                 controller: controller.nameController,
@@ -43,7 +44,7 @@ class PetProfileForm extends StatelessWidget {
               WeightTextField(),
               SizedBox(height: Sizes.spaceBetweenInputFields.h),
               SelectableOptionsRow(
-                options: ['Intact', 'Neutered'],
+                options: [AppStrings.intactOption, AppStrings.neuteredOption],
                 selectedValue: controller.neuterStatus,
                 onSelect: (value) =>
                     controller.selectOption(group: 'neuter', value: value),
@@ -52,10 +53,10 @@ class PetProfileForm extends StatelessWidget {
               PetTypeAndBreed(),
               SizedBox(height: Sizes.spaceBetweenInputFields.h),
               SelectableOptionsRow(
-                options: ['Male', 'Female'],
+                options: [AppStrings.maleOption, AppStrings.femaleOption],
                 selectedValue: controller.gender,
                 haveLabel: true,
-                label: 'Gender',
+                label: AppStrings.genderLabel,
                 onSelect: (value) =>
                     controller.selectOption(group: 'gender', value: value),
               ),
@@ -65,7 +66,7 @@ class PetProfileForm extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Does your pet have any medical conditions?",
+                    AppStrings.medicalConditionQuestion,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Checkbox(

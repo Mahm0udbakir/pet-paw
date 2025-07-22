@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../common/custom_label.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../auth/view/signup/widgets/password_strength_label.dart';
 import '../../../controller/reset_password_cubit.dart';
 
@@ -26,7 +27,7 @@ class CustomNewPassword extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        customLabel('Password', context),
+        customLabel(AppStrings.passwordTitle, context),
         SizedBox(height: 5.h),
         Stack(
           children: [
@@ -74,7 +75,7 @@ class CustomNewPassword extends StatelessWidget {
                     ),
                   ],
                 ),
-                hintText: "Enter your password",
+                hintText: AppStrings.passwordHint,
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.iconColor,
                   fontWeight: FontWeight.w400,

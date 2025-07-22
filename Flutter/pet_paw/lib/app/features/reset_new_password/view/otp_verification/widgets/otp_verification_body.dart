@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../common/custom_dark_button.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/reset_password_cubit.dart';
 import '../../../controller/reset_password_state.dart';
@@ -15,7 +16,6 @@ class OtpVerificationBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: Sizes.defaultSpace,
@@ -25,10 +25,10 @@ class OtpVerificationBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: Sizes.xxl),
               child: Text(
-                "Enter the code we sent to your mobile number/email address.",
+                AppStrings.otpHintMessage,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.smallTextColor,
@@ -41,9 +41,9 @@ class OtpVerificationBody extends StatelessWidget {
             BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
               listener: (context, state) {
                 if (state is OtpVerificationSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.message)),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.message)));
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -54,9 +54,9 @@ class OtpVerificationBody extends StatelessWidget {
                     ),
                   );
                 } else if (state is OtpVerificationError) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.message)),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.message)));
                 }
               },
               builder: (context, state) {
@@ -77,7 +77,9 @@ class OtpVerificationBody extends StatelessWidget {
                         onFinished: () {
                           // Show a message or disable inputs
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Time expired. Please resend OTP.")),
+                            SnackBar(
+                              content: Text(AppStrings.timeExpiredMessage),
+                            ),
                           );
                         },
                       ),
@@ -87,20 +89,23 @@ class OtpVerificationBody extends StatelessWidget {
                       const NoReceiveOtp(),
                       const Spacer(),
                       CustomDarkButton(
-                        text: 'Submit',
+                        text: AppStrings.otpSubmitButton,
                         onPressed: isLoading
                             ? null
                             : () {
-                          if (cubit.otpController.text.length < 6) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Please enter all 6 digits')),
-                            );
-                          } else {
-                            cubit.verifyOtp();
-                          }
-                        },
+                                if (cubit.otpController.text.length < 6) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        AppStrings.incompleteOtpMessage,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  cubit.verifyOtp();
+                                }
+                              },
                       ),
-
                     ],
                   ),
                 );

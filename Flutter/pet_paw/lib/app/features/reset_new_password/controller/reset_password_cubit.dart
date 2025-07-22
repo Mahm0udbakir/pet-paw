@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import '../../../core/config/api_config.dart';
+import '../../../core/utils/constants/app_strings.dart';
 import '../../../core/utils/validators/password_validator.dart';
 import 'reset_password_state.dart';
 
@@ -23,12 +24,15 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   final phoneFocus = FocusNode();
   final confirmNewPasswordFocus = FocusNode();
 
-  bool get hasMinLength => PasswordValidator.hasMinLength(newPasswordController.text);
+  bool get hasMinLength =>
+      PasswordValidator.hasMinLength(newPasswordController.text);
   bool get hasNumber => PasswordValidator.hasNumber(newPasswordController.text);
   bool get hasUpper => PasswordValidator.hasUpper(newPasswordController.text);
   bool get hasLower => PasswordValidator.hasLower(newPasswordController.text);
-  bool get hasSpecial => PasswordValidator.hasSpecial(newPasswordController.text);
-  bool get isPasswordValid => PasswordValidator.isValid(newPasswordController.text);
+  bool get hasSpecial =>
+      PasswordValidator.hasSpecial(newPasswordController.text);
+  bool get isPasswordValid =>
+      PasswordValidator.isValid(newPasswordController.text);
   int get passwordStrengthCount =>
       PasswordValidator.countValidations(newPasswordController.text);
 
@@ -72,7 +76,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   /// 1) Forget Password: Send email to get OTP
   Future<void> forgetPassword() async {
     if (emailController.text.trim().isEmpty) {
-      emit(ForgotPasswordError('Email is required.'));
+      emit(ForgotPasswordError(AppStrings.emailRequired));
       return;
     }
 
@@ -92,22 +96,24 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
       );
 
       if (response.body.isEmpty) {
-        emit(ForgotPasswordError('No response from server.'));
+        emit(ForgotPasswordError(AppStrings.loginNoResponseMessage));
         return;
       }
 
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200 && data['success'] == true) {
-        final message = data['message'] ?? 'OTP sent to your email.';
+        final message = data['message'] ?? AppStrings.otpSent;
         resetToken = data['data']?.toString();
         emit(ForgotPasswordSuccess(message));
       } else {
-        final error = data['message'] ?? 'Failed to send OTP.';
+        final error = data['message'] ?? AppStrings.otpSendFailed;
         emit(ForgotPasswordError(error));
       }
     } catch (e) {
-      emit(ForgotPasswordError('Error: ${e.toString()}'));
+      emit(
+        ForgotPasswordError('${AppStrings.networkErrorPrefix}${e.toString()}'),
+      );
     }
   }
 
@@ -117,13 +123,13 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     final otp = otpController.text.trim();
 
     if (email.isEmpty && otp.isEmpty) {
-      emit(OtpVerificationError('Email and OTP are required.'));
+      emit(OtpVerificationError(AppStrings.emailAndOtpRequired));
       return;
     } else if (email.isEmpty) {
-      emit(OtpVerificationError('Email is required.'));
+      emit(OtpVerificationError(AppStrings.emailRequired));
       return;
     } else if (otp.isEmpty) {
-      emit(OtpVerificationError('OTP is required.'));
+      emit(OtpVerificationError(AppStrings.otpRequired));
       return;
     }
 
@@ -147,14 +153,14 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
         emit(OtpVerificationError('No response from server.'));
         return;
       }
-print(response.body);
+      print(response.body);
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200 && data['success'] == true) {
-        final message = data['message'] ?? 'OTP verified successfully.';
+        final message = data['message'] ?? AppStrings.otpVerified;
         emit(OtpVerificationSuccess(message));
       } else {
-        final error = data['message'] ?? 'OTP verification failed.';
+        final error = data['message'] ?? AppStrings.otpFailed;
         emit(OtpVerificationError(error));
       }
     } catch (e) {
@@ -173,12 +179,12 @@ print(response.body);
         token.isEmpty ||
         newPassword.isEmpty ||
         confirmPassword.isEmpty) {
-      emit(ResetPasswordError('All fields are required.'));
+      emit(ResetPasswordError(AppStrings.allFieldsRequired));
       return;
     }
 
     if (newPassword != confirmPassword) {
-      emit(ResetPasswordError('Passwords do not match.'));
+      emit(ResetPasswordError(AppStrings.passwordMismatch));
       return;
     }
 
@@ -208,14 +214,16 @@ print(response.body);
       final data = response.body.isNotEmpty ? jsonDecode(response.body) : {};
 
       if (response.statusCode == 200 && data['success'] == true) {
-        final message = data['message'] ?? 'Password reset successfully.';
+        final message = data['message'] ?? AppStrings.passwordResetSuccess;
         emit(ResetPasswordSuccess(message));
       } else {
-        final error = data['message'] ?? 'Password reset failed.';
+        final error = data['message'] ?? AppStrings.passwordResetFailed;
         emit(ResetPasswordError(error));
       }
     } catch (e) {
-      emit(ResetPasswordError('Error: ${e.toString()}'));
+      emit(
+        ResetPasswordError('${AppStrings.networkErrorPrefix}${e.toString()}'),
+      );
     }
   }
 }

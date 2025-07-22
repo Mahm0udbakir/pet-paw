@@ -9,6 +9,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 import 'show_pick_image_bottom_sheet.dart';
 
@@ -47,7 +48,7 @@ class ImageUploaded extends StatelessWidget {
               child: Row(
                 children: [
                   Tooltip(
-                    message: 'Edit image',
+                    message: AppStrings.editImageTooltip,
                     child: Icon(
                       Iconsax.edit,
                       color: AppColors.success,
@@ -56,7 +57,7 @@ class ImageUploaded extends StatelessWidget {
                   ),
                   SizedBox(width: 4.w),
                   Text(
-                    'Change the pet image',
+                    AppStrings.changePetImageText,
                     style: TextStyle(
                       color: AppColors.success,
                       fontSize: 10.sp,
@@ -74,7 +75,7 @@ class ImageUploaded extends StatelessWidget {
               child: Row(
                 children: [
                   Tooltip(
-                    message: 'Delete image',
+                    message: AppStrings.deleteImageTooltip,
                     child: Icon(
                       Icons.delete_outline_outlined,
                       color: AppColors.error,
@@ -83,7 +84,7 @@ class ImageUploaded extends StatelessWidget {
                   ),
                   SizedBox(width: 4.w),
                   Text(
-                    'Delete',
+                    AppStrings.deleteText,
                     style: TextStyle(
                       color: AppColors.error,
                       fontSize: 10.sp,

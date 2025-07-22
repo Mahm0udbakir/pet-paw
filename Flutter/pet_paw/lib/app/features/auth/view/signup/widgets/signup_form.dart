@@ -10,6 +10,7 @@ import 'package:petpaw/app/features/auth/controller/signup/signup_state.dart';
 import 'package:petpaw/app/features/auth/view/pet_profile/create_pet_profile_screen.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../controller/signup/signup_cubit.dart';
 import 'custom_password.dart';
 import 'terms_and_conditions.dart';
@@ -22,8 +23,8 @@ class SignupForm extends StatelessWidget {
     final signupCubit = context.read<SignupCubit>();
     final customTextFields = [
       CustomTextField(
-        title: 'Name',
-        hintText: 'Enter your name',
+        title: AppStrings.nameFieldTitle,
+        hintText: AppStrings.nameFieldHint,
         icon: Icon(Icons.person_outline),
         keyboardType: TextInputType.text,
         controller: signupCubit.nameController,
@@ -33,8 +34,8 @@ class SignupForm extends StatelessWidget {
       ),
 
       CustomTextField(
-        title: 'Email',
-        hintText: 'Enter your email',
+        title: AppStrings.emailFieldTitle,
+        hintText: AppStrings.emailFieldHint,
         icon: Icon(Icons.email_outlined),
         keyboardType: TextInputType.emailAddress,
         controller: signupCubit.emailController,
@@ -44,8 +45,8 @@ class SignupForm extends StatelessWidget {
       ),
 
       CustomTextField(
-        title: 'Phone Number',
-        hintText: 'Enter your phone number',
+        title: AppStrings.phoneFieldTitle,
+        hintText: AppStrings.phoneFieldHint,
         icon: Icon(Icons.phone_outlined),
         keyboardType: TextInputType.phone,
         controller: signupCubit.phoneController,
@@ -62,17 +63,17 @@ class SignupForm extends StatelessWidget {
       ),
 
       CustomTextField(
-        title: 'Confirm your Password',
-        hintText: 'Retype your password',
+        title: AppStrings.confirmPasswordTitle,
+        hintText: AppStrings.confirmPasswordHint,
         icon: Icon(Icons.lock_outline),
         keyboardType: TextInputType.text,
         controller: signupCubit.confirmPasswordController,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please confirm your password';
+            return AppStrings.confirmPasswordEmptyError;
           }
           if (value != signupCubit.passwordController.text.trim()) {
-            return 'Passwords do not match';
+            return AppStrings.passwordsNotMatch;
           }
           return null;
         },
@@ -161,7 +162,7 @@ class SignupForm extends StatelessWidget {
                   }
                 },
 
-                child: Text('Next'),
+                child: Text(AppStrings.next),
               ),
             ),
           ],

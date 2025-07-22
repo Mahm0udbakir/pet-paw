@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:petpaw/app/features/onboarding_and_getstarted/view/get_started/get_started_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/utils/constants/app_strings.dart';
 import '../../../core/utils/constants/images_strings.dart';
 import '../model/onboarding_model.dart';
 
@@ -11,60 +14,84 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   OnBoardingCubit() : super(OnBoardingPageChanged(0));
 
   // Variables
-  final pageController = PageController();
+  int selectedIndex = 0;
+  final pageController = PageController(initialPage: 0);
 
   List<OnboardingModel> onboardingList = [
     OnboardingModel(
       image: ImagesStrings.onBoarding1,
-      title: 'Expert Care for Your Pet',
-      description:
-          'Keep your furry friends healthy with access to trusted veterinarians anytime, anywhere.',
+      title: AppStrings.onboardingTitle1,
+      description: AppStrings.onboardingSubTitle1,
     ),
     OnboardingModel(
       image: ImagesStrings.onBoarding2,
-      title: 'All Essentials in One Place',
-      description:
-          'From toys to treats, find everything your pet needs delivered right to your door.',
+      title: AppStrings.onboardingTitle2,
+      description: AppStrings.onboardingSubTitle2,
     ),
     OnboardingModel(
       image: ImagesStrings.onBoarding3,
-      title: 'Welcome to PetPaw!',
-      description:
-          'Keep your furry friends healthy with access to trusted veterinarians anytime, anywhere.',
+      title: AppStrings.onboardingTitle3,
+      description: AppStrings.onboardingSubTitle1,
     ),
   ];
 
   // Functions
   void updatePageIndicator(int index) {
+    selectedIndex = index;
     emit(OnBoardingPageChanged(index));
   }
 
   void nextPage(BuildContext context) {
-    final currentIndex = _getCurrentIndex();
-    if (currentIndex < onboardingList.length - 1) {
+    print('Next page clicked, current index: $selectedIndex');
+    if (selectedIndex < onboardingList.length - 1) {
       pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
-      emit(OnBoardingPageChanged(currentIndex + 1));
     } else {
-      Navigator.pushAndRemoveUntil(
-        context,
-        CupertinoPageRoute(builder: (context) => GetStartedScreen()),
-        (route) => false,
-      );
+      removeOnBoarding(context);
     }
+    // final currentIndex = _getCurrentIndex();
+    // if (currentIndex < onboardingList.length - 1) {
+    //   pageController.nextPage(
+    //     duration: const Duration(milliseconds: 300),
+    //     curve: Curves.easeInOut,
+    //   );
+    //   emit(OnBoardingPageChanged(currentIndex + 1));
+    // } else {
+    //   removeOnBoarding(context);
+    // }
   }
 
-  void skipPage() {
-    emit(OnBoardingPageChanged(onboardingList.length - 1));
+  void initO(){
+    pageController.addListener((){
+      int newPage = pageController.page!.round();
+      if(selectedIndex != newPage){
+        selectedIndex = newPage;
+        emit(ChangeOnBoardingPageState());
+      }
+    });
   }
 
-  int _getCurrentIndex() {
-    final stateNow = state;
-    if (stateNow is OnBoardingPageChanged) {
-      return stateNow.currentIndex;
-    }
-    return 0;
+  void removeOnBoarding(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboarding_seen', true);
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const GetStartedScreen()),
+    );
+  }
+
+  // int _getCurrentIndex() {
+  //   final stateNow = state;
+  //   if (stateNow is OnBoardingPageChanged) {
+  //     return stateNow.currentIndex;
+  //   }
+  //   return 0;
+  // }
+
+  @override
+  Future<void> close() {
+    pageController.dispose();
+    return super.close();
   }
 }

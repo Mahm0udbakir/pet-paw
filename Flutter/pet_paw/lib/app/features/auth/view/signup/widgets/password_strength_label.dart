@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/utils/constants/app_strings.dart';
+
 class PasswordStrengthLabel extends StatelessWidget {
   final int passedCount;
 
@@ -12,13 +14,13 @@ class PasswordStrengthLabel extends StatelessWidget {
     Color strengthColor;
 
     if (passedCount <= 2) {
-      strengthText = 'Weak Password!';
+      strengthText = AppStrings.weakPassword;
       strengthColor = Colors.red;
     } else if (passedCount <= 4) {
-      strengthText = 'Normal Password!';
+      strengthText = AppStrings.normalPassword;
       strengthColor = Colors.orange;
     } else {
-      strengthText = 'Strong Password!';
+      strengthText = AppStrings.strongPassword;
       strengthColor = Colors.green;
     }
 

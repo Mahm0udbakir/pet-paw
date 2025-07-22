@@ -5,6 +5,7 @@ import 'package:petpaw/app/common/custom_text_field.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/core/utils/validators/validation.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../reset_new_password/view/email_forgot_password/email_forgot_password_screen.dart';
 import '../../../controller/login/login_cubit.dart';
 import '../../../controller/login/login_state.dart';
@@ -20,8 +21,8 @@ class LoginForm extends StatelessWidget {
 
     final customTextFields = [
       CustomTextField(
-        title: 'Email',
-        hintText: 'Enter your email',
+        title: AppStrings.emailTitle,
+        hintText: AppStrings.emailHint,
         icon: Icon(Icons.email_outlined),
         keyboardType: TextInputType.emailAddress,
         controller: loginCubit.emailController,
@@ -30,8 +31,8 @@ class LoginForm extends StatelessWidget {
         nextFocusNode: loginCubit.passwordFocus,
       ),
       CustomTextField(
-        title: 'Password',
-        hintText: 'Enter your password',
+        title: AppStrings.passwordTitle,
+        hintText: AppStrings.passwordHint,
         icon: Icon(Icons.lock_outline),
         keyboardType: TextInputType.text,
         controller: loginCubit.passwordController,
@@ -67,7 +68,7 @@ class LoginForm extends StatelessWidget {
                 );
               },
               child: Text(
-                'Forgot Password?',
+                AppStrings.forgotPassword,
                 style: TextStyle(
                   color: AppColors.buttonMainColor,
                   fontSize: 13.sp,
@@ -80,8 +81,8 @@ class LoginForm extends StatelessWidget {
           SizedBox(height: Sizes.spaceBetweenItems / 2.h),
           RegisterButton(
             isLoading: isLoading,
-            buttonText: 'Sign in',
-            shimmerButtonText: 'Signing in...',
+            buttonText: AppStrings.loginButton,
+            shimmerButtonText: AppStrings.loginLoadingButton,
             onPressed: () => loginCubit.login(),
           ),
         ],

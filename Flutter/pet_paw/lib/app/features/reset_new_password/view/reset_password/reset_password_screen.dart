@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petpaw/app/features/reset_new_password/view/reset_password/widgets/reset_password_body.dart';
 import '../../../../core/utils/constants/app_colors.dart';
+import '../../../../core/utils/constants/app_strings.dart';
 import '../../../../core/utils/constants/sizes.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
@@ -12,8 +12,8 @@ class ResetPasswordScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.primaryBackground,
       appBar: AppBar(
-        title: const Text(
-          "Reset your password",
+        title: Text(
+          AppStrings.resetPassword,
           style: TextStyle(
             color: AppColors.buttonMainColor,
             fontWeight: FontWeight.w600,

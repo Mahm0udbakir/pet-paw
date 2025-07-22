@@ -5,6 +5,7 @@ import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 
 class WeightTextField extends StatelessWidget {
@@ -16,7 +17,7 @@ class WeightTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        customLabel('Weight (Kg.)', context),
+        customLabel(AppStrings.weightLabel, context),
         SizedBox(height: 5.h),
         BlocBuilder<CreatePetProfileCubit, CreatePetProfileState>(
           buildWhen: (previous, current) => current is WeightUpdated,
@@ -28,7 +29,7 @@ class WeightTextField extends StatelessWidget {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                hintText: "Enter your pet's weight (kg.)",
+                hintText: AppStrings.enterPetWeightHint,
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.iconColor,
                   fontWeight: FontWeight.w400,

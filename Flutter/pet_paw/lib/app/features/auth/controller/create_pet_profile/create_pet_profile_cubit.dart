@@ -13,6 +13,7 @@ import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 
 import '../../../../core/config/api_config.dart';
 import '../../../../core/config/token_storage.dart';
+import '../../../../core/utils/constants/app_strings.dart';
 import '../../../../core/utils/helpers/loaders.dart';
 import '../../model/pet_profile_model.dart';
 
@@ -58,9 +59,19 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   double maxWeight = 200.0;
 
   // Lists
-  List<String> colorOptions = ['Black', 'White', 'Brown', 'Golden', 'Gray'];
+  List<String> colorOptions = [
+    AppStrings.black,
+    AppStrings.brown,
+    AppStrings.white,
+    AppStrings.gray,
+    AppStrings.golden,
+  ];
   List<String> petTypeOptions = ['Dog', 'Cat'];
   List<String> breedOptions = [];
+  Map<String, String> petTypeDisplayMap = {
+    'Dog': AppStrings.dog,
+    'Cat': AppStrings.cat,
+  };
 
   //----------- [Functions] Functions -----------
   void decrementWeight() {
@@ -91,7 +102,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     if (source == ImageSource.camera) {
       final status = await Permission.camera.request();
       if (!status.isGranted) {
-        emit(ImagePickFailed('Camera permission is required.'));
+        emit(ImagePickFailed(AppStrings.cameraPermission));
         return;
       }
     }
@@ -127,6 +138,16 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     }
   }
 
+  String _convertToEnglishNumbers(String input) {
+    final arabicNums = '٠١٢٣٤٥٦٧٨٩';
+    final englishNums = '0123456789';
+
+    for (int i = 0; i < arabicNums.length; i++) {
+      input = input.replaceAll(arabicNums[i], englishNums[i]);
+    }
+    return input;
+  }
+
   void autoFormatBirthdayDate() {
     final text = birthdayController.text;
     if (text.length > previousBirthdayText.length) {
@@ -149,13 +170,13 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
 
   void chooseType(String? type) {
     selectedType = type;
-    petTypeController.text = type ?? '';
+    petTypeController.text = petTypeDisplayMap[type] ?? '';
 
     breedOptions = type == 'Dog'
         ? dogBreeds
         : type == 'Cat'
         ? catBreeds
-        : [];
+        : ['Select Type First'];
 
     selectedBreed = null;
     breedController.clear();
@@ -184,11 +205,11 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
 
   bool validateSelections() {
     if (gender == null) {
-      emit(ValidationFailed("Please select gender."));
+      emit(ValidationFailed(AppStrings.selectGender));
       return false;
     }
     if (neuterStatus == null) {
-      emit(ValidationFailed("Please select neuter status."));
+      emit(ValidationFailed(AppStrings.selectNeuterStatus));
       return false;
     }
     return true;
@@ -205,12 +226,12 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       weight = maxWeight;
       weightController.text = maxWeight.toString();
       emit(WeightUpdated());
-      _showError(context, 'the weight cannot be more than $maxWeight');
+      _showError(context, '${AppStrings.weightTooHigh} $maxWeight');
     } else if (parsed < minWeight) {
       weight = minWeight;
       weightController.text = minWeight.toString();
       emit(WeightUpdated());
-      _showError(context, 'the weight cannot be less than $minWeight');
+      _showError(context, '${AppStrings.weightTooLow} $minWeight');
     }
   }
 
@@ -261,7 +282,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
         birthdayController.text.isEmpty ||
         weightController.text.isEmpty ||
         double.tryParse(weightController.text) == null) {
-      emit(ValidationFailed("Please fill all required fields correctly."));
+      emit(ValidationFailed(AppStrings.fillAllFields));
       return false;
     }
 
@@ -274,10 +295,10 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     if (token == null || token.isEmpty) {
       Loaders.errorSnackBar(
         context: context,
-        title: "Authentication Error",
-        message: "Token is missing. Please login again.",
+        title: AppStrings.authErrorTitle,
+        message: AppStrings.authErrorMessage,
       );
-      emit(ProfileCreationFailed("Authentication token not found."));
+      emit(ProfileCreationFailed(AppStrings.authTokenErrorMessage));
       return false;
     }
 
@@ -285,7 +306,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       final model = PetProfileModel(
         name: nameController.text,
         breed: selectedBreed!,
-        birthday: birthdayController.text.trim(),
+        birthday: _convertToEnglishNumbers(birthdayController.text.trim()),
         color: selectedColor!,
         weight: double.tryParse(weightController.text.trim())!,
         gender: gender!,
@@ -330,14 +351,14 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         Loaders.successSnackBar(
           context: context,
-          title: "Success",
-          message: "Pet profile created successfully.",
+          title: AppStrings.successTitle,
+          message: AppStrings.successMessage,
         );
         emit(ProfileCreatedSuccessfully());
         return true;
       } else {
         final decoded = jsonDecode(responseBody);
-        String message = 'Something went wrong.';
+        String message = AppStrings.unknownError;
 
         if (decoded is Map && decoded.containsKey('errors')) {
           final errors = decoded['errors'] as Map<String, dynamic>;
@@ -354,10 +375,10 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     } catch (e) {
       Loaders.errorSnackBar(
         context: context,
-        title: "Network Error",
-        message: "Something went wrong. Please try again.",
+        title: AppStrings.networkErrorTitle,
+        message: AppStrings.networkErrorMessage,
       );
-      emit(ProfileCreationFailed('Exception: $e'));
+      emit(ProfileCreationFailed(e.toString()));
       return false;
     }
   }

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_dark_button.dart';
+import 'package:petpaw/app/common/custom_light_button.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/features/onboarding_and_getstarted/controller/on_boarding_cubit.dart';
+
+import '../../../../../core/utils/constants/app_strings.dart';
 
 class NextPreviousButtons extends StatelessWidget {
   const NextPreviousButtons({super.key});
@@ -24,16 +27,16 @@ class NextPreviousButtons extends StatelessWidget {
 
           if (isLastPage) {
             return CustomDarkButton(
-              text: 'Get Started',
-              onPressed: cubit.skipPage,
+              text: AppStrings.letsStart,
+              onPressed: () => cubit.nextPage(context),
             );
           } else if (isFirstPage) {
             return Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
-                width: 150,
+                width: 150.w,
                 child: CustomDarkButton(
-                  text: 'Next',
+                  text: AppStrings.next,
                   onPressed: () => cubit.nextPage(context),
                 ),
               ),
@@ -44,8 +47,8 @@ class NextPreviousButtons extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: CustomDarkButton(
-                      text: 'Previous',
+                    child: CustomLightButton(
+                      text: AppStrings.back,
                       onPressed: () {
                         cubit.pageController.previousPage(
                           duration: const Duration(milliseconds: 300),
@@ -58,7 +61,7 @@ class NextPreviousButtons extends StatelessWidget {
                   const SizedBox(width: Sizes.spaceBetweenSections),
                   Expanded(
                     child: CustomDarkButton(
-                      text: 'Next',
+                      text: AppStrings.next,
                       onPressed: () => cubit.nextPage(context),
                     ),
                   ),

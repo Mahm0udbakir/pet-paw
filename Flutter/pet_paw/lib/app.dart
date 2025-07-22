@@ -36,7 +36,7 @@ class PetPaw extends StatelessWidget {
                   ? Locale(langState.languageCode!)
                   : const Locale('en');
               return MaterialApp(
-                key: ValueKey(locale.languageCode),
+                key: const ValueKey('PetPawApp'),
                 debugShowCheckedModeBanner: false,
                 title: 'PetPaw',
                 theme: theme,

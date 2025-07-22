@@ -6,6 +6,7 @@ import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 import 'package:petpaw/app/features/auth/view/login/login_screen.dart';
 import 'package:petpaw/app/features/auth/view/signup/widgets/signup_form.dart';
 
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/login/login_cubit.dart';
 
@@ -25,7 +26,7 @@ class SignupBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Create new account',
+              AppStrings.createAccountTitle,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w600,
                 fontSize: 24.sp,
@@ -37,7 +38,7 @@ class SignupBody extends StatelessWidget {
             SizedBox(height: Sizes.spaceBetweenItems * 2.h),
             Text.rich(
               TextSpan(
-                text: 'Already have an account? ',
+                text: AppStrings.alreadyHaveAccount,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w400,
                   fontSize: 16.sp,
@@ -45,7 +46,7 @@ class SignupBody extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: 'Sign in',
+                    text: AppStrings.signIn,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w400,
                       fontSize: 14.sp,
