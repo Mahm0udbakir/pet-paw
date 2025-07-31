@@ -3,6 +3,7 @@ import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_label.dart';
+import 'package:petpaw/app/core/utils/helpers/helper_functions.dart';
 import '../core/utils/constants/app_colors.dart';
 
 class CustomDropDownTextField extends StatelessWidget {
@@ -34,7 +35,7 @@ class CustomDropDownTextField extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               border: Border.all(color: Colors.brown.shade100, width: 1.w),
               borderRadius: BorderRadius.circular(50),
             ),
@@ -45,16 +46,17 @@ class CustomDropDownTextField extends StatelessWidget {
                   child: Text(
                     value ?? hintText,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: value == null ? AppColors.iconColor : Colors.black,
-                          fontSize: 14.sp,
-                        ),
+                      color: value == null
+                          ? HelperFunctions.isDarkMode(context)
+                                ? AppColors.iconColor
+                                : Colors.black
+                          : AppColors.iconColor,
+                      fontSize: 14.sp,
+                    ),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Icon(
-                  Icons.arrow_drop_down,
-                  color: AppColors.iconColor,
-                ),
+                Icon(Icons.arrow_drop_down, color: AppColors.iconColor),
               ],
             ),
           ),

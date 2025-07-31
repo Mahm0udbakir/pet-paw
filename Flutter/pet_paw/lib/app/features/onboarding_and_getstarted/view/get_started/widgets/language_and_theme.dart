@@ -5,6 +5,7 @@ import 'package:petpaw/app/domain/app_language_cubit/change_language_cubit.dart'
 
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
+import '../../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../../domain/app_language_cubit/language_state.dart';
 import '../../../../../domain/app_theme_cubit/apptheme_cubit.dart';
 import '../../../../../domain/app_theme_cubit/theme_state.dart';
@@ -14,6 +15,7 @@ class LanguageAndTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = HelperFunctions.isDarkMode(context);
     final languageCubit = context.read<ChangeLanguageCubit>();
     final themeCubit = context.read<AppthemeCubit>();
     return Column(
@@ -62,7 +64,6 @@ class LanguageAndTheme extends StatelessWidget {
                                   content: const Text(
                                     'Language changed to English',
                                   ),
-                                  backgroundColor: AppColors.buttonMainColor,
                                   behavior: SnackBarBehavior.floating,
                                   duration: const Duration(seconds: 2),
                                     animation: const AlwaysStoppedAnimation(1.0),
@@ -90,7 +91,6 @@ class LanguageAndTheme extends StatelessWidget {
                                   content: const Text(
                                     'تم تغيير اللغة إلى العربية',
                                   ),
-                                  backgroundColor: AppColors.buttonMainColor,
                                   behavior: SnackBarBehavior.floating,
                                   animation: const AlwaysStoppedAnimation(1.0),
                                   duration: const Duration(seconds: 2),
@@ -113,14 +113,15 @@ class LanguageAndTheme extends StatelessWidget {
             children: [
               Icon(
                 Icons.language,
-                color: AppColors.buttonMainColor.withOpacity(0.4),
+                color:isDark ? Colors.grey : AppColors.buttonMainColor.withOpacity(0.4),
               ),
               SizedBox(width: 5.w),
               Text(
                 AppStrings.changeLanguage,
                 style: TextStyle(
-                  color: AppColors.grey,
+                  color:isDark ? Color(0xffBDBDBD) : AppColors.grey,
                   decoration: TextDecoration.underline,
+                  decorationColor: isDark ? Color(0xffBDBDBD) : AppColors.grey,
                 ),
               ),
             ],

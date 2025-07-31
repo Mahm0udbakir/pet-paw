@@ -57,13 +57,13 @@ class CustomNewPassword extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     // if (controller.text.isNotEmpty && !isValid)
-                       // ValidationPopoverIcon(validation: ValidationStatus(
-                       //   hasMinLength: cubit.hasMinLength,
-                       //   hasNumber: cubit.hasNumber,
-                       //   hasUpper: cubit.hasUpper,
-                       //   hasLower: cubit.hasLower,
-                       //   hasSpecial: cubit.hasSpecial,
-                       // ), showBubble: true),
+                    // ValidationPopoverIcon(validation: ValidationStatus(
+                    //   hasMinLength: cubit.hasMinLength,
+                    //   hasNumber: cubit.hasNumber,
+                    //   hasUpper: cubit.hasUpper,
+                    //   hasLower: cubit.hasLower,
+                    //   hasSpecial: cubit.hasSpecial,
+                    // ), showBubble: true),
                     IconButton(
                       onPressed: cubit.togglePasswordVisibility,
                       icon: Icon(

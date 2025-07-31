@@ -78,15 +78,15 @@ class LoginBody extends StatelessWidget {
                       fontSize: 14.sp,
                       color: AppColors.buttonMainColor,
                       decoration: TextDecoration.underline,
+                      decorationColor: AppColors.buttonMainColor,
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.pushAndRemoveUntil(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const SignupScreen(),
                           ),
-                          (route) => false,
                         );
                       },
                   ),

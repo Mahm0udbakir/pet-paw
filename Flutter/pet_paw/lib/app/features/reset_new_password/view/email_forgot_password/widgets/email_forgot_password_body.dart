@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../common/custom_dark_button.dart';
-import '../../../../../common/custom_light_button.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/reset_password_cubit.dart';
 import '../../../controller/reset_password_state.dart';
 import '../../otp_verification/otp_verification_screen.dart';
-import '../../phone_forgot_password/phone_forgot_password_screen.dart';
 import 'email_forgot_password_form.dart';
 
 class EmailForgotPasswordBody extends StatelessWidget {
@@ -85,20 +83,7 @@ class EmailForgotPasswordBody extends StatelessWidget {
                                 },
                         ),
                       ),
-                      const SizedBox(height: Sizes.spaceBetweenSections),
-                      SizedBox(
-                        width: double.infinity,
-                        child: CustomLightButton(
-                          text: AppStrings.resetUsingMobile,
-                          onPressed: () => Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const PhoneForgotPasswordScreen(),
-                            ),
-                          ),
-                        ),
-                      ),
+                      
                     ],
                   ),
                 );

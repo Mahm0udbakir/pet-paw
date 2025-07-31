@@ -26,9 +26,11 @@ class WeightTextField extends StatelessWidget {
               readOnly: false,
               keyboardType: TextInputType.number,
               controller: controller.weightController,
+              onFieldSubmitted: (value) =>
+                  controller.validateWeightInput(context, value),
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Theme.of(context).scaffoldBackgroundColor,
                 hintText: AppStrings.enterPetWeightHint,
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.iconColor,

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
+import 'package:petpaw/app/core/utils/helpers/helper_functions.dart';
 
 import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/images_strings.dart';
@@ -13,6 +14,7 @@ class TopGetStarted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = HelperFunctions.isDarkMode(context);
     return Column(
       children: [
         Text(
@@ -23,14 +25,17 @@ class TopGetStarted extends StatelessWidget {
           ),
         ),
         SizedBox(height: Sizes.lg.h),
-        Text(
-          AppStrings.getStartedSubtitle,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: AppColors.grey,
-            fontWeight: FontWeight.w400,
-            fontSize: 17.sp,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Text(
+            AppStrings.getStartedSubtitle,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w400,
+              color: isDark ? Color(0xffBDBDBD) : AppColors.grey,
+              fontSize: 16.sp,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
         ),
         SizedBox(height: Sizes.spaceBetweenSections.h),
         SvgPicture.asset(ImagesStrings.getStarted),

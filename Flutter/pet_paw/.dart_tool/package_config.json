@@ -249,7 +249,7 @@
     },
     {
       "name": "image_picker_android",
-      "rootUri": "file:///C:/Users/DELL/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_android-0.8.12+23",
+      "rootUri": "file:///C:/Users/DELL/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_android-0.8.12+24",
       "packageUri": "lib/",
       "languageVersion": "3.6"
     },
@@ -635,6 +635,6 @@
   "generator": "pub",
   "generatorVersion": "3.8.1",
   "flutterRoot": "file:///C:/flutter",
-  "flutterVersion": "3.32.6",
+  "flutterVersion": "3.32.9-0.0.pre.2",
   "pubCache": "file:///C:/Users/DELL/AppData/Local/Pub/Cache"
 }

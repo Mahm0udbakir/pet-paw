@@ -48,6 +48,7 @@ class TermsAndConditions extends StatelessWidget {
                       fontSize: 13.sp,
                       color: AppColors.buttonMainColor,
                       decoration: TextDecoration.underline,
+                      decorationColor: AppColors.buttonMainColor,
                     ),
                     children: [
                       TextSpan(
@@ -67,6 +68,7 @@ class TermsAndConditions extends StatelessWidget {
                               fontSize: 13.sp,
                               color: AppColors.buttonMainColor,
                               decoration: TextDecoration.underline,
+                              decorationColor: AppColors.buttonMainColor,
                             ),
                       ),
                     ],

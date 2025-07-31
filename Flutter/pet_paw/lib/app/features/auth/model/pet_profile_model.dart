@@ -25,20 +25,38 @@ class PetProfileModel {
 
   Map<String, String> toFields() {
     final fields = {
-      'Name': name.trim(),
-      'Breed': breed,
+      'Name': _translate(name.trim()),
+      'Breed': _translate(breed),
       'BirthDay': birthday,
-      'Color': color,
+      'Color': _translate(color),
       'Weight': weight.toString(),
-      'Gender': gender,
-      'IsInBreedingPeriod': neuterStatus,
-      'petType': petType,
+      'Gender': _translate(gender),
+      'breedingRequestStatus': _translate(neuterStatus),
+      'petType': _translate(petType),
     };
 
     if (medicalConditions != null && medicalConditions!.trim().isNotEmpty) {
-      fields['MedicalConditions'] = medicalConditions!;
+      fields['MedicalConditions'] = _translate(medicalConditions!);
     }
 
     return fields;
+  }
+
+  String _translate(String input) {
+    final translations = {
+      'ذكر': 'Male',
+      'أنثى': 'Female',
+      'مخصي': 'Neutered',
+      'غير مخصي': 'Not Neutered',
+      'كلب': 'Dog',
+      'قطة': 'Cat',
+      'أبيض': 'White',
+      'أسود': 'Black',
+      'بني': 'Brown',
+      'رمادي': 'Gray',
+      'ذهبي': 'Golden',
+    };
+
+    return translations[input.trim()] ?? input;
   }
 }

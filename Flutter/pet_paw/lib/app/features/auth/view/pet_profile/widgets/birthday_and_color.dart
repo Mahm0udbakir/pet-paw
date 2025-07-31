@@ -6,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
+import 'package:petpaw/app/core/utils/helpers/helper_functions.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
@@ -97,7 +98,7 @@ class BirthdayAndColor extends StatelessWidget {
                 SizedBox(height: 5.h),
                 DropdownButtonFormField(
                   value: context.read<CreatePetProfileCubit>().selectedColor,
-                  dropdownColor: Colors.white,
+                  dropdownColor: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(12),
                   icon: const Icon(
                     Iconsax.arrow_down_1,
@@ -106,7 +107,7 @@ class BirthdayAndColor extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 11),
                   style: TextStyle(
-                    color: AppColors.buttonMainColor,
+                    // color:HelperFunctions.isDarkMode(context) ? Colors.white : AppColors.buttonMainColor,
                     fontSize: 16.sp,
                   ),
                   items: context.read<CreatePetProfileCubit>().colorOptions.map(
@@ -119,7 +120,7 @@ class BirthdayAndColor extends StatelessWidget {
                   },
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Theme.of(context).scaffoldBackgroundColor,
                     contentPadding: EdgeInsets.symmetric(horizontal: 12),
                     prefixIcon: Image.asset(ImagesStrings.colorIcon),
                     border: OutlineInputBorder(

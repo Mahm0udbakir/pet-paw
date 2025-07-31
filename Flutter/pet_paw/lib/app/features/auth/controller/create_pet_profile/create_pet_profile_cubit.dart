@@ -232,6 +232,9 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       weightController.text = minWeight.toString();
       emit(WeightUpdated());
       _showError(context, '${AppStrings.weightTooLow} $minWeight');
+    }else{
+      weight = parsed;
+      emit(WeightUpdated());
     }
   }
 
@@ -378,7 +381,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
         title: AppStrings.networkErrorTitle,
         message: AppStrings.networkErrorMessage,
       );
-      emit(ProfileCreationFailed(e.toString()));
       return false;
     }
   }
@@ -442,6 +444,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     'West Highland White Terrier',
     'Yorkshire Terrier',
   ];
+
   List<String> get catBreeds => [
     'Abyssinian',
     'American Shorthair',

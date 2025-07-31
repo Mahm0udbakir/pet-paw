@@ -16,7 +16,7 @@ class SignupScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => SignupCubit(),
       child: Scaffold(
-        backgroundColor: AppColors.primaryBackground,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SafeArea(
           child: BlocListener<SignupCubit, SignupState>(
             listener: (context, state) {

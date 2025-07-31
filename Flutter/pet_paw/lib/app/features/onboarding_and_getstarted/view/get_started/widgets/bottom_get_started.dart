@@ -24,7 +24,7 @@ class BottomGetStarted extends StatelessWidget {
           width: double.infinity,
           child: CustomDarkButton(
             text: AppStrings.signUp,
-            onPressed: () => Navigator.pushAndRemoveUntil(
+            onPressed: () => Navigator.push(
               context,
               CupertinoPageRoute(
                 builder: (context) => BlocProvider(
@@ -32,7 +32,6 @@ class BottomGetStarted extends StatelessWidget {
                   child: SignupScreen(),
                 ),
               ),
-              (route) => false,
             ),
           ),
         ),
@@ -41,7 +40,7 @@ class BottomGetStarted extends StatelessWidget {
           width: double.infinity,
           child: CustomLightButton(
             text: AppStrings.signIn,
-            onPressed: () => Navigator.pushAndRemoveUntil(
+            onPressed: () => Navigator.push(
               context,
               CupertinoPageRoute(
                 builder: (context) => BlocProvider(
@@ -49,7 +48,6 @@ class BottomGetStarted extends StatelessWidget {
                   child: LoginScreen(),
                 ),
               ),
-              (route) => false,
             ),
           ),
         ),
@@ -91,7 +89,7 @@ class BottomGetStarted extends StatelessWidget {
             style: TextStyle(
               color: AppColors.grey,
               fontWeight: FontWeight.w400,
-              fontSize: 11.sp,
+              fontSize: 10.sp,
             ),
             children: [
               TextSpan(
@@ -99,8 +97,9 @@ class BottomGetStarted extends StatelessWidget {
                 style: TextStyle(
                   color: AppColors.buttonMainColor,
                   fontWeight: FontWeight.w400,
-                  fontSize: 11.sp,
+                  fontSize: 10.sp,
                   decoration: TextDecoration.underline,
+                  decorationColor: AppColors.buttonMainColor,
                 ),
               ),
               TextSpan(
@@ -108,7 +107,7 @@ class BottomGetStarted extends StatelessWidget {
                 style: TextStyle(
                   color: AppColors.grey,
                   fontWeight: FontWeight.w400,
-                  fontSize: 11.sp,
+                  fontSize: 10.sp,
                 ),
               ),
               TextSpan(
@@ -116,8 +115,9 @@ class BottomGetStarted extends StatelessWidget {
                 style: TextStyle(
                   color: AppColors.buttonMainColor,
                   fontWeight: FontWeight.w400,
-                  fontSize: 11.sp,
+                  fontSize: 10.sp,
                   decoration: TextDecoration.underline,
+                  decorationColor: AppColors.buttonMainColor,
                 ),
               ),
             ],

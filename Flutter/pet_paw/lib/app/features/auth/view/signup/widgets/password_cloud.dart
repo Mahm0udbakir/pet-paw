@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petpaw/app/core/utils/helpers/helper_functions.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../model/validation_status_model.dart';
 
@@ -37,11 +38,15 @@ class ValidationPopoverIcon extends StatelessWidget {
                   width: 320.w,
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: HelperFunctions.isDarkMode(context)
+                        ? Colors.grey
+                        : Colors.white,
                     borderRadius: BorderRadius.circular(26),
+                    border:Border.all(color: HelperFunctions.isDarkMode(context) ? Colors.white : Colors.grey, width: 1.w),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black26,
+                        color: HelperFunctions.isDarkMode(context)
+                            ? Colors.white: Colors.black26,
                         blurRadius: 4,
                         offset: Offset(0, 2),
                       ),
@@ -77,7 +82,11 @@ class ValidationPopoverIcon extends StatelessWidget {
                   offset: Offset(isRtl ? 38 : -38, -3),
                   child: CustomPaint(
                     size: Size(30, 40),
-                    painter: TrianglePainter(color: Colors.white),
+                    painter: TrianglePainter(
+                      color: HelperFunctions.isDarkMode(context)
+                          ? Colors.grey
+                          : Colors.white,
+                    ),
                   ),
                 ),
               ],
@@ -101,7 +110,7 @@ class ValidationPopoverIcon extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w300),
+              style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w300),
               overflow: TextOverflow.ellipsis,
             ),
           ),

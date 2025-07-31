@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petpaw/app/features/onboarding_and_getstarted/view/get_started/get_started_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,7 +41,6 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   }
 
   void nextPage(BuildContext context) {
-    print('Next page clicked, current index: $selectedIndex');
     if (selectedIndex < onboardingList.length - 1) {
       pageController.nextPage(
         duration: const Duration(milliseconds: 300),
@@ -51,22 +49,12 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
     } else {
       removeOnBoarding(context);
     }
-    // final currentIndex = _getCurrentIndex();
-    // if (currentIndex < onboardingList.length - 1) {
-    //   pageController.nextPage(
-    //     duration: const Duration(milliseconds: 300),
-    //     curve: Curves.easeInOut,
-    //   );
-    //   emit(OnBoardingPageChanged(currentIndex + 1));
-    // } else {
-    //   removeOnBoarding(context);
-    // }
   }
 
-  void initO(){
-    pageController.addListener((){
+  void initO() {
+    pageController.addListener(() {
       int newPage = pageController.page!.round();
-      if(selectedIndex != newPage){
+      if (selectedIndex != newPage) {
         selectedIndex = newPage;
         emit(ChangeOnBoardingPageState());
       }

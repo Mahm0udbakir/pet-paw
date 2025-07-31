@@ -149,7 +149,23 @@ class SignupForm extends StatelessWidget {
                         signupCubit.passwordController.text.trim(),
                         signupCubit.confirmPasswordController.text.trim(),
                       )) {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return const Dialog(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.buttonMainColor,
+                            ),
+                          ),
+                        );
+                      },
+                    );
                     final success = await signupCubit.signup();
+                    Navigator.of(context).pop();
                     if (success) {
                       Navigator.push(
                         context,
@@ -161,7 +177,6 @@ class SignupForm extends StatelessWidget {
                     }
                   }
                 },
-
                 child: Text(AppStrings.next),
               ),
             ),

@@ -21,7 +21,7 @@ class CustomLightButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-          backgroundColor: AppColors.primaryBackground,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100),
             side: BorderSide(color: AppColors.buttonMainColor, width: 1.w),

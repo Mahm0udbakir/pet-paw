@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petpaw/app/core/utils/constants/app_colors.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/features/onboarding_and_getstarted/controller/on_boarding_cubit.dart';
 import 'package:petpaw/app/features/onboarding_and_getstarted/view/onboarding/widgets/next_previous_buttons.dart';
@@ -17,7 +16,7 @@ class OnboardingScreen extends StatelessWidget {
     
 
     return Scaffold(
-      backgroundColor: AppColors.primaryBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(Sizes.defaultSpace),
         child: Column(

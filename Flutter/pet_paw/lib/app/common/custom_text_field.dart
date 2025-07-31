@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
+import 'package:petpaw/app/core/utils/helpers/helper_functions.dart';
 
 class CustomTextField extends StatefulWidget {
   final String title;
@@ -69,6 +70,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = HelperFunctions.isDarkMode(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,12 +98,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
           onEditingComplete: widget.onEditingComplete,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             fontSize: 14.sp,
-            color: Colors.brown.shade500,
+            // color:isDark ? Colors.white : Colors.brown.shade500,
             fontWeight: FontWeight.w500,
           ),
           decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.white,
+            fillColor: Theme.of(context).scaffoldBackgroundColor,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 20,
               vertical: 14,
@@ -127,7 +129,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 : widget.suffixIcon,
             hintText: widget.hintText,
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: AppColors.iconColor,
+              color: isDark ? Colors.white38 : Colors.brown.shade500,
               fontWeight: FontWeight.w400,
               fontSize: 14.sp,
             ),

@@ -5,6 +5,7 @@ import 'package:petpaw/app/features/auth/view/signup/widgets/password_cloud.dart
 import '../../../../../common/custom_label.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
+import '../../../../../core/utils/helpers/helper_functions.dart';
 import '../../../controller/signup/signup_cubit.dart';
 import '../../../model/validation_status_model.dart';
 import 'password_strength_label.dart';
@@ -25,6 +26,7 @@ class CustomPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.watch<SignupCubit>();
     final isValid = cubit.isPasswordValid;
+    final isDark = HelperFunctions.isDarkMode(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,12 +43,12 @@ class CustomPassword extends StatelessWidget {
               textInputAction: TextInputAction.next,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: 14.sp,
-                color: Colors.brown.shade500,
+                // color: isDark ? Colors.white : Colors.brown.shade500,
                 fontWeight: FontWeight.w500,
               ),
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.white.withOpacity(0.5),
+                fillColor: Theme.of(context).scaffoldBackgroundColor,
                 prefixIcon: Icon(
                   Icons.lock_outline,
                   color: AppColors.iconColor,
@@ -63,7 +65,6 @@ class CustomPassword extends StatelessWidget {
                           hasLower: cubit.hasLower,
                           hasSpecial: cubit.hasSpecial,
                         ),
-                        showBubble: true,
                       ),
                     IconButton(
                       onPressed: cubit.togglePasswordVisibility,
@@ -78,7 +79,7 @@ class CustomPassword extends StatelessWidget {
                 ),
                 hintText: AppStrings.passwordHint,
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.iconColor,
+                  color: isDark ? Colors.white38 : Colors.brown.shade500,
                   fontWeight: FontWeight.w400,
                   fontSize: 14.sp,
                 ),

@@ -74,6 +74,7 @@ class LoginForm extends StatelessWidget {
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
                   decoration: TextDecoration.underline,
+                  decorationColor: AppColors.buttonMainColor,
                 ),
               ),
             ),

@@ -14,7 +14,7 @@ class EmailForgotPasswordScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => ResetPasswordCubit(),
       child: Scaffold(
-        backgroundColor: AppColors.primaryBackground,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           title: Text(
             AppStrings.forgotPasswordTitle,

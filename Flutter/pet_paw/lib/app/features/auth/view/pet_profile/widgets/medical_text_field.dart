@@ -54,7 +54,7 @@ class MedicalTextField extends StatelessWidget {
               bottom: 16.0,
             ),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: Theme.of(context).scaffoldBackgroundColor,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(24),
               borderSide: BorderSide(color: Colors.brown.shade100, width: 1.w),

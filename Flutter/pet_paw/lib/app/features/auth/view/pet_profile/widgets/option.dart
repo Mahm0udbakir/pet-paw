@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petpaw/app/core/utils/helpers/helper_functions.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
 
@@ -17,7 +18,7 @@ Widget buildOption(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       margin: EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
           color: isSelected ? Colors.brown.shade400 : Colors.brown.shade100,
@@ -41,7 +42,7 @@ Widget buildOption(
                       height: 12.h,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppColors.buttonMainColor,
+                        color:HelperFunctions.isDarkMode(context) ? Colors.white : AppColors.buttonMainColor,
                       ),
                     ),
                   )
@@ -51,7 +52,11 @@ Widget buildOption(
           Text(
             value,
             style: TextStyle(
-              color: isSelected ? Colors.brown.shade800 : Colors.brown.shade300,
+              color: isSelected
+                  ? HelperFunctions.isDarkMode(context)
+                        ? Colors.white
+                        : Colors.brown.shade300
+                  : Colors.brown.shade400,
               fontWeight: FontWeight.w500,
             ),
           ),

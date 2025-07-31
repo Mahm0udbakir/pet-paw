@@ -52,10 +52,11 @@ class SignupBody extends StatelessWidget {
                       fontSize: 14.sp,
                       color: AppColors.buttonMainColor,
                       decoration: TextDecoration.underline,
+                      decorationColor: AppColors.buttonMainColor,
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.pushAndRemoveUntil(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => BlocProvider(
@@ -63,7 +64,6 @@ class SignupBody extends StatelessWidget {
                               child: const LoginScreen(),
                             ),
                           ),
-                          (route) => false,
                         );
                       },
                   ),

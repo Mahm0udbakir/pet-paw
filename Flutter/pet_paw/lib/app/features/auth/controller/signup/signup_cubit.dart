@@ -129,6 +129,9 @@ class SignupCubit extends Cubit<SignupState> {
       final responseData = jsonDecode(response.body);
       final statusCode = response.statusCode;
 
+      debugPrint('Signup request body: ${jsonEncode(body)}');
+
+
       debugPrint('[SignupCubit] Raw response: ${response.body}');
       debugPrint('[SignupCubit] Status code: ${response.statusCode}');
 
@@ -139,7 +142,6 @@ class SignupCubit extends Cubit<SignupState> {
           emit(SignupSuccess(user));
           return true;
         } else {
-          // emit(SignupError(AppStrings.unexpectedResponse));
           return false;
         }
       } else if (statusCode == 400 || statusCode == 422) {

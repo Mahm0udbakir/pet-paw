@@ -25,7 +25,6 @@ class PetTypeAndBreed extends StatelessWidget {
               title: AppStrings.petTypeTitle,
               items: cubit.petTypeOptions,
               value: cubit.selectedType,
-              // controller: cubit.petTypeDropdownController,
               onChanged: (value) {
                 cubit.chooseType(value);
               },

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../common/custom_label.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
+import '../../../../../core/utils/helpers/helper_functions.dart';
 
 class BreedDropdown extends StatefulWidget {
   final List<String> options;
@@ -47,7 +48,7 @@ class _BreedDropdownState extends State<BreedDropdown> {
             width: double.infinity,
             padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               border: Border.all(color: Colors.brown.shade100, width: 1.w),
               borderRadius: BorderRadius.circular(50),
             ),
@@ -59,8 +60,10 @@ class _BreedDropdownState extends State<BreedDropdown> {
                     displayedText,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: (widget.selectedBreed == null && !showCustomInput)
-                          ? AppColors.iconColor
-                          : Colors.black,
+                          ? HelperFunctions.isDarkMode(context)
+                                ? AppColors.iconColor
+                                : Colors.black
+                          : AppColors.iconColor,
                       fontSize: 14.sp,
                     ),
                     overflow: TextOverflow.ellipsis,

@@ -5,7 +5,6 @@ import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/features/onboarding_and_getstarted/view/get_started/widgets/bottom_get_started.dart';
 import 'package:petpaw/app/features/onboarding_and_getstarted/view/get_started/widgets/top_get_started.dart';
 
-import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../domain/app_language_cubit/change_language_cubit.dart';
 
 class GetStartedScreen extends StatelessWidget {
@@ -16,7 +15,7 @@ class GetStartedScreen extends StatelessWidget {
     return BlocBuilder<ChangeLanguageCubit, ChangeLanguageState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: AppColors.primaryBackground,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: Padding(
             padding: const EdgeInsets.all(Sizes.defaultSpace),
             child: SingleChildScrollView(
