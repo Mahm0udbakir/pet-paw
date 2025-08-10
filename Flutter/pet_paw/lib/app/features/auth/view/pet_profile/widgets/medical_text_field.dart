@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
@@ -42,7 +43,7 @@ class MedicalTextField extends StatelessWidget {
             alignLabelWithHint: true,
             prefixIcon: Padding(
               padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 8.0),
-              child: Image.asset(
+              child: SvgPicture.asset(
                 ImagesStrings.medicalIcon,
                 height: 20.h,
                 width: 20.w,

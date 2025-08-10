@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 import 'package:petpaw/app/core/utils/validators/validation.dart';
@@ -31,7 +32,7 @@ class PetProfileForm extends StatelessWidget {
               CustomTextField(
                 title: AppStrings.petNameLabel,
                 hintText: AppStrings.petNameHint,
-                icon: Image.asset(ImagesStrings.petIcon),
+                icon: SvgPicture.asset(ImagesStrings.petIcon),
                 keyboardType: TextInputType.text,
                 controller: controller.nameController,
                 validator: (value) => Validator.validateName(value),

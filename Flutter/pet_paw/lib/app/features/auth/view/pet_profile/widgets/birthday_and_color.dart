@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
-import 'package:petpaw/app/core/utils/helpers/helper_functions.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/images_strings.dart';
+import '../../../../../core/utils/helpers/helper_functions.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 
 class BirthdayAndColor extends StatelessWidget {
@@ -31,13 +32,10 @@ class BirthdayAndColor extends StatelessWidget {
               title: AppStrings.birthdayLabel,
               hintText: AppStrings.birthdayHintText,
               readOnly: false,
-              icon: Image.asset(ImagesStrings.petIcon),
+              icon: SvgPicture.asset(ImagesStrings.birthIcon),
               suffixIcon: GestureDetector(
                 onTap: () => controller.chooseCalendarDate(context),
-                child: const Icon(
-                  Icons.calendar_today,
-                  color: AppColors.buttonMainColor,
-                ),
+                child: SvgPicture.asset(ImagesStrings.calendarIcon),
               ),
               controller: controller.birthdayController,
               currentFocusNode: controller.birthdayFocus,
@@ -107,7 +105,9 @@ class BirthdayAndColor extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 11),
                   style: TextStyle(
-                    // color:HelperFunctions.isDarkMode(context) ? Colors.white : AppColors.buttonMainColor,
+                    color: HelperFunctions.isDarkMode(context)
+                        ? Colors.white
+                        : AppColors.buttonMainColor,
                     fontSize: 16.sp,
                   ),
                   items: context.read<CreatePetProfileCubit>().colorOptions.map(
@@ -122,7 +122,7 @@ class BirthdayAndColor extends StatelessWidget {
                     filled: true,
                     fillColor: Theme.of(context).scaffoldBackgroundColor,
                     contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                    prefixIcon: Image.asset(ImagesStrings.colorIcon),
+                    prefixIcon: SvgPicture.asset(ImagesStrings.colorIcon),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide: BorderSide(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:petpaw/app/common/custom_label.dart';
 import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 
@@ -39,7 +40,7 @@ class WeightTextField extends StatelessWidget {
                 ),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Image.asset(ImagesStrings.weightIcon),
+                  child: SvgPicture.asset(ImagesStrings.weightIcon),
                 ),
                 suffixIcon: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
