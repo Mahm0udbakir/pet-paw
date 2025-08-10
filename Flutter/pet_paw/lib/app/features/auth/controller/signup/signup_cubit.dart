@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import '../../../../core/config/api_config.dart';
 import '../../../../core/config/token_storage.dart';
+import '../../../../core/utils/constants/app_strings.dart';
 import '../../../../core/utils/validators/password_validator.dart';
 import '../../model/user_model.dart';
 import 'signup_state.dart';
@@ -18,8 +19,14 @@ class SignupCubit extends Cubit<SignupState> {
   final confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
+  final nameFocus = FocusNode();
+  final emailFocus = FocusNode();
+  final phoneFocus = FocusNode();
+  final passwordFocus = FocusNode();
+  final confirmPasswordFocus = FocusNode();
+
   bool triedToSubmit = false;
-  bool terms = false;
+  bool terms = true;
   bool isPasswordObscured = true;
   String currentPassword = '';
 
@@ -54,11 +61,8 @@ class SignupCubit extends Cubit<SignupState> {
   }
 
   void validatePassword(String password) {
-    final oldState = isPasswordValid;
     currentPassword = password;
-    if (isPasswordValid != oldState) {
-      emit(PasswordVisibilityToggled());
-    }
+    emit(PasswordValidationChanged());
   }
 
   bool isFormValid() => signupFormKey.currentState?.validate() ?? false;
@@ -68,32 +72,32 @@ class SignupCubit extends Cubit<SignupState> {
 
   bool isTermsAccepted() => terms;
 
-  Future<void> signup() async {
+  Future<bool> signup() async {
     triedToSubmit = true;
 
-    if (!isFormValid()) return;
+    if (!isFormValid()) return false;
 
     final password = passwordController.text.trim();
     final confirmPassword = confirmPasswordController.text.trim();
 
     if (!isPasswordConfirmed(password, confirmPassword)) {
-      emit(SignupError('Passwords do not match.'));
-      return;
+      emit(SignupError(AppStrings.passwordMismatch));
+      return false;
     }
 
     if (!isPasswordValid) {
-      emit(SignupError('Password does not meet the strength requirements.'));
-      return;
+      emit(SignupError(AppStrings.passwordMismatch));
+      return false;
     }
 
     if (!isTermsAccepted()) {
       emit(
         DetailedSignupError(
-          'Please accept the terms and conditions.',
+          AppStrings.termsNotAccepted,
           type: SignupErrorType.termsNotAccepted,
         ),
       );
-      return;
+      return false;
     }
 
     emit(SignupLoading());
@@ -118,35 +122,40 @@ class SignupCubit extends Cubit<SignupState> {
       );
 
       if (response.body.isEmpty) {
-        emit(SignupError('No response from server.'));
-        return;
+        emit(SignupError(AppStrings.loginNoResponseMessage));
+        return false;
       }
 
       final responseData = jsonDecode(response.body);
       final statusCode = response.statusCode;
 
-      print('[SignupCubit] Raw response: ${response.body}');
-      print('[SignupCubit] Status code: ${response.statusCode}');
+      debugPrint('Signup request body: ${jsonEncode(body)}');
+
+
+      debugPrint('[SignupCubit] Raw response: ${response.body}');
+      debugPrint('[SignupCubit] Status code: ${response.statusCode}');
 
       if (statusCode == 200 && responseData['success'] == true) {
         if (responseData.containsKey('data')) {
           final user = UserModel.fromJson(responseData['data']);
           await TokenStorage.saveToken(user.token);
           emit(SignupSuccess(user));
+          return true;
         } else {
-          emit(SignupError('Unexpected response structure.'));
+          return false;
         }
       } else if (statusCode == 400 || statusCode == 422) {
-        emit(SignupError(responseData['message'] ?? 'Validation failed.'));
+        emit(
+          SignupError(responseData['message'] ?? AppStrings.validationFailed),
+        );
+        return false;
       } else {
-        emit(SignupError(responseData['message'] ?? 'Signup failed.'));
+        emit(SignupError(responseData['message'] ?? AppStrings.networkError));
+        return false;
       }
     } catch (e) {
-      emit(
-        SignupError(
-          'Something went wrong. Please check your internet connection.',
-        ),
-      );
+      // emit(SignupError('${AppStrings.loginErrorMessagePrefix}${e.toString()}'));
+      return false;
     }
   }
 }

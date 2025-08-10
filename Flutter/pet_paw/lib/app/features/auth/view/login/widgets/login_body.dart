@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
-
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/helpers/loaders.dart';
-import '../../../controller/signup/signup_cubit.dart';
 import '../../signup/signup_screen.dart';
 import 'social_buttons.dart';
 import '../../../../../core/utils/constants/sizes.dart';
@@ -19,7 +19,7 @@ class LoginBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
+      padding: EdgeInsets.symmetric(
         vertical: Sizes.defaultSpace,
         horizontal: Sizes.md,
       ),
@@ -29,19 +29,19 @@ class LoginBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             LoginHeader(),
-            const SizedBox(height: Sizes.spaceBetweenSections),
+            SizedBox(height: Sizes.spaceBetweenSections.h),
             BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
                 if (state is LoginSuccess) {
                   Loaders.successSnackBar(
                     context: context,
-                    title: 'Login Successful',
-                    message: 'Welcome back, ${state.user.name}!',
+                    title: AppStrings.loginSuccessTitle,
+                    message: AppStrings.loginSuccessMessage,
                   );
                 } else if (state is LoginError) {
                   Loaders.errorSnackBar(
                     context: context,
-                    title: 'Login Failed',
+                    title: AppStrings.loginFailedTitle,
                     message: state.message,
                   );
                 }
@@ -50,46 +50,43 @@ class LoginBody extends StatelessWidget {
                 return const LoginForm();
               },
             ),
-            const SizedBox(height: Sizes.spaceBetweenItems),
+            SizedBox(height: Sizes.spaceBetweenItems.h),
             Text(
-              'Or Sign in with',
+              AppStrings.orSignInWith,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w400,
-                fontSize: 14,
+                fontSize: 14.sp,
                 color: AppColors.buttonMainColor,
               ),
             ),
-            const SizedBox(height: Sizes.spaceBetweenItems),
+            SizedBox(height: Sizes.spaceBetweenItems.h),
             SocialButtons(),
-            const SizedBox(height: Sizes.spaceBetweenItems * 2),
+            SizedBox(height: Sizes.spaceBetweenItems.h),
             Text.rich(
               TextSpan(
-                text: 'No account yet? ',
+                text: AppStrings.noAccountYet,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w400,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   color: AppColors.grey,
                 ),
                 children: [
                   TextSpan(
-                    text: 'Create one',
+                    text: AppStrings.createOne,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       color: AppColors.buttonMainColor,
                       decoration: TextDecoration.underline,
+                      decorationColor: AppColors.buttonMainColor,
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.pushAndRemoveUntil(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                              create: (context) => SignupCubit(),
-                              child: const SignupScreen(),
-                            ),
+                            builder: (context) => const SignupScreen(),
                           ),
-                          (route) => false,
                         );
                       },
                   ),

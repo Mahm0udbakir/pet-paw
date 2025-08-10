@@ -5,6 +5,7 @@ class Sizes {
   static const double md = 16.0;
   static const double lg = 24.0;
   static const double xl = 32.0;
+  static const double xxl = 64.0;
 
   // Icon sizes
   static const double xsIcon = 12.0;
@@ -31,8 +32,8 @@ class Sizes {
 
   // Default spacing between sections
   static const double defaultSpace = 24.0;
-  static const double spaceBetweenItems = 16.0;
-  static const double spaceBetweenSections = 32.0;
+  static const double spaceBetweenItems = 8.0;
+  static const double spaceBetweenSections = 16.0;
 
   // Border radius
   static const double smBorderRadius = 4.0;
@@ -49,7 +50,7 @@ class Sizes {
 
   // Input field
   static const double inputFieldRadius = 12.0;
-  static const double spaceBetweenInputFields = 16.0;
+  static const double spaceBetweenInputFields = 8.0;
 
   // Card sizes
   static const double smCardRadius = 10.0;

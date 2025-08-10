@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constants/app_colors.dart';
 import 'custom_themes/custom_appbar_theme.dart';
 import 'custom_themes/custom_bottom_sheet_theme.dart';
 import 'custom_themes/custom_checkbox_theme.dart';
@@ -17,7 +18,7 @@ class AppTheme {
     useMaterial3: true,
     fontFamily: 'Poppins',
     brightness: Brightness.light,
-    primaryColor: Colors.blue,
+    primaryColor: AppColors.buttonMainColor,
     scaffoldBackgroundColor: Colors.white,
     textTheme: CustomTextTheme.lightTextTheme,
     chipTheme: CustomChipTheme.lightChipTheme,
@@ -33,7 +34,7 @@ class AppTheme {
     useMaterial3: true,
     fontFamily: 'Poppins',
     brightness: Brightness.dark,
-    primaryColor: Colors.blue,
+    primaryColor: AppColors.buttonMainColor,
     scaffoldBackgroundColor: Colors.black,
     textTheme: CustomTextTheme.darkTextTheme,
     chipTheme: CustomChipTheme.darkChipTheme,

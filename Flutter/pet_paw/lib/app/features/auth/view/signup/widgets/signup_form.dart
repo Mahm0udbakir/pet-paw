@@ -1,12 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
+import 'package:petpaw/app/core/utils/helpers/loaders.dart';
 import 'package:petpaw/app/core/utils/validators/validation.dart';
 import 'package:petpaw/app/features/auth/controller/signup/signup_state.dart';
+import 'package:petpaw/app/features/auth/view/pet_profile/create_pet_profile_screen.dart';
 
+import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../controller/signup/signup_cubit.dart';
-import '../../login/widgets/register_button.dart';
 import 'custom_password.dart';
 import 'terms_and_conditions.dart';
 
@@ -15,78 +20,168 @@ class SignupForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context.watch<SignupCubit>().state is SignupLoading;
     final signupCubit = context.read<SignupCubit>();
     final customTextFields = [
       CustomTextField(
-        title: 'Name',
-        hintText: 'Enter your name',
-        icon: Icons.person_outline,
+        title: AppStrings.nameFieldTitle,
+        hintText: AppStrings.nameFieldHint,
+        icon: Icon(Icons.person_outline),
         keyboardType: TextInputType.text,
         controller: signupCubit.nameController,
         validator: (value) => Validator.validateName(value),
+        currentFocusNode: signupCubit.nameFocus,
+        nextFocusNode: signupCubit.emailFocus,
       ),
 
       CustomTextField(
-        title: 'Email',
-        hintText: 'Enter your email',
-        icon: Icons.email_outlined,
+        title: AppStrings.emailFieldTitle,
+        hintText: AppStrings.emailFieldHint,
+        icon: Icon(Icons.email_outlined),
         keyboardType: TextInputType.emailAddress,
         controller: signupCubit.emailController,
         validator: (value) => Validator.validateEmail(value),
+        currentFocusNode: signupCubit.emailFocus,
+        nextFocusNode: signupCubit.phoneFocus,
       ),
 
       CustomTextField(
-        title: 'Phone Number',
-        hintText: 'Enter your phone number',
-        icon: Icons.phone_outlined,
+        title: AppStrings.phoneFieldTitle,
+        hintText: AppStrings.phoneFieldHint,
+        icon: Icon(Icons.phone_outlined),
         keyboardType: TextInputType.phone,
         controller: signupCubit.phoneController,
-        validator: (value) =>
-            Validator.validateEmptyText('Phone number', value),
+        validator: (value) => Validator.validatePhone(value),
+        currentFocusNode: signupCubit.phoneFocus,
+        nextFocusNode: signupCubit.passwordFocus,
       ),
 
       CustomPassword(
         controller: signupCubit.passwordController,
         showValidationError:
             !signupCubit.isPasswordValid && signupCubit.triedToSubmit,
+        validator: (value) => Validator.validatePassword(value),
       ),
 
       CustomTextField(
-        title: 'Confirm your Password',
-        hintText: 'Retype your password',
-        icon: Icons.lock_outline,
+        title: AppStrings.confirmPasswordTitle,
+        hintText: AppStrings.confirmPasswordHint,
+        icon: Icon(Icons.lock_outline),
         keyboardType: TextInputType.text,
         controller: signupCubit.confirmPasswordController,
-        validator: (value) => Validator.validatePassword(value),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return AppStrings.confirmPasswordEmptyError;
+          }
+          if (value != signupCubit.passwordController.text.trim()) {
+            return AppStrings.passwordsNotMatch;
+          }
+          return null;
+        },
+
         obscure: true,
+        currentFocusNode: signupCubit.confirmPasswordFocus,
+        isLast: true,
+        onSubmit: () async {
+          if (signupCubit.signupFormKey.currentState!.validate() &&
+              signupCubit.isPasswordConfirmed(
+                signupCubit.passwordController.text.trim(),
+                signupCubit.confirmPasswordController.text.trim(),
+              )) {
+            final success = await signupCubit.signup();
+            if (success) {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) =>
+                      CreatePetProfileScreen(isFirstTime: true),
+                ),
+              );
+            }
+          }
+        },
       ),
     ];
 
-    return Form(
-      key: signupCubit.signupFormKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ListView.separated(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => customTextFields[index],
-            separatorBuilder: (context, index) => SizedBox(height: Sizes.md),
-            itemCount: customTextFields.length,
-          ),
-          SizedBox(height: Sizes.spaceBetweenSections * 1.5),
+    return BlocListener<SignupCubit, SignupState>(
+      listener: (context, state) {
+        if (state is SignupError) {
+          Loaders.errorSnackBar(context: context, title: state.message);
+        }
+        if (state is DetailedSignupError) {
+          Loaders.errorSnackBar(context: context, title: state.message);
+        }
+      },
+      child: Form(
+        key: signupCubit.signupFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ListView.separated(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => customTextFields[index],
+              separatorBuilder: (context, index) =>
+                  SizedBox(height: Sizes.spaceBetweenInputFields.h),
+              itemCount: customTextFields.length,
+            ),
+            SizedBox(height: Sizes.spaceBetweenSections.h),
 
-          TermsAndConditions(),
+            TermsAndConditions(),
 
-          SizedBox(height: Sizes.spaceBetweenSections),
-          RegisterButton(
-            isLoading: isLoading,
-            buttonText: 'Create Account',
-            shimmerButtonText: 'Creating Account...',
-            onPressed: () => signupCubit.signup(),
-          ),
-        ],
+            SizedBox(height: Sizes.spaceBetweenSections.h),
+            SizedBox(
+              width: double.infinity,
+              height: 40.h,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 14,
+                  ),
+                  backgroundColor: AppColors.buttonMainColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+                onPressed: () async {
+                  if (signupCubit.signupFormKey.currentState!.validate() &&
+                      signupCubit.isPasswordConfirmed(
+                        signupCubit.passwordController.text.trim(),
+                        signupCubit.confirmPasswordController.text.trim(),
+                      )) {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return const Dialog(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.buttonMainColor,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                    final success = await signupCubit.signup();
+                    Navigator.of(context).pop();
+                    if (success) {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) =>
+                              CreatePetProfileScreen(isFirstTime: true),
+                        ),
+                      );
+                    }
+                  }
+                },
+                child: Text(AppStrings.next),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

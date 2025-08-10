@@ -10,9 +10,11 @@ class Validator {
     if (email == null || email.isEmpty) {
       return 'Email is required';
     }
-    final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    final emailRegExp = RegExp(
+      r'^[\w.-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|icloud\.com)$',
+    );
     if (!emailRegExp.hasMatch(email)) {
-      return 'Please enter a valid email address';
+      return 'Please enter a valid email address from Gmail, Yahoo, Outlook, Hotmail or iCloud';
     }
     return null;
   }
@@ -28,12 +30,16 @@ class Validator {
   }
 
   static String? validatePhone(String? phone) {
-    if (phone == null || phone.isEmpty) {
+    if (phone == null || phone.trim().isEmpty) {
       return 'Phone number is required';
     }
-    final phoneRegExp = RegExp(r'^\+?\d{10}$');
-    if (!phoneRegExp.hasMatch(phone)) {
-      return 'Please enter a valid phone number';
+    final cleanedPhone = phone.trim();
+    final phoneRegExp = RegExp(r'^(010|011|012|015)\d{8}$');
+    if (!RegExp(r'^\d{11}$').hasMatch(cleanedPhone)) {
+      return 'Phone number must be exactly 11 digits';
+    }
+    if (!phoneRegExp.hasMatch(cleanedPhone)) {
+      return 'Phone number must start with 010, 011, 012, or 015';
     }
     return null;
   }
@@ -41,6 +47,13 @@ class Validator {
   static String? validateName(String? name) {
     if (name == null || name.isEmpty) {
       return 'Name is required';
+    }
+    if (name.trim().isEmpty) {
+      return 'Name cannot be just spaces';
+    }
+    final nameRegExp = RegExp(r'^[a-zA-Z]+(?:\s[a-zA-Z]+)*$');
+    if (!nameRegExp.hasMatch(name)) {
+      return 'Please enter a valid name without numbers or symbols';
     }
     return null;
   }

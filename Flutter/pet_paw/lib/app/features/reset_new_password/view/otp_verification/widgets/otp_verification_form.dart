@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../controller/reset_password_cubit.dart';
+
+class OtpVerificationForm extends StatefulWidget {
+  const OtpVerificationForm({super.key});
+
+  @override
+  State<OtpVerificationForm> createState() => _OtpVerificationFormState();
+}
+
+class _OtpVerificationFormState extends State<OtpVerificationForm> {
+  final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+  final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
+  String getOtp() {
+    return _controllers.map((c) => c.text).join();
+  }
+
+  @override
+  void dispose() {
+    for (final node in _focusNodes) {
+      node.dispose();
+    }
+    for (final controller in _controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  void _onChanged(String value, int index) {
+    if (value.isNotEmpty) {
+      if (index < 5) {
+        _focusNodes[index + 1].requestFocus();
+      } else {
+        _focusNodes[index].unfocus();
+      }
+    } else {
+      if (index > 0) {
+        _focusNodes[index - 1].requestFocus();
+      }
+    }
+
+    // Update the Cubit controller with the combined OTP
+    final cubit = context.read<ResetPasswordCubit>();
+    cubit.otpController.text = _controllers.map((c) => c.text).join();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<ResetPasswordCubit>();
+    final GlobalKey<FormState> formKeyOTP = GlobalKey<FormState>();
+    return Form(
+      key: formKeyOTP,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(6, (index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Container(
+                  width: 55,
+                  height: 55,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.white,
+                    border: Border.all(
+                      color: AppColors.borderOtp,
+                      width: 2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 6,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  alignment: Alignment.center,
+                  child: TextField(
+                    controller: _controllers[index],
+                    focusNode: _focusNodes[index],
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    maxLength: 1,
+                    decoration: const InputDecoration(
+                      counterText: '',
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      focusedErrorBorder: InputBorder.none,
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    onChanged: (value) {
+                      _onChanged(value, index);
+                    },
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              );
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:petpaw/app/splash_screen.dart';
-
 import 'app/core/utils/theme/theme.dart';
 import 'app/domain/app_language_cubit/change_language_cubit.dart';
 import 'app/domain/app_theme_cubit/apptheme_cubit.dart';
@@ -37,10 +36,12 @@ class PetPaw extends StatelessWidget {
                   ? Locale(langState.languageCode!)
                   : const Locale('en');
               return MaterialApp(
-                key: ValueKey(locale.languageCode),
+                key: const ValueKey('PetPawApp'),
                 debugShowCheckedModeBanner: false,
                 title: 'PetPaw',
                 theme: theme,
+                themeAnimationCurve: Curves.fastOutSlowIn,
+                themeAnimationDuration: const Duration(milliseconds: 2000),
                 localizationsDelegates: [
                   S.delegate,
                   GlobalMaterialLocalizations.delegate,

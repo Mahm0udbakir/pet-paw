@@ -8,5 +8,3 @@ final class ChangeLanguageSuccess extends ChangeLanguageState {
   final String? languageCode;
   ChangeLanguageSuccess({this.languageCode});
 }
-
-

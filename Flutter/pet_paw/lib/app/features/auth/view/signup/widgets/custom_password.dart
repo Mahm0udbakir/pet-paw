@@ -1,60 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:popover/popover.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:petpaw/app/features/auth/view/signup/widgets/password_cloud.dart';
+import '../../../../../common/custom_label.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
+import '../../../../../core/utils/helpers/helper_functions.dart';
 import '../../../controller/signup/signup_cubit.dart';
+import '../../../model/validation_status_model.dart';
 import 'password_strength_label.dart';
 
 class CustomPassword extends StatelessWidget {
   final TextEditingController controller;
   final bool showValidationError;
+  final String? Function(String?)? validator;
 
   const CustomPassword({
     super.key,
     required this.controller,
     this.showValidationError = false,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<SignupCubit>();
     final isValid = cubit.isPasswordValid;
+    final isDark = HelperFunctions.isDarkMode(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Password",
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: AppColors.greyColor,
-            fontWeight: FontWeight.w400,
-            fontSize: 16,
-          ),
-        ),
-        const SizedBox(height: 5),
+        customLabel(AppStrings.passwordTitle, context),
+        SizedBox(height: 5.h),
         Stack(
           children: [
             TextFormField(
               controller: controller,
               obscureText: cubit.isPasswordObscured,
               onChanged: cubit.validatePassword,
+              validator: validator,
+              textInputAction: TextInputAction.next,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: 16,
-                color: Colors.brown.shade500,
+                fontSize: 14.sp,
+                // color: isDark ? Colors.white : Colors.brown.shade500,
                 fontWeight: FontWeight.w500,
               ),
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.white.withOpacity(0.5),
-                prefixIcon: Icon(Icons.lock_outline, color: AppColors.iconColor),
+                fillColor: Theme.of(context).scaffoldBackgroundColor,
+                prefixIcon: Icon(
+                  Icons.lock_outline,
+                  color: AppColors.iconColor,
+                ),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (showValidationError && !isValid)
-                      IconButton(
-                        onPressed: () => _showValidationPopover(context, cubit),
-                        icon: const Icon(Icons.error, color: Colors.red),
+                    if (controller.text.isNotEmpty && !isValid)
+                      ValidationPopoverIcon(
+                        validation: ValidationStatus(
+                          hasMinLength: cubit.hasMinLength,
+                          hasNumber: cubit.hasNumber,
+                          hasUpper: cubit.hasUpper,
+                          hasLower: cubit.hasLower,
+                          hasSpecial: cubit.hasSpecial,
+                        ),
                       ),
                     IconButton(
                       onPressed: cubit.togglePasswordVisibility,
@@ -67,114 +77,60 @@ class CustomPassword extends StatelessWidget {
                     ),
                   ],
                 ),
-                hintText: "Enter your password",
+                hintText: AppStrings.passwordHint,
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.iconColor,
+                  color: isDark ? Colors.white38 : Colors.brown.shade500,
                   fontWeight: FontWeight.w400,
-                  fontSize: 16,
+                  fontSize: 14.sp,
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.brown.shade100,
-                    width: 1,
+                    width: 1.w,
                   ),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.red.shade300,
-                    width: 1.2,
+                    width: 1.2.w,
                   ),
                 ),
-                focusedErrorBorder: OutlineInputBorder(
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.brown.shade200,
-                    width: 1,
+                    width: 1.w,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(
                     color: Colors.brown.shade100,
-                    width: 1,
+                    width: 1.w,
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide(
+                    color: Colors.red.shade300,
+                    width: 1.2,
                   ),
                 ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h),
         Row(
           children: [
-            SizedBox(width: 15),
-            PasswordStrengthLabel(passedCount: cubit.passwordStrengthCount),
+            SizedBox(width: 15.w),
+            if (controller.text.isNotEmpty && !isValid)
+              PasswordStrengthLabel(passedCount: cubit.passwordStrengthCount),
           ],
         ),
       ],
-    );
-  }
-
-  void _showValidationPopover(BuildContext context, SignupCubit cubit) {
-    showPopover(
-      context: context,
-      bodyBuilder: (context) => Container(
-        padding: const EdgeInsets.all(20),
-        width: 250,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildPopoverCheck(
-              cubit.hasMinLength,
-              'Must be at 8-20 characters.',
-            ),
-            _buildPopoverCheck(
-              cubit.hasNumber,
-              'Must include at least 1 number.',
-            ),
-            _buildPopoverCheck(
-              cubit.hasUpper,
-              'Must contain at least 1 uppercase letter. ',
-            ),
-            _buildPopoverCheck(
-              cubit.hasLower,
-              'Must contain at least 1 lowercase letter. ',
-            ),
-            _buildPopoverCheck(
-              cubit.hasSpecial,
-              'Must include at least 1 special character (e.g.!,@,#).',
-            ),
-          ],
-        ),
-      ),
-      direction: PopoverDirection.top,
-      width: 380,
-      arrowHeight: 15,
-      arrowWidth: 30,
-      backgroundColor: AppColors.white,
-      radius: 10,
-      transition: PopoverTransition.scale,
-      transitionDuration: const Duration(milliseconds: 150),
-      barrierColor: Colors.transparent,
-    );
-  }
-
-  Widget _buildPopoverCheck(bool condition, String text) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Icon(
-            condition ? Icons.check : Icons.close,
-            color: condition ? Colors.green : Colors.red,
-            size: 16,
-          ),
-          const SizedBox(width: 8),
-          Text(text, style: TextStyle(color: Colors.black, fontSize: 13)),
-        ],
-      ),
     );
   }
 }

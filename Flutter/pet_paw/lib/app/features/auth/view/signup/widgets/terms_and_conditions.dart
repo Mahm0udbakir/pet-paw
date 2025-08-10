@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
+import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../controller/signup/signup_cubit.dart';
+import '../../../controller/signup/signup_state.dart';
 
 class TermsAndConditions extends StatelessWidget {
   const TermsAndConditions({super.key});
@@ -16,50 +19,56 @@ class TermsAndConditions extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Checkbox(
-            value: controller.terms,
-            onChanged: (value) => controller.toggleTerms(),
-            activeColor: AppColors.buttonMainColor,
+          BlocBuilder<SignupCubit, SignupState>(
+            builder: (context, state) {
+              return Checkbox(
+                value: controller.terms,
+                onChanged: (value) => controller.toggleTerms(),
+                activeColor: AppColors.buttonMainColor,
+              );
+            },
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'By creating your account you agree to our ',
+                  AppStrings.termsIntro,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w400,
-                    fontSize: 16,
+                    fontSize: 14.sp,
                     color: AppColors.grey,
                   ),
                 ),
                 Text.rich(
                   TextSpan(
-                    text: 'Terms & Conditions',
+                    text: AppStrings.termsAndConditions,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                      fontSize: 13.sp,
                       color: AppColors.buttonMainColor,
                       decoration: TextDecoration.underline,
+                      decorationColor: AppColors.buttonMainColor,
                     ),
                     children: [
                       TextSpan(
-                        text: ' and ',
+                        text: AppStrings.and,
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               fontWeight: FontWeight.w400,
-                              fontSize: 16,
+                              fontSize: 14.sp,
                               color: AppColors.grey,
                             ),
                       ),
                       TextSpan(
-                        text: 'Terms & Conditions',
+                        text: AppStrings.privacyPolicy,
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               fontWeight: FontWeight.w400,
-                              fontSize: 14,
+                              fontSize: 13.sp,
                               color: AppColors.buttonMainColor,
                               decoration: TextDecoration.underline,
+                              decorationColor: AppColors.buttonMainColor,
                             ),
                       ),
                     ],

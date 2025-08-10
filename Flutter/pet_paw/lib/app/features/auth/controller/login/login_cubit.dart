@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import '../../../../core/config/api_config.dart';
 import '../../../../core/config/token_storage.dart';
+import '../../../../core/utils/constants/app_strings.dart';
 import '../../model/user_model.dart';
 import 'login_state.dart';
 
@@ -13,6 +14,9 @@ class LoginCubit extends Cubit<LoginState> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+
+  final emailFocus = FocusNode();
+  final passwordFocus = FocusNode();
 
   @override
   Future<void> close() {
@@ -43,7 +47,7 @@ class LoginCubit extends Cubit<LoginState> {
       );
 
       if (response.body.isEmpty) {
-        emit(LoginError('No response from server.'));
+        emit(LoginError(AppStrings.loginNoResponseMessage));
         return;
       }
 
@@ -55,11 +59,12 @@ class LoginCubit extends Cubit<LoginState> {
         await TokenStorage.saveToken(user.token);
         emit(LoginSuccess(user));
       } else {
-        final errorMessage = responseData['message'] ?? 'Login failed';
+        final errorMessage =
+            responseData['message'] ?? AppStrings.loginFailedMessage;
         emit(LoginError(errorMessage));
       }
     } catch (e) {
-      emit(LoginError('Something went wrong: ${e.toString()}'));
+      emit(LoginError('${AppStrings.loginErrorMessagePrefix}${e.toString()}'));
     }
   }
 }
