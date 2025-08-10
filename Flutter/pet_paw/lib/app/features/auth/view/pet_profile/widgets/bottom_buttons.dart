@@ -11,7 +11,6 @@ import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
-import '../../login/widgets/register_button.dart';
 import '../create_pet_profile_screen.dart';
 
 class BottomButtons extends StatelessWidget {
@@ -20,7 +19,6 @@ class BottomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.read<CreatePetProfileCubit>();
-    final isLoading = controller.state is CreatePetProfileLoading;
 
     return Column(
       children: [
