@@ -7,6 +7,7 @@ import 'package:petpaw/app/features/auth/view/login/login_screen.dart';
 
 import '../../../../../common/custom_light_button.dart';
 import '../../../../../common/done_screen.dart';
+import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
@@ -46,33 +47,62 @@ class BottomButtons extends StatelessWidget {
           ),
         ),
         SizedBox(height: Sizes.spaceBetweenItems.h),
-        RegisterButton(
-          isLoading: isLoading,
-          onPressed: () async {
-            final profileCreated = await controller.createPetProfile(context);
-            if (!profileCreated) return;
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+              backgroundColor: AppColors.buttonMainColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
+            onPressed: () async {
+              final profileCreatedFuture = controller.createPetProfile(context);
 
-            if (context.mounted) {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DoneScreen(
-                    message: AppStrings.welcomeMessage,
-                    imageAsset: ImagesStrings.successCharacter,
-                    description: AppStrings.welcomeDescription,
-                    buttonText: AppStrings.loginButtonText,
-                    nextScreen: BlocProvider(
-                      create: (context) => LoginCubit(),
-                      child: LoginScreen(),
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return const Dialog(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.buttonMainColor,
+                      ),
+                    ),
+                  );
+                },
+              );
+
+              final profileCreated = await profileCreatedFuture;
+
+              Navigator.of(context).pop();
+
+              if (!profileCreated) return;
+
+              if (context.mounted) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DoneScreen(
+                      message: AppStrings.welcomeMessage,
+                      imageAsset: ImagesStrings.successCharacter,
+                      description: AppStrings.welcomeDescription,
+                      buttonText: AppStrings.loginButtonText,
+                      nextScreen: BlocProvider(
+                        create: (context) => LoginCubit(),
+                        child: LoginScreen(),
+                      ),
                     ),
                   ),
-                ),
-                (route) => false,
-              );
-            }
-          },
-          buttonText: AppStrings.createProfile,
-          shimmerButtonText: AppStrings.creatingProfileShimmer,
+                  (route) => false,
+                );
+              }
+            },
+            child: Text(AppStrings.createProfile),
+          ),
         ),
       ],
     );

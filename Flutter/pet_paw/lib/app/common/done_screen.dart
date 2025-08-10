@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petpaw/app/common/custom_dark_button.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
@@ -33,29 +34,29 @@ class DoneScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    message.replaceAll(' ', '\n'),
+                    message,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.success,
-                      fontSize: 24,
+                      fontSize: 24.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  SizedBox(height: 40.h),
                   SizedBox(
                     child: SvgPicture.asset(
                       imageAsset,
-                      width: screenWidth * 0.6,
+                      width: screenWidth * 0.6.w,
                       fit: BoxFit.contain,
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  SizedBox(height: 40.h),
                   Text(
                     description,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.grey,
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w300,
                     ),
                   ),
@@ -68,12 +69,12 @@ class DoneScreen extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 child: CustomDarkButton(
-                  onPressed:  () {
-                    // Navigator.pushAndRemoveUntil(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => nextScreen),
-                    //       (route) => false,
-                    // );
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => nextScreen),
+                      (route) => false,
+                    );
                   },
                   text: buttonText,
                 ),
@@ -85,4 +86,3 @@ class DoneScreen extends StatelessWidget {
     );
   }
 }
-

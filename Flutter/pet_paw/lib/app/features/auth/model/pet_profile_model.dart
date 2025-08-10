@@ -27,12 +27,14 @@ class PetProfileModel {
     final fields = {
       'Name': _translate(name.trim()),
       'Breed': _translate(breed),
-      'BirthDay': birthday,
+      'BirthDay.year': _getYear(),
+      'BirthDay.month': _getMonth(),
+      'BirthDay.day': _getDay(),
       'Color': _translate(color),
       'Weight': weight.toString(),
       'Gender': _translate(gender),
       'breedingRequestStatus': _translate(neuterStatus),
-      'petType': _translate(petType),
+      'petType': _translate(petType).toLowerCase(),
     };
 
     if (medicalConditions != null && medicalConditions!.trim().isNotEmpty) {
@@ -41,6 +43,10 @@ class PetProfileModel {
 
     return fields;
   }
+
+  String _getYear() => birthday.split('-')[0];
+  String _getMonth() => birthday.split('-')[1];
+  String _getDay() => birthday.split('-')[2];
 
   String _translate(String input) {
     final translations = {

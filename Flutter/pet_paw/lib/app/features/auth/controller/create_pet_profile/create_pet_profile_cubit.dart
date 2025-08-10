@@ -5,6 +5,7 @@ import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as path;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -232,7 +233,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       weightController.text = minWeight.toString();
       emit(WeightUpdated());
       _showError(context, '${AppStrings.weightTooLow} $minWeight');
-    }else{
+    } else {
       weight = parsed;
       emit(WeightUpdated());
     }
@@ -314,7 +315,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
         weight: double.tryParse(weightController.text.trim())!,
         gender: gender!,
         neuterStatus: neuterStatus!,
-        petType: selectedType!.toLowerCase(),
+        petType: selectedType!,
         medicalConditions: medicalController.text.trim().isNotEmpty
             ? medicalController.text.trim()
             : null,
@@ -337,7 +338,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
         final multipartFile = http.MultipartFile.fromBytes(
           'Photo',
           bytes.buffer.asUint8List(),
-          filename: ImagesStrings.appIcon,
+          filename: path.basename(ImagesStrings.appIcon),
           contentType: MediaType('image', 'png'),
         );
         request.files.add(multipartFile);
@@ -352,11 +353,6 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
       debugPrint('Raw response: $responseBody');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Loaders.successSnackBar(
-          context: context,
-          title: AppStrings.successTitle,
-          message: AppStrings.successMessage,
-        );
         emit(ProfileCreatedSuccessfully());
         return true;
       } else {
