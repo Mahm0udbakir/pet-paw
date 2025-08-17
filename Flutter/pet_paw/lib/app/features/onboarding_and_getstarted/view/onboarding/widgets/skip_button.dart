@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:petpaw/app/core/utils/constants/app_colors.dart';
+import 'package:petpaw/app/core/utils/constants/images_strings.dart';
 
 import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../controller/on_boarding_cubit.dart';
@@ -16,7 +18,6 @@ class SkipButton extends StatelessWidget {
       alignment: isRtl ? Alignment.centerLeft : Alignment.centerRight,
       child: InkWell(
         onTap: () {
-          // context.read<OnBoardingCubit>().skipPage();
           final lastPageIndex =
               context.read<OnBoardingCubit>().onboardingList.length - 1;
 
@@ -37,19 +38,21 @@ class SkipButton extends StatelessWidget {
                 Text(
                   AppStrings.skipButton,
                   style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.buttonMainColor,
-                    fontSize: 17.sp,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.iconColor.withValues(alpha: 0.5),
+                    fontSize: 16.sp,
+                    fontFamily: 'Poppins',
                   ),
                 ),
-                SizedBox(width: 4.w),
-                Icon(
-                  isRtl
-                      ? Icons.skip_previous_outlined
-                      : Icons.skip_next_outlined,
-                  color: AppColors.iconColor,
-                  size: 24.sp,
-                ),
+                SizedBox(width: 8.w),
+                // Icon(
+                //   isRtl
+                //       ? Icons.skip_previous_outlined
+                //       : Icons.skip_next_outlined,
+                //   color: AppColors.iconColor.withValues(alpha: 0.5),
+                //   size: 24.sp,
+                // ),
+                SvgPicture.asset(ImagesStrings.skipIcon),
               ],
             ),
           ),

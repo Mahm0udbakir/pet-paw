@@ -22,7 +22,6 @@ class NextPreviousButtons extends StatelessWidget {
           if (state is OnBoardingPageChanged) {
             currentPage = state.currentIndex;
           }
-          final isFirstPage = currentPage == 0;
           final isLastPage = currentPage == cubit.onboardingList.length - 1;
 
           if (isLastPage) {
@@ -30,42 +29,12 @@ class NextPreviousButtons extends StatelessWidget {
               text: AppStrings.letsStart,
               onPressed: () => cubit.nextPage(context),
             );
-          } else if (isFirstPage) {
-            return Align(
-              alignment: Alignment.centerRight,
-              child: SizedBox(
-                width: 150.w,
-                child: CustomDarkButton(
-                  text: AppStrings.next,
-                  onPressed: () => cubit.nextPage(context),
-                ),
-              ),
-            );
           } else {
             return SizedBox(
-              height: 48.h,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomLightButton(
-                      text: AppStrings.back,
-                      onPressed: () {
-                        cubit.pageController.previousPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                        cubit.updatePageIndicator(currentPage - 1);
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: Sizes.spaceBetweenSections),
-                  Expanded(
-                    child: CustomDarkButton(
-                      text: AppStrings.next,
-                      onPressed: () => cubit.nextPage(context),
-                    ),
-                  ),
-                ],
+              width: 150.w,
+              child: CustomDarkButton(
+                text: AppStrings.next,
+                onPressed: () => cubit.nextPage(context),
               ),
             );
           }

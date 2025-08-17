@@ -50,7 +50,7 @@ class BottomButtons extends StatelessWidget {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-              backgroundColor: AppColors.buttonMainColor,
+              backgroundColor: AppColors.mainColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(100),
               ),
@@ -67,7 +67,7 @@ class BottomButtons extends StatelessWidget {
                     elevation: 0,
                     child: Center(
                       child: CircularProgressIndicator(
-                        color: AppColors.buttonMainColor,
+                        color: AppColors.mainColor,
                       ),
                     ),
                   );

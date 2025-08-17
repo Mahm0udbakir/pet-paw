@@ -77,7 +77,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         _titleBool == true
             ? customLabel(widget.title, context)
             : SizedBox.shrink(),
-        SizedBox(height: 5.h),
+        SizedBox(height: 8.h),
         TextFormField(
           maxLines: widget.maxLines,
           readOnly: widget.readOnly,
@@ -86,7 +86,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
           keyboardType: widget.keyboardType,
           obscureText: _isObscure,
           onChanged: widget.onChanged,
-          textInputAction: widget.isLast ? TextInputAction.done : TextInputAction.next,
+          textInputAction: widget.isLast
+              ? TextInputAction.done
+              : TextInputAction.next,
           inputFormatters: widget.inputFormatters,
           onFieldSubmitted: (_) {
             if (widget.isLast) {
@@ -98,15 +100,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
           onEditingComplete: widget.onEditingComplete,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             fontSize: 14.sp,
-            // color:isDark ? Colors.white : Colors.brown.shade500,
-            fontWeight: FontWeight.w500,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w400,
+            color: isDark
+                ? Colors.white
+                : AppColors.iconColor.withValues(alpha: 0.6),
           ),
           decoration: InputDecoration(
             filled: true,
-            fillColor: Theme.of(context).scaffoldBackgroundColor,
+            fillColor: Color(0xff000000).withValues(alpha: 0.05),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 20,
-              vertical: 14,
+              vertical: 10,
             ),
             prefixIcon: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -114,44 +119,43 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             suffixIcon: widget.obscure
                 ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _isObscure = !_isObscure;
-                      });
-                    },
+                    onPressed: () => setState(() => _isObscure = !_isObscure),
                     icon: Icon(
-                      _isObscure
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined,
-                      color: AppColors.iconColor,
+                      _isObscure ? Icons.visibility : Icons.visibility_off,
+                      color: isDark
+                          ? AppColors.iconColor
+                          : AppColors.iconColor.withValues(alpha: 0.6),
                     ),
                   )
                 : widget.suffixIcon,
             hintText: widget.hintText,
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: isDark ? Colors.white38 : Colors.brown.shade500,
-              fontWeight: FontWeight.w400,
               fontSize: 14.sp,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w400,
+              color: isDark
+                  ? Colors.white
+                  : AppColors.iconColor.withValues(alpha: 0.6),
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.brown.shade100, width: 1.w),
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Colors.transparent),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.brown.shade100, width: 1.w),
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Colors.transparent),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.brown.shade200, width: 1.2.w),
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Colors.transparent, width: 1.2.w),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(color: Colors.red.shade300, width: 1.2.w),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.red.shade300, width: 1.2.w),
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Colors.transparent, width: 1.2.w),
             ),
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/features/onboarding_and_getstarted/controller/on_boarding_cubit.dart';
 import 'package:petpaw/app/features/onboarding_and_getstarted/view/onboarding/widgets/next_previous_buttons.dart';
@@ -13,7 +14,6 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final onboardingCubit = context.read<OnBoardingCubit>();
     final onboardingList = onboardingCubit.onboardingList;
-    
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -40,7 +40,7 @@ class OnboardingScreen extends StatelessWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
-          height: 100,
+          height: 90.h,
           padding: const EdgeInsets.all(Sizes.defaultSpace),
           child: NextPreviousButtons(),
         ),

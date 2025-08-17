@@ -21,13 +21,17 @@ class TermsAndConditions extends StatelessWidget {
         children: [
           BlocBuilder<SignupCubit, SignupState>(
             builder: (context, state) {
-              return Checkbox(
-                value: controller.terms,
-                onChanged: (value) => controller.toggleTerms(),
-                activeColor: AppColors.buttonMainColor,
+              return SizedBox(
+                width: 20.w,
+                child: Checkbox(
+                  value: controller.terms,
+                  onChanged: (value) => controller.toggleTerms(),
+                  activeColor: AppColors.iconColor.withValues(alpha: 0.6),
+                ),
               );
             },
           ),
+          SizedBox(width: 2.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,8 +40,9 @@ class TermsAndConditions extends StatelessWidget {
                   AppStrings.termsIntro,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w400,
+                    fontFamily: 'Poppins',
                     fontSize: 14.sp,
-                    color: AppColors.grey,
+                    color: AppColors.iconColor.withValues(alpha: 0.9),
                   ),
                 ),
                 Text.rich(
@@ -45,10 +50,11 @@ class TermsAndConditions extends StatelessWidget {
                     text: AppStrings.termsAndConditions,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 13.sp,
-                      color: AppColors.buttonMainColor,
+                      fontSize: 14.sp,
+                      color: AppColors.mainColor,
+                      fontFamily: 'Poppins',
                       decoration: TextDecoration.underline,
-                      decorationColor: AppColors.buttonMainColor,
+                      decorationColor: AppColors.mainColor,
                     ),
                     children: [
                       TextSpan(
@@ -57,7 +63,8 @@ class TermsAndConditions extends StatelessWidget {
                             ?.copyWith(
                               fontWeight: FontWeight.w400,
                               fontSize: 14.sp,
-                              color: AppColors.grey,
+                              fontFamily: 'Poppins',
+                              color: AppColors.iconColor.withValues(alpha: 0.9),
                             ),
                       ),
                       TextSpan(
@@ -65,10 +72,11 @@ class TermsAndConditions extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               fontWeight: FontWeight.w400,
-                              fontSize: 13.sp,
-                              color: AppColors.buttonMainColor,
+                              fontSize: 14.sp,
+                              color: AppColors.mainColor,
+                              fontFamily: 'Poppins',
                               decoration: TextDecoration.underline,
-                              decorationColor: AppColors.buttonMainColor,
+                              decorationColor: AppColors.mainColor,
                             ),
                       ),
                     ],

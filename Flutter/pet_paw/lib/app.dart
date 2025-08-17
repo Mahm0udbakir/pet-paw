@@ -40,8 +40,8 @@ class PetPaw extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 title: 'PetPaw',
                 theme: theme,
-                themeAnimationCurve: Curves.fastOutSlowIn,
-                themeAnimationDuration: const Duration(milliseconds: 2000),
+                themeAnimationCurve: Curves.easeIn,
+                themeAnimationDuration: const Duration(milliseconds: 200),
                 localizationsDelegates: [
                   S.delegate,
                   GlobalMaterialLocalizations.delegate,

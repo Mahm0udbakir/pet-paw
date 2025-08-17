@@ -15,21 +15,15 @@ class LoginHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          AppStrings.loginWelcomeBack,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: AppColors.greyColor,
-          ),
-        ),
-        SizedBox(height: Sizes.spaceBetweenItems.h),
-        SvgPicture.asset(ImagesStrings.appLogo, height: 160.h),
-        SizedBox(height: Sizes.spaceBetweenItems.h),
+        SvgPicture.asset(ImagesStrings.appLogo, height: 130.h),
+        SizedBox(height: 37.h),
         Text(
           AppStrings.loginTitle,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: AppColors.buttonMainColor,
+            fontWeight: FontWeight.w400,
+            color: AppColors.mainColor,
+            fontSize: 16.sp,
+            fontFamily: 'Poppins',
           ),
         ),
       ],

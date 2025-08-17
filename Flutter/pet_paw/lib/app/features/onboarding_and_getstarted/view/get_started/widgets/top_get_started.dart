@@ -17,27 +17,35 @@ class TopGetStarted extends StatelessWidget {
     final isDark = HelperFunctions.isDarkMode(context);
     return Column(
       children: [
-        Text(
-          AppStrings.getStartedTitle,
-          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-            color: AppColors.buttonMainColor,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        SizedBox(height: Sizes.lg.h),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Text(
-            AppStrings.getStartedSubtitle,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: isDark ? Color(0xffBDBDBD) : AppColors.grey,
-              fontSize: 16.sp,
-            ),
-            textAlign: TextAlign.center,
+          padding: EdgeInsets.symmetric(horizontal: 48.w),
+          child: Column(
+            children: [
+              Text(
+                AppStrings.getStartedTitle,
+                style: TextStyle(
+                  color: AppColors.mainColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24.sp,
+                  fontFamily: 'Poppins',
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: Sizes.sm.h),
+              Text(
+                AppStrings.getStartedSubtitle,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: isDark ? Color(0xffBDBDBD) : Color(0xff30200D),
+                  fontSize: HelperFunctions.isArabic(context) ? 16.sp : 15.sp,
+                  fontFamily: 'Poppins',
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
-        SizedBox(height: Sizes.spaceBetweenSections.h),
+        SizedBox(height: Sizes.xl + 4.h),
         SvgPicture.asset(ImagesStrings.getStarted),
         SizedBox(height: Sizes.lg.h),
         LanguageAndTheme(),

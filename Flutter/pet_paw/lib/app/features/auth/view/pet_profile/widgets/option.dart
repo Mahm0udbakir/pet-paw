@@ -19,21 +19,28 @@ Widget buildOption(
       margin: EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(8.r),
         border: Border.all(
-          color: isSelected ? Colors.brown.shade400 : Colors.brown.shade100,
-          width: isSelected ? 2.w : 1.w,
+          color: isSelected
+              ? AppColors.selectedOption.withValues(alpha: 0.25)
+              : AppColors.unselectedOption.withValues(alpha: 0.6),
+          width: isSelected ? 0 : 1.w,
         ),
       ),
       child: Row(
         children: [
           AnimatedContainer(
-            duration: const Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 250),
             width: 20.w,
             height: 20.h,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.brown.shade400, width: 2.w),
+              border: Border.all(
+                color: isSelected
+                    ? AppColors.mainColor
+                    : AppColors.unselectedOption.withValues(alpha: 0.6),
+                width: 2.w,
+              ),
             ),
             child: isSelected
                 ? Center(
@@ -42,7 +49,9 @@ Widget buildOption(
                       height: 12.h,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color:HelperFunctions.isDarkMode(context) ? Colors.white : AppColors.buttonMainColor,
+                        color: HelperFunctions.isDarkMode(context)
+                            ? Colors.white
+                            : AppColors.mainColor,
                       ),
                     ),
                   )
@@ -55,9 +64,11 @@ Widget buildOption(
               color: isSelected
                   ? HelperFunctions.isDarkMode(context)
                         ? Colors.white
-                        : Colors.brown.shade300
-                  : Colors.brown.shade400,
-              fontWeight: FontWeight.w500,
+                        : AppColors.mainColor
+                  : AppColors.unselectedOption.withValues(alpha: 0.6),
+              fontWeight: FontWeight.w400,
+              fontSize: 14.sp,
+              fontFamily: 'Poppins',
             ),
           ),
         ],

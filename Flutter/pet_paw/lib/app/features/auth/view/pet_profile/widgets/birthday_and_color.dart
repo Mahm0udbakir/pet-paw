@@ -101,13 +101,13 @@ class BirthdayAndColor extends StatelessWidget {
                   icon: const Icon(
                     Iconsax.arrow_down_1,
                     size: 25,
-                    color: AppColors.buttonMainColor,
+                    color: AppColors.mainColor,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 11),
                   style: TextStyle(
                     color: HelperFunctions.isDarkMode(context)
                         ? Colors.white
-                        : AppColors.buttonMainColor,
+                        : AppColors.mainColor,
                     fontSize: 16.sp,
                   ),
                   items: context.read<CreatePetProfileCubit>().colorOptions.map(
@@ -122,7 +122,7 @@ class BirthdayAndColor extends StatelessWidget {
                     filled: true,
                     fillColor: Theme.of(context).scaffoldBackgroundColor,
                     contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                    prefixIcon: SvgPicture.asset(ImagesStrings.colorIcon),
+                    prefixIcon: SvgPicture.asset(ImagesStrings.nameIcon),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide: BorderSide(

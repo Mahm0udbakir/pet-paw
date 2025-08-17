@@ -26,12 +26,16 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   }
 
   // Variables
-  final formKey = GlobalKey<FormState>();
+  // final formKey = GlobalKey<FormState>();
+  final step1FormKey = GlobalKey<FormState>();
+  final step2FormKey = GlobalKey<FormState>();
+  final step3FormKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final birthdayController = TextEditingController();
   final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
   final colorController = TextEditingController();
   final weightController = TextEditingController();
+  final heightController = TextEditingController();
   final petTypeController = TextEditingController();
   final breedController = TextEditingController();
   final medicalController = TextEditingController();
@@ -58,6 +62,9 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   double weight = 0.0;
   double minWeight = 0.0;
   double maxWeight = 200.0;
+  double height = 0.0;
+  double minHeight = 0.0;
+  double maxHeight = 200.0;
 
   // Lists
   List<String> colorOptions = [
@@ -87,6 +94,20 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     weight = double.parse(weight.toStringAsFixed(1));
     weightController.text = weight.toString();
     emit(WeightUpdated());
+  }
+
+  void decrementHeight() {
+    if (height > minHeight) height -= 0.1;
+    height = double.parse(height.toStringAsFixed(1));
+    heightController.text = height.toString();
+    emit(HeightUpdated());
+  }
+
+  void incrementHeight() {
+    if (height < maxHeight) height += 0.1;
+    height = double.parse(height.toStringAsFixed(1));
+    heightController.text = height.toString();
+    emit(HeightUpdated());
   }
 
   Future<void> uploadImage() async {
@@ -239,6 +260,29 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     }
   }
 
+  void validateHeightInput(BuildContext context, String value) {
+    final parsed = double.tryParse(value);
+    if (parsed == null) {
+      heightController.text = height.toString();
+      return;
+    }
+
+    if (parsed > maxHeight) {
+      height = maxHeight;
+      heightController.text = maxHeight.toString();
+      emit(HeightUpdated());
+      _showError(context, '${AppStrings.heightTooHigh} $maxHeight');
+    } else if (parsed < minHeight) {
+      height = minHeight;
+      heightController.text = minHeight.toString();
+      emit(HeightUpdated());
+      _showError(context, '${AppStrings.heightTooLow} $minWeight');
+    } else {
+      height = parsed;
+      emit(HeightUpdated());
+    }
+  }
+
   void _showError(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message), backgroundColor: Colors.red),
@@ -277,7 +321,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   }
 
   Future<bool> createPetProfile(BuildContext context) async {
-    if (!formKey.currentState!.validate() ||
+    if (!step3FormKey.currentState!.validate() ||
         selectedType == null ||
         selectedBreed == null ||
         selectedColor == null ||
@@ -285,7 +329,9 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
         neuterStatus == null ||
         birthdayController.text.isEmpty ||
         weightController.text.isEmpty ||
-        double.tryParse(weightController.text) == null) {
+        double.tryParse(weightController.text) == null ||
+        heightController.text.isEmpty ||
+        double.tryParse(heightController.text) == null) {
       emit(ValidationFailed(AppStrings.fillAllFields));
       return false;
     }
@@ -313,6 +359,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
         birthday: _convertToEnglishNumbers(birthdayController.text.trim()),
         color: selectedColor!,
         weight: double.tryParse(weightController.text.trim())!,
+        // height: double.tryParse(heightController.text.trim())!,
         gender: gender!,
         neuterStatus: neuterStatus!,
         petType: selectedType!,
@@ -387,6 +434,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
     birthdayController.dispose();
     colorController.dispose();
     weightController.dispose();
+    heightController.dispose();
     petTypeController.dispose();
     breedController.dispose();
     medicalController.dispose();

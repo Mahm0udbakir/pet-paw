@@ -22,14 +22,14 @@ class RegisterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 40.h,
+      height: 45.h,
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-          backgroundColor: AppColors.buttonMainColor,
+          backgroundColor: AppColors.mainColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
+            borderRadius: BorderRadius.circular(16),
           ),
         ),
         child: isLoading
@@ -51,6 +51,7 @@ class RegisterButton extends StatelessWidget {
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
+                  fontFamily: 'Poppins',
                 ),
               ),
       ),

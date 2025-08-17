@@ -11,6 +11,7 @@ import 'package:petpaw/app/features/auth/view/signup/signup_screen.dart';
 
 import '../../../../../core/utils/constants/app_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
+import '../../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../auth/view/login/login_screen.dart';
 
 class BottomGetStarted extends StatelessWidget {
@@ -18,6 +19,7 @@ class BottomGetStarted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = HelperFunctions.isDarkMode(context);
     return Column(
       children: [
         SizedBox(
@@ -35,7 +37,7 @@ class BottomGetStarted extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: Sizes.lg.h),
+        SizedBox(height: Sizes.md.h),
         SizedBox(
           width: double.infinity,
           child: CustomLightButton(
@@ -51,7 +53,7 @@ class BottomGetStarted extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: Sizes.lg.h),
+        SizedBox(height: Sizes.md.h),
         SizedBox(
           width: double.infinity,
           child: CustomLightButton(
@@ -82,42 +84,46 @@ class BottomGetStarted extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: Sizes.lg.h),
+        SizedBox(height: Sizes.xl.h),
         Text.rich(
           TextSpan(
             text: AppStrings.agreementPrefix,
             style: TextStyle(
-              color: AppColors.grey,
+              color: isDark ? Color(0xffBDBDBD) : AppColors.gray,
               fontWeight: FontWeight.w400,
               fontSize: 10.sp,
+              fontFamily: 'Poppins',
             ),
             children: [
               TextSpan(
                 text: AppStrings.terms,
                 style: TextStyle(
-                  color: AppColors.buttonMainColor,
+                  color: AppColors.mainColor,
                   fontWeight: FontWeight.w400,
                   fontSize: 10.sp,
                   decoration: TextDecoration.underline,
-                  decorationColor: AppColors.buttonMainColor,
+                  decorationColor: AppColors.mainColor,
+                  fontFamily: 'Poppins',
                 ),
               ),
               TextSpan(
                 text: AppStrings.and,
                 style: TextStyle(
-                  color: AppColors.grey,
+                  color: isDark ? Color(0xffBDBDBD) : AppColors.gray,
                   fontWeight: FontWeight.w400,
                   fontSize: 10.sp,
+                  fontFamily: 'Poppins',
                 ),
               ),
               TextSpan(
                 text: AppStrings.privacyPolicy,
                 style: TextStyle(
-                  color: AppColors.buttonMainColor,
+                  color: AppColors.mainColor,
                   fontWeight: FontWeight.w400,
                   fontSize: 10.sp,
                   decoration: TextDecoration.underline,
-                  decorationColor: AppColors.buttonMainColor,
+                  decorationColor: AppColors.mainColor,
+                  fontFamily: 'Poppins',
                 ),
               ),
             ],

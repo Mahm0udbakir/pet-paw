@@ -20,6 +20,7 @@ class OnboardingPage extends StatelessWidget {
         SvgPicture.asset(
           onboardingModel.image,
           width: 0.8.sw,
+          height: 1.02.sw,
           fit: BoxFit.contain,
         ),
 
@@ -27,7 +28,7 @@ class OnboardingPage extends StatelessWidget {
 
         const PageIndicator(),
 
-        SizedBox(height: Sizes.defaultSpace.h),
+        SizedBox(height: Sizes.spaceBetweenSections + 2.h),
 
         Text(
           onboardingModel.title,
@@ -35,7 +36,8 @@ class OnboardingPage extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 20.sp,
-            color: AppColors.buttonMainColor,
+            color: AppColors.mainColor,
+            fontFamily: 'Nunito',
           ),
         ),
 
@@ -50,10 +52,10 @@ class OnboardingPage extends StatelessWidget {
               fontWeight: FontWeight.w400,
               fontSize: 14.sp,
               color: AppColors.smallTextColor,
+              fontFamily: 'Nunito',
             ),
           ),
         ),
-
       ],
     );
   }

@@ -31,7 +31,7 @@ class SignupScreen extends StatelessWidget {
               } else if (state is SignupLoading) {
                 CircularProgressIndicator(
                   backgroundColor: Colors.transparent,
-                  color: AppColors.buttonMainColor,
+                  color: AppColors.mainColor,
                 );
               }
             },

@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petpaw/app/domain/app_language_cubit/change_language_cubit.dart';
 
+import '../../../../../common/custom_dark_button.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
+import '../../../../../core/utils/constants/sizes.dart';
 import '../../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../../domain/app_language_cubit/language_state.dart';
 import '../../../../../domain/app_theme_cubit/apptheme_cubit.dart';
@@ -29,80 +31,94 @@ class LanguageAndTheme extends StatelessWidget {
             builder: (context) {
               return BlocBuilder<ChangeLanguageCubit, ChangeLanguageState>(
                 builder: (context, state) {
-                  final currentLang = (state is ChangeLanguageSuccess)
+                  String currentLang = (state is ChangeLanguageSuccess)
                       ? state.languageCode ?? 'en'
                       : 'en';
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppStrings.selectYourLanguage,
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            color: AppColors.buttonMainColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        ListTile(
-                          title: const Text('English'),
-                          trailing: currentLang == 'en'
-                              ? Icon(
-                                  Icons.check,
-                                  color: AppColors.buttonMainColor,
-                                )
-                              : null,
-                          onTap: () {
-                            if (currentLang != 'en') {
-                              languageCubit.changeLanguage(LanguageState.en);
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: const Text(
-                                    'Language changed to English',
-                                  ),
-                                  behavior: SnackBarBehavior.floating,
-                                  duration: const Duration(seconds: 2),
-                                    animation: const AlwaysStoppedAnimation(1.0),
+                  String tempSelectedLang = currentLang;
+                  return StatefulBuilder(
+                    builder: (context, setState) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListTile(
+                              title: Text(
+                                'English',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 22.sp,
+                                  color: tempSelectedLang == 'en'
+                                      ? AppColors.mainColor
+                                      : AppColors.iconColor.withValues(
+                                          alpha: 0.5,
+                                        ),
+                                  fontWeight: tempSelectedLang == 'en'
+                                      ? FontWeight.bold
+                                      : null,
                                 ),
-                              );
-                            } else {
-                              Navigator.pop(context);
-                            }
-                          },
-                        ),
-                        ListTile(
-                          title: const Text('العربية'),
-                          trailing: currentLang == 'ar'
-                              ? Icon(
-                                  Icons.check,
-                                  color: AppColors.buttonMainColor,
-                                )
-                              : null,
-                          onTap: () {
-                            if (currentLang != 'ar') {
-                              languageCubit.changeLanguage(LanguageState.ar);
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: const Text(
-                                    'تم تغيير اللغة إلى العربية',
-                                  ),
-                                  behavior: SnackBarBehavior.floating,
-                                  animation: const AlwaysStoppedAnimation(1.0),
-                                  duration: const Duration(seconds: 2),
+                              ),
+
+                              onTap: () =>
+                                  setState(() => tempSelectedLang = 'en'),
+                            ),
+                            ListTile(
+                              title: Text(
+                                'العربية',
+                                style: TextStyle(
+                                  fontFamily: 'Cairo',
+                                  fontSize: 22.sp,
+                                  color: tempSelectedLang == 'ar'
+                                      ? AppColors.mainColor
+                                      : AppColors.iconColor.withValues(
+                                          alpha: 0.5,
+                                        ),
+                                  fontWeight: tempSelectedLang == 'ar'
+                                      ? FontWeight.bold
+                                      : null,
                                 ),
-                              );
-                            } else {
-                              Navigator.pop(context);
-                            }
-                          },
+                              ),
+
+                              onTap: () =>
+                                  setState(() => tempSelectedLang = 'ar'),
+                            ),
+                            SizedBox(height: Sizes.xl - 2.h),
+                            SizedBox(
+                              width: double.infinity,
+                              child: CustomDarkButton(
+                                text: AppStrings.selectYourLanguage,
+                                onPressed: () {
+                                  if (tempSelectedLang != currentLang) {
+                                    languageCubit.changeLanguage(
+                                      tempSelectedLang == 'ar'
+                                          ? LanguageState.ar
+                                          : LanguageState.en,
+                                    );
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          tempSelectedLang == 'ar'
+                                              ? 'تم تغيير اللغة إلى العربية'
+                                              : 'Language changed to English',
+                                        ),
+                                        behavior: SnackBarBehavior.floating,
+                                        duration: const Duration(seconds: 2),
+                                        animation: const AlwaysStoppedAnimation(
+                                          1.0,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   );
                 },
               );
@@ -113,21 +129,24 @@ class LanguageAndTheme extends StatelessWidget {
             children: [
               Icon(
                 Icons.language,
-                color:isDark ? Colors.grey : AppColors.buttonMainColor.withOpacity(0.4),
+                color: isDark
+                    ? Colors.grey
+                    : AppColors.iconColor.withValues(alpha: 0.5),
               ),
-              SizedBox(width: 5.w),
+              SizedBox(width: 8.w),
               Text(
                 AppStrings.changeLanguage,
                 style: TextStyle(
-                  color:isDark ? Color(0xffBDBDBD) : AppColors.grey,
+                  fontFamily: 'Inter',
+                  color: isDark ? Color(0xffBDBDBD) : AppColors.gray,
                   decoration: TextDecoration.underline,
-                  decorationColor: isDark ? Color(0xffBDBDBD) : AppColors.grey,
+                  decorationColor: isDark ? Color(0xffBDBDBD) : AppColors.gray,
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(height: 10.h),
+        SizedBox(height: 20.h),
         BlocBuilder<AppthemeCubit, AppThemeState>(
           builder: (context, state) {
             final isDark = state is DarkAppTheme;
@@ -136,23 +155,44 @@ class LanguageAndTheme extends StatelessWidget {
               children: [
                 Icon(
                   Icons.wb_sunny_outlined,
-                  color: isDark ? Colors.grey : AppColors.buttonMainColor,
+                  color: isDark ? AppColors.grey : AppColors.mainColor,
+                  size: 24.sp,
                 ),
-                Switch(
-                  value: isDark,
-                  onChanged: (value) {
-                    themeCubit.changeTheme(
-                      value ? ThemeState.dark : ThemeState.light,
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    final curvedAnimation = CurvedAnimation(
+                      parent: animation,
+                      curve: Curves.elasticOut,
+                    );
+
+                    return ScaleTransition(
+                      scale: curvedAnimation,
+                      child: child,
                     );
                   },
-                  activeColor: AppColors.white,
-                  activeTrackColor: AppColors.buttonMainColor,
-                  inactiveThumbColor: Colors.white,
-                  inactiveTrackColor: AppColors.lightGray,
+                  child: Switch(
+                    key: ValueKey(isDark),
+                    value: isDark,
+                    onChanged: (value) {
+                      themeCubit.changeTheme(
+                        value ? ThemeState.dark : ThemeState.light,
+                      );
+                    },
+                    activeColor: AppColors.white,
+                    activeTrackColor: AppColors.mainColor,
+                    inactiveThumbColor: Colors.white,
+                    inactiveTrackColor: AppColors.lightGray,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    splashRadius: 0,
+                  ),
                 ),
                 Icon(
                   Icons.dark_mode_outlined,
-                  color: isDark ? AppColors.buttonMainColor : Colors.grey,
+                  color: isDark
+                      ? AppColors.mainColor
+                      : AppColors.iconColor.withValues(alpha: 0.5),
+                  size: 24.sp,
                 ),
               ],
             );

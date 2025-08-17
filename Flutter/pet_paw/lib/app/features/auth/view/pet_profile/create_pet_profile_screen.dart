@@ -24,7 +24,7 @@ class CreatePetProfileScreen extends StatelessWidget {
               ? AppStrings.createPetProfileTitle
               : AppStrings.addAnotherPetTitle,
           style: TextStyle(
-            color: AppColors.buttonMainColor,
+            color: AppColors.mainColor,
             fontWeight: FontWeight.w600,
             fontSize: 24.sp,
           ),
@@ -33,7 +33,7 @@ class CreatePetProfileScreen extends StatelessWidget {
         leading: IconButton(
           icon: Padding(
             padding: const EdgeInsets.symmetric(horizontal: Sizes.md),
-            child: Icon(Icons.arrow_back_ios, color: AppColors.buttonMainColor),
+            child: Icon(Icons.arrow_back_ios, color: AppColors.mainColor),
           ),
           onPressed: () {
             Navigator.pop(context);

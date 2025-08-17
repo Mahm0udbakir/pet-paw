@@ -14,7 +14,7 @@ class CustomCheckboxTheme {
     }),
     fillColor: WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.selected)) {
-        return AppColors.buttonMainColor;
+        return AppColors.mainColor;
       }
       return Colors.transparent;
     }),
@@ -30,7 +30,7 @@ class CustomCheckboxTheme {
     }),
     fillColor: WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.selected)) {
-        return AppColors.buttonMainColor;
+        return AppColors.mainColor;
       }
       return Colors.transparent;
     }),

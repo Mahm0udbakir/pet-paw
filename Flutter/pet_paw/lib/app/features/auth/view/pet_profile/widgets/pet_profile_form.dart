@@ -32,7 +32,7 @@ class PetProfileForm extends StatelessWidget {
               CustomTextField(
                 title: AppStrings.petNameLabel,
                 hintText: AppStrings.petNameHint,
-                icon: SvgPicture.asset(ImagesStrings.petIcon),
+                icon: SvgPicture.asset(ImagesStrings.nameIcon),
                 keyboardType: TextInputType.text,
                 controller: controller.nameController,
                 validator: (value) => Validator.validateName(value),
@@ -51,7 +51,7 @@ class PetProfileForm extends StatelessWidget {
                     controller.selectOption(group: 'neuter', value: value),
               ),
               SizedBox(height: Sizes.spaceBetweenInputFields.h),
-              PetTypeAndBreed(),
+              // PetTypeAndBreed(),
               SizedBox(height: Sizes.spaceBetweenInputFields.h),
               SelectableOptionsRow(
                 options: [AppStrings.maleOption, AppStrings.femaleOption],
@@ -79,7 +79,7 @@ class PetProfileForm extends StatelessWidget {
                           .read<CreatePetProfileCubit>()
                           .toggleMedicalCondition(val ?? false);
                     },
-                    activeColor: AppColors.buttonMainColor,
+                    activeColor: AppColors.mainColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4),
                     ),

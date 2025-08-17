@@ -22,6 +22,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "HeightTooHigh": MessageLookupByLibrary.simpleMessage(
+      "the height cannot be more than",
+    ),
+    "HeightTooLow": MessageLookupByLibrary.simpleMessage(
+      "the height cannot be less than",
+    ),
     "addAnotherPet": MessageLookupByLibrary.simpleMessage("add another pet"),
     "addAnotherPetTitle": MessageLookupByLibrary.simpleMessage(
       "Add another pet",
@@ -114,13 +120,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterNewPassword": MessageLookupByLibrary.simpleMessage(
       "Enter your new password.",
     ),
-    "enterPetWeightHint": MessageLookupByLibrary.simpleMessage(
-      "Enter your pet\'s weight (kg.)",
+    "enterPetHeightHint": MessageLookupByLibrary.simpleMessage(
+      "Select your Pet Height",
     ),
+    "enterPetWeightHint": MessageLookupByLibrary.simpleMessage(
+      "Select your Pet Weight",
+    ),
+    "facebook": MessageLookupByLibrary.simpleMessage("Facebook"),
     "femaleOption": MessageLookupByLibrary.simpleMessage("Female"),
     "fillAllFields": MessageLookupByLibrary.simpleMessage(
       "Please fill all required fields correctly.",
     ),
+    "finish": MessageLookupByLibrary.simpleMessage("Finish"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "forgotPasswordPhoneSubtitle": MessageLookupByLibrary.simpleMessage(
       "Enter your mobile number and we will send you an OTP to reset password.",
@@ -136,7 +147,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ready, Set, Woof!",
     ),
     "golden": MessageLookupByLibrary.simpleMessage("Golden"),
+    "google": MessageLookupByLibrary.simpleMessage("Google"),
     "gray": MessageLookupByLibrary.simpleMessage("Gray"),
+    "heightLabel": MessageLookupByLibrary.simpleMessage("Height"),
     "imageSelectionFailedTitle": MessageLookupByLibrary.simpleMessage(
       "Image Selection Failed",
     ),
@@ -171,7 +184,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Login Successful",
     ),
     "loginTitle": MessageLookupByLibrary.simpleMessage(
-      "sign in to your account",
+      "Sign in to your account",
     ),
     "loginWelcomeBack": MessageLookupByLibrary.simpleMessage("Welcome Back to"),
     "maleOption": MessageLookupByLibrary.simpleMessage("Male"),
@@ -194,6 +207,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "networkErrorPrefix": MessageLookupByLibrary.simpleMessage("Error: "),
     "networkErrorTitle": MessageLookupByLibrary.simpleMessage("Network Error"),
+    "neuterStatusHint": MessageLookupByLibrary.simpleMessage(
+      "Choose your pet state",
+    ),
     "neuteredOption": MessageLookupByLibrary.simpleMessage("Neutered"),
     "next": MessageLookupByLibrary.simpleMessage("Next"),
     "noAccountYet": MessageLookupByLibrary.simpleMessage("No account yet? "),
@@ -271,13 +287,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "passwordsNotMatch": MessageLookupByLibrary.simpleMessage(
       "Passwords do not match",
     ),
-    "petBreedLabel": MessageLookupByLibrary.simpleMessage("Pet Breed"),
-    "petNameHint": MessageLookupByLibrary.simpleMessage(
-      "Enter your pet\'s name",
+    "petBreedLabel": MessageLookupByLibrary.simpleMessage("Breed"),
+    "petGenderHint": MessageLookupByLibrary.simpleMessage(
+      "Choose your pet gender",
     ),
+    "petNameHint": MessageLookupByLibrary.simpleMessage("Enter your pet name"),
     "petNameLabel": MessageLookupByLibrary.simpleMessage("Pet\'s name"),
     "petTypeHint": MessageLookupByLibrary.simpleMessage("Choose your pet"),
-    "petTypeTitle": MessageLookupByLibrary.simpleMessage("Pet Type"),
+    "petTypeTitle": MessageLookupByLibrary.simpleMessage("Type"),
     "phoneFieldHint": MessageLookupByLibrary.simpleMessage(
       "Enter your phone number",
     ),
@@ -302,6 +319,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "retypePassword": MessageLookupByLibrary.simpleMessage(
       "Retype your password",
     ),
+    "search": MessageLookupByLibrary.simpleMessage("Search"),
     "selectGender": MessageLookupByLibrary.simpleMessage(
       "Please select gender.",
     ),
@@ -310,7 +328,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Please select neuter status.",
     ),
     "selectYourLanguage": MessageLookupByLibrary.simpleMessage(
-      "Select your language",
+      "Choose your language",
     ),
     "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
     "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
@@ -354,7 +372,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Validation failed.",
     ),
     "weakPassword": MessageLookupByLibrary.simpleMessage("Weak Password!"),
-    "weightLabel": MessageLookupByLibrary.simpleMessage("Weight (Kg.)"),
+    "weightLabel": MessageLookupByLibrary.simpleMessage("Weight"),
     "weightTooHigh": MessageLookupByLibrary.simpleMessage(
       "the weight cannot be more than",
     ),

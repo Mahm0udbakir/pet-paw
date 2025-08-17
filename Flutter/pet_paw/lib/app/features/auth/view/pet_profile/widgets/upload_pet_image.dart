@@ -35,7 +35,7 @@ class UploadPetImage extends StatelessWidget {
             Text(
               AppStrings.uploadYourPetImage,
               style: TextStyle(
-                color: AppColors.buttonMainColor,
+                color: AppColors.mainColor,
                 fontWeight: FontWeight.w600,
                 fontSize: 22.sp,
               ),

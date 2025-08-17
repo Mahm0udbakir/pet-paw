@@ -15,7 +15,7 @@ class PasswordStrengthLabel extends StatelessWidget {
 
     if (passedCount <= 2) {
       strengthText = AppStrings.weakPassword;
-      strengthColor = Colors.red;
+      strengthColor = Color(0xffD10010);
     } else if (passedCount <= 4) {
       strengthText = AppStrings.normalPassword;
       strengthColor = Colors.orange;
@@ -28,8 +28,9 @@ class PasswordStrengthLabel extends StatelessWidget {
       strengthText,
       style: TextStyle(
         fontSize: 14.sp,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: strengthColor,
+        fontFamily: 'Inter',
       ),
     );
   }

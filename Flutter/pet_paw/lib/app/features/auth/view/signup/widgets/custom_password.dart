@@ -32,7 +32,7 @@ class CustomPassword extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         customLabel(AppStrings.passwordTitle, context),
-        SizedBox(height: 5.h),
+        SizedBox(height: 8.h),
         Stack(
           children: [
             TextFormField(
@@ -43,15 +43,22 @@ class CustomPassword extends StatelessWidget {
               textInputAction: TextInputAction.next,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: 14.sp,
-                // color: isDark ? Colors.white : Colors.brown.shade500,
-                fontWeight: FontWeight.w500,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w400,
+                color: isDark
+                    ? Colors.white
+                    : AppColors.iconColor.withValues(alpha: 0.6),
               ),
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Theme.of(context).scaffoldBackgroundColor,
+                fillColor: Color(0xff000000).withValues(alpha: 0.05),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 14,
+                ),
                 prefixIcon: Icon(
                   Icons.lock_outline,
-                  color: AppColors.iconColor,
+                  color: AppColors.iconColor.withValues(alpha: 0.6),
                 ),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -70,59 +77,58 @@ class CustomPassword extends StatelessWidget {
                       onPressed: cubit.togglePasswordVisibility,
                       icon: Icon(
                         cubit.isPasswordObscured
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                        color: AppColors.iconColor,
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: isDark
+                            ? AppColors.iconColor
+                            : AppColors.iconColor.withValues(alpha: 0.6),
                       ),
                     ),
                   ],
                 ),
                 hintText: AppStrings.passwordHint,
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: isDark ? Colors.white38 : Colors.brown.shade500,
-                  fontWeight: FontWeight.w400,
                   fontSize: 14.sp,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                  color: isDark
+                      ? Colors.white
+                      : AppColors.iconColor.withValues(alpha: 0.6),
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
                   borderSide: BorderSide(
-                    color: Colors.brown.shade100,
-                    width: 1.w,
+                    color: Colors.transparent,
+                    width: 1.2.w,
                   ),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(16),
                   borderSide: BorderSide(
                     color: Colors.red.shade300,
                     width: 1.2.w,
                   ),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  borderSide: BorderSide(
-                    color: Colors.brown.shade200,
-                    width: 1.w,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  borderSide: BorderSide(
-                    color: Colors.brown.shade100,
-                    width: 1.w,
-                  ),
-                ),
                 focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(16),
                   borderSide: BorderSide(
-                    color: Colors.red.shade300,
-                    width: 1.2,
+                    color: Colors.transparent,
+                    width: 1.2.w,
                   ),
                 ),
               ),
             ),
           ],
         ),
-        SizedBox(height: 10.h),
+        SizedBox(height: 8.h),
         Row(
           children: [
             SizedBox(width: 15.w),

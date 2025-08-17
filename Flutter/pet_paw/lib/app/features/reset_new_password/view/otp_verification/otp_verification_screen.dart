@@ -15,7 +15,7 @@ class OtpVerificationScreen extends StatelessWidget {
         title: Text(
           AppStrings.otpVerificationTitle,
           style: TextStyle(
-            color: AppColors.buttonMainColor,
+            color: AppColors.mainColor,
             fontWeight: FontWeight.w600,
             fontSize: 24,
           ),
@@ -24,7 +24,7 @@ class OtpVerificationScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Padding(
             padding: EdgeInsets.symmetric(horizontal: Sizes.md),
-            child: Icon(Icons.arrow_back_ios, color: AppColors.buttonMainColor),
+            child: Icon(Icons.arrow_back_ios, color: AppColors.mainColor),
           ),
           onPressed: () => Navigator.pop(context),
         ),

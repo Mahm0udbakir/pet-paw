@@ -17,34 +17,34 @@ class CustomDarkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40.h,
+      height: 45.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 32,
-            vertical: 14,
-          ),
-          backgroundColor: AppColors.buttonMainColor,
+          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 10.h),
+          backgroundColor: AppColors.mainColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
+            borderRadius: BorderRadius.circular(16.r),
           ),
         ),
         onPressed: isLoading ? null : onPressed,
         child: isLoading
             ? SizedBox(
-          height: 20.h,
-          width: 20.w,
-          child: CircularProgressIndicator(
-            strokeWidth: 2,
-            color: Colors.white,
-          ),
-        )
-            : Text(text,
-          style: TextStyle(
-            color: AppColors.white,
-            fontWeight: FontWeight.w400,
-            fontSize: 16.sp,
-          ),),
+                height: 20.h,
+                width: 20.w,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.w,
+                  color: Colors.white,
+                ),
+              )
+            : Text(
+                text,
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.sp,
+                  fontFamily: 'Poppins',
+                ),
+              ),
       ),
     );
   }

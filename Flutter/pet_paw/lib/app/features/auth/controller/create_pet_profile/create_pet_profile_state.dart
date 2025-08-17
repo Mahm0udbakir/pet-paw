@@ -7,6 +7,8 @@ final class CreatePetProfileInitial extends CreatePetProfileState {}
 
 class WeightUpdated extends CreatePetProfileState {}
 
+class HeightUpdated extends CreatePetProfileState {}
+
 class ImagePicking extends CreatePetProfileState {}
 
 class ImagePicked extends CreatePetProfileState {

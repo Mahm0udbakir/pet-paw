@@ -37,6 +37,8 @@ class AppStrings {
   static String get loginFailedMessage => S.current.loginFailedMessage;
   static String get loginErrorMessagePrefix =>
       S.current.loginErrorMessagePrefix;
+  static String get facebook => S.current.facebook;
+  static String get google => S.current.google;
 
   // -------------------- Login Form --------------------
   static String get emailTitle => S.current.emailTitle;
@@ -94,6 +96,7 @@ class AppStrings {
   static String get next => S.current.next;
   static String get back => S.current.back;
   static String get letsStart => S.current.letsStart;
+  static String get finish => S.current.finish;
 
   // -------------------- Pet Profile --------------------
   static String get createPetProfileTitle => S.current.createPetProfileTitle;
@@ -126,12 +129,16 @@ class AppStrings {
   static String get maleOption => S.current.maleOption;
   static String get femaleOption => S.current.femaleOption;
   static String get genderLabel => S.current.genderLabel;
+  static String get petGenderHint => S.current.petGenderHint;
+  static String get neuterStatusHint => S.current.neuterStatusHint;
   static String get medicalConditionQuestion =>
       S.current.medicalConditionQuestion;
   static String get birthdayLabel => S.current.birthdayLabel;
   static String get birthdayHintText => S.current.birthdayHintText;
   static String get colorLabel => S.current.colorLabel;
   static String get weightLabel => S.current.weightLabel;
+  static String get heightLabel => S.current.heightLabel;
+  static String get enterPetHeightHint => S.current.enterPetHeightHint;
   static String get enterPetWeightHint => S.current.enterPetWeightHint;
 
   // -------------------- Medical Info --------------------
@@ -188,6 +195,7 @@ class AppStrings {
   // -------------------- Common Messages --------------------
   static String get networkErrorPrefix => S.current.networkErrorPrefix;
   static String get allFieldsRequired => S.current.allFieldsRequired;
+  static String get search => S.current.search;
 
   // -------------------- OTP & Email Validation --------------------
   static String get emailRequired => S.current.emailRequired;
@@ -204,6 +212,8 @@ class AppStrings {
   static String get cameraPermission => S.current.cameraPermission;
   static String get weightTooHigh => S.current.weightTooHigh;
   static String get weightTooLow => S.current.weightTooLow;
+  static String get heightTooHigh => S.current.HeightTooHigh;
+  static String get heightTooLow => S.current.HeightTooLow;
   static String get selectGender => S.current.selectGender;
   static String get selectNeuterStatus => S.current.selectNeuterStatus;
   static String get fillAllFields => S.current.fillAllFields;

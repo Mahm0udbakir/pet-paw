@@ -11,7 +11,10 @@ void main() async {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) => SafeArea(child: const PetPaw()),
+      builder: (context, child) => Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: const PetPaw(),
+      ),
     ),
   );
 }

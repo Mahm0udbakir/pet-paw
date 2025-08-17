@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:petpaw/app/common/custom_text_field.dart';
 import 'package:petpaw/app/core/utils/constants/sizes.dart';
 import 'package:petpaw/app/core/utils/validators/validation.dart';
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
+import '../../../../../core/utils/constants/images_strings.dart';
 import '../../../../reset_new_password/view/email_forgot_password/email_forgot_password_screen.dart';
 import '../../../controller/login/login_cubit.dart';
 import '../../../controller/login/login_state.dart';
@@ -23,7 +25,7 @@ class LoginForm extends StatelessWidget {
       CustomTextField(
         title: AppStrings.emailTitle,
         hintText: AppStrings.emailHint,
-        icon: Icon(Icons.email_outlined),
+        icon: SvgPicture.asset(ImagesStrings.emailIcon),
         keyboardType: TextInputType.emailAddress,
         controller: loginCubit.emailController,
         validator: (value) => Validator.validateEmail(value),
@@ -33,7 +35,10 @@ class LoginForm extends StatelessWidget {
       CustomTextField(
         title: AppStrings.passwordTitle,
         hintText: AppStrings.passwordHint,
-        icon: Icon(Icons.lock_outline),
+        icon: Icon(
+          Icons.lock_outline,
+          color: AppColors.iconColor.withValues(alpha: 0.6),
+        ),
         keyboardType: TextInputType.text,
         controller: loginCubit.passwordController,
         validator: (value) => Validator.validatePassword(value),
@@ -56,6 +61,7 @@ class LoginForm extends StatelessWidget {
                 SizedBox(height: Sizes.spaceBetweenInputFields.h),
             itemCount: customTextFields.length,
           ),
+          SizedBox(height: Sizes.spaceBetweenItems.h),
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
@@ -70,16 +76,17 @@ class LoginForm extends StatelessWidget {
               child: Text(
                 AppStrings.forgotPassword,
                 style: TextStyle(
-                  color: AppColors.buttonMainColor,
-                  fontSize: 13.sp,
+                  color: AppColors.mainColor,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w400,
                   decoration: TextDecoration.underline,
-                  decorationColor: AppColors.buttonMainColor,
+                  decorationColor: AppColors.mainColor,
+                  fontFamily: 'Inter',
                 ),
               ),
             ),
           ),
-          SizedBox(height: Sizes.spaceBetweenItems / 2.h),
+          SizedBox(height: Sizes.defaultSpace / 2.h),
           RegisterButton(
             isLoading: isLoading,
             buttonText: AppStrings.loginButton,

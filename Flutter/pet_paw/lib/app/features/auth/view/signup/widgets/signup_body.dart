@@ -29,20 +29,22 @@ class SignupBody extends StatelessWidget {
               AppStrings.createAccountTitle,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w600,
-                fontSize: 24.sp,
-                color: AppColors.buttonMainColor,
+                fontSize: 22.sp,
+                fontFamily: 'Poppins',
+                color: AppColors.mainColor,
               ),
             ),
-            SizedBox(height: Sizes.spaceBetweenSections.h),
+            SizedBox(height: Sizes.defaultSpace + 4.h),
             SignupForm(),
-            SizedBox(height: Sizes.spaceBetweenItems * 2.h),
+            SizedBox(height: Sizes.defaultSpace.h),
             Text.rich(
               TextSpan(
                 text: AppStrings.alreadyHaveAccount,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w400,
                   fontSize: 16.sp,
-                  color: AppColors.grey,
+                  fontFamily: 'Poppins',
+                  color: AppColors.iconColor.withValues(alpha: 0.9),
                 ),
                 children: [
                   TextSpan(
@@ -50,9 +52,10 @@ class SignupBody extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w400,
                       fontSize: 14.sp,
-                      color: AppColors.buttonMainColor,
+                      fontFamily: 'Poppins',
+                      color: AppColors.mainColor,
                       decoration: TextDecoration.underline,
-                      decorationColor: AppColors.buttonMainColor,
+                      decorationColor: AppColors.mainColor,
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {

@@ -91,3 +91,150 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:petpaw/app/core/utils/constants/images_strings.dart';
+//
+// import 'features/onboarding_and_getstarted/controller/on_boarding_cubit.dart';
+// import 'features/onboarding_and_getstarted/view/onboarding/onboarding_screen.dart';
+//
+// class SplashScreen extends StatefulWidget {
+//   const SplashScreen({super.key});
+//
+//   @override
+//   State<SplashScreen> createState() => _SplashScreenState();
+// }
+//
+// class _SplashScreenState extends State<SplashScreen>
+//     with TickerProviderStateMixin {
+//   late AnimationController _logoController;
+//   late Animation<double> _logoScale;
+//   late Animation<double> _logoOpacity;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//
+//     _logoController = AnimationController(
+//       vsync: this,
+//       duration: const Duration(seconds: 2),
+//     );
+//
+//     _logoScale = Tween<double>(begin: 0.8, end: 1.0).animate(
+//       CurvedAnimation(parent: _logoController, curve: Curves.easeOutBack),
+//     );
+//
+//     _logoOpacity = Tween<double>(
+//       begin: 0,
+//       end: 1,
+//     ).animate(CurvedAnimation(parent: _logoController, curve: Curves.bounceIn));
+//
+//     _logoController.forward();
+//
+//     Future.delayed(const Duration(seconds: 5), () {
+//       Navigator.pushReplacement(
+//         context,
+//         MaterialPageRoute(
+//           builder: (_) => BlocProvider(
+//             create: (_) => OnBoardingCubit()..initO(),
+//             child: const OnboardingScreen(),
+//           ),
+//         ),
+//       );
+//     });
+//   }
+//
+//   @override
+//   void dispose() {
+//     _logoController.dispose();
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Stack(
+//         children: [
+//           Container(
+//             decoration: const BoxDecoration(
+//               gradient: LinearGradient(
+//                 begin: Alignment.topCenter,
+//                 end: Alignment.bottomCenter,
+//                 colors: [Color(0xffFCC9AD), Color(0xffE35E21)],
+//               ),
+//             ),
+//           ),
+//           Stack(
+//             children: [
+//               Positioned(
+//                 top: -135,
+//                 right: -135,
+//                 child: SlideTransition(
+//                   position:
+//                       Tween<Offset>(
+//                         begin: const Offset(0.5, -0.5),
+//                         end: Offset.zero,
+//                       ).animate(
+//                         CurvedAnimation(
+//                           parent: _logoController,
+//                           curve: Curves.easeOut,
+//                         ),
+//                       ),
+//                   child: Container(
+//                     width: 270,
+//                     height: 270,
+//                     decoration: BoxDecoration(
+//                       color: const Color(0xffF09E60).withValues(alpha: 0.1),
+//                       shape: BoxShape.circle,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//
+//               Align(
+//                 alignment: Alignment(0, -0.2),
+//                 child: ScaleTransition(
+//                   scale: _logoScale,
+//                   child: FadeTransition(
+//                     opacity: _logoOpacity,
+//                     child: SvgPicture.asset(
+//                       ImagesStrings.newSplash,
+//                       width: 200,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//
+//               Positioned(
+//                 bottom: -135,
+//                 left: -135,
+//                 child: SlideTransition(
+//                   position:
+//                       Tween<Offset>(
+//                         begin: const Offset(-0.5, 0.5),
+//                         end: Offset.zero,
+//                       ).animate(
+//                         CurvedAnimation(
+//                           parent: _logoController,
+//                           curve: Curves.easeOut,
+//                         ),
+//                       ),
+//                   child: Container(
+//                     width: 270,
+//                     height: 270,
+//                     decoration: BoxDecoration(
+//                       color: const Color(0xffF09E60).withValues(alpha: 0.1),
+//                       shape: BoxShape.circle,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

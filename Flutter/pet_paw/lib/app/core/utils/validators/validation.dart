@@ -51,7 +51,9 @@ class Validator {
     if (name.trim().isEmpty) {
       return 'Name cannot be just spaces';
     }
-    final nameRegExp = RegExp(r'^[a-zA-Z]+(?:\s[a-zA-Z]+)*$');
+    final nameRegExp = RegExp(
+      r'^[a-zA-Z\u0621-\u063A\u0641-\u064A\u064B-\u0652\u0649\u0671]+(?:\s[a-zA-Z\u0621-\u063A\u0641-\u064A\u064B-\u0652\u0649\u0671]+)*$',
+    );
     if (!nameRegExp.hasMatch(name)) {
       return 'Please enter a valid name without numbers or symbols';
     }
@@ -97,6 +99,76 @@ class Validator {
     final cardNumberRegExp = RegExp(r'^\d{16}$');
     if (!cardNumberRegExp.hasMatch(cardNumber)) {
       return 'Please enter a valid card number';
+    }
+    return null;
+  }
+
+  static String? validatePetType(String? petType) {
+    if (petType == null || petType.isEmpty) {
+      return 'Pet type is required';
+    }
+    return null;
+  }
+
+  static String? validatePetBreed(String? petBreed) {
+    if (petBreed == null || petBreed.isEmpty) {
+      return 'Pet breed is required';
+    }
+    return null;
+  }
+
+  static String? validateGender(String? gender) {
+    if (gender == null || gender.isEmpty) {
+      return 'Gender is required';
+    }
+    return null;
+  }
+
+  static String? validateNeuterStatus(String? neuterStatus) {
+    if (neuterStatus == null || neuterStatus.isEmpty) {
+      return 'Neuter status is required';
+    }
+    return null;
+  }
+
+  static String? validateBirthday(String? birthday) {
+    if (birthday == null || birthday.isEmpty) {
+      return 'Birthday is required';
+    }
+    return null;
+  }
+
+  static String? validateWeight(String? weight) {
+    if (weight == null || weight.trim().isEmpty) {
+      return 'Weight is required';
+    }
+    final weight1 = double.tryParse(weight);
+    if (weight1 == null) {
+      return 'Please enter a valid number';
+    }
+    if (weight1 <= 0) {
+      return 'Weight must be greater than 0';
+    }
+    return null;
+  }
+
+  static String? validateHeight(String? height) {
+    if (height == null || height.trim().isEmpty) {
+      return 'Height is required';
+    }
+    final height1 = double.tryParse(height);
+    if (height1 == null) {
+      return 'Please enter a valid number';
+    }
+    if (height1 <= 0) {
+      return 'Height must be greater than 0';
+    }
+    return null;
+  }
+
+  static String? validateCharacteristic(String? characteristic) {
+    if (characteristic == null || characteristic.isEmpty) {
+      return 'Characteristic is required';
     }
     return null;
   }

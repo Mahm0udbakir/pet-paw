@@ -94,10 +94,20 @@ class S {
     );
   }
 
-  /// `Select your language`
+  /// `Facebook`
+  String get facebook {
+    return Intl.message('Facebook', name: 'facebook', desc: '', args: []);
+  }
+
+  /// `Google`
+  String get google {
+    return Intl.message('Google', name: 'google', desc: '', args: []);
+  }
+
+  /// `Choose your language`
   String get selectYourLanguage {
     return Intl.message(
-      'Select your language',
+      'Choose your language',
       name: 'selectYourLanguage',
       desc: '',
       args: [],
@@ -359,6 +369,11 @@ class S {
     return Intl.message('Sign in', name: 'loginButton', desc: '', args: []);
   }
 
+  /// `Search`
+  String get search {
+    return Intl.message('Search', name: 'search', desc: '', args: []);
+  }
+
   /// `Signing in...`
   String get loginLoadingButton {
     return Intl.message(
@@ -379,10 +394,10 @@ class S {
     );
   }
 
-  /// `sign in to your account`
+  /// `Sign in to your account`
   String get loginTitle {
     return Intl.message(
-      'sign in to your account',
+      'Sign in to your account',
       name: 'loginTitle',
       desc: '',
       args: [],
@@ -739,9 +754,9 @@ class S {
     return Intl.message('Login', name: 'loginButtonText', desc: '', args: []);
   }
 
-  /// `Pet Breed`
+  /// `Breed`
   String get petBreedLabel {
-    return Intl.message('Pet Breed', name: 'petBreedLabel', desc: '', args: []);
+    return Intl.message('Breed', name: 'petBreedLabel', desc: '', args: []);
   }
 
   /// `Choose your pet breed`
@@ -774,9 +789,29 @@ class S {
     );
   }
 
-  /// `Pet Type`
+  /// `Choose your pet gender`
+  String get petGenderHint {
+    return Intl.message(
+      'Choose your pet gender',
+      name: 'petGenderHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose your pet state`
+  String get neuterStatusHint {
+    return Intl.message(
+      'Choose your pet state',
+      name: 'neuterStatusHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type`
   String get petTypeTitle {
-    return Intl.message('Pet Type', name: 'petTypeTitle', desc: '', args: []);
+    return Intl.message('Type', name: 'petTypeTitle', desc: '', args: []);
   }
 
   /// `Edit image`
@@ -824,10 +859,10 @@ class S {
     );
   }
 
-  /// `Enter your pet's name`
+  /// `Enter your pet name`
   String get petNameHint {
     return Intl.message(
-      'Enter your pet\'s name',
+      'Enter your pet name',
       name: 'petNameHint',
       desc: '',
       args: [],
@@ -889,21 +924,36 @@ class S {
     return Intl.message('Color', name: 'colorLabel', desc: '', args: []);
   }
 
-  /// `Weight (Kg.)`
+  /// `Weight`
   String get weightLabel {
+    return Intl.message('Weight', name: 'weightLabel', desc: '', args: []);
+  }
+
+  /// `Finish`
+  String get finish {
+    return Intl.message('Finish', name: 'finish', desc: '', args: []);
+  }
+
+  /// `Height`
+  String get heightLabel {
+    return Intl.message('Height', name: 'heightLabel', desc: '', args: []);
+  }
+
+  /// `Select your Pet Weight`
+  String get enterPetWeightHint {
     return Intl.message(
-      'Weight (Kg.)',
-      name: 'weightLabel',
+      'Select your Pet Weight',
+      name: 'enterPetWeightHint',
       desc: '',
       args: [],
     );
   }
 
-  /// `Enter your pet's weight (kg.)`
-  String get enterPetWeightHint {
+  /// `Select your Pet Height`
+  String get enterPetHeightHint {
     return Intl.message(
-      'Enter your pet\'s weight (kg.)',
-      name: 'enterPetWeightHint',
+      'Select your Pet Height',
+      name: 'enterPetHeightHint',
       desc: '',
       args: [],
     );
@@ -1369,6 +1419,26 @@ class S {
     return Intl.message(
       'the weight cannot be less than',
       name: 'weightTooLow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the height cannot be more than`
+  String get HeightTooHigh {
+    return Intl.message(
+      'the height cannot be more than',
+      name: 'HeightTooHigh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the height cannot be less than`
+  String get HeightTooLow {
+    return Intl.message(
+      'the height cannot be less than',
+      name: 'HeightTooLow',
       desc: '',
       args: [],
     );

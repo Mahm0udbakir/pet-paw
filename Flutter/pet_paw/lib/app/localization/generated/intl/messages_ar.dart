@@ -22,6 +22,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "HeightTooHigh": MessageLookupByLibrary.simpleMessage(
+      "لا يمكن ان يكون الطول اكثر من",
+    ),
+    "HeightTooLow": MessageLookupByLibrary.simpleMessage(
+      "لا يمكن ان يكون الطول اقل من",
+    ),
     "addAnotherPet": MessageLookupByLibrary.simpleMessage(
       "إضافة حيوان أليف آخر",
     ),
@@ -114,13 +120,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterNewPassword": MessageLookupByLibrary.simpleMessage(
       "أدخل كلمة المرور الجديدة.",
     ),
-    "enterPetWeightHint": MessageLookupByLibrary.simpleMessage(
-      "أدخل وزن حيوانك (كجم)",
+    "enterPetHeightHint": MessageLookupByLibrary.simpleMessage(
+      "اختر طول حيوانك الأليف",
     ),
+    "enterPetWeightHint": MessageLookupByLibrary.simpleMessage(
+      "اختر وزن حيوانك الأليف",
+    ),
+    "facebook": MessageLookupByLibrary.simpleMessage("فيسبوك"),
     "femaleOption": MessageLookupByLibrary.simpleMessage("أنثى"),
     "fillAllFields": MessageLookupByLibrary.simpleMessage(
       "يرجى ملء جميع الحقول المطلوبة بشكل صحيح.",
     ),
+    "finish": MessageLookupByLibrary.simpleMessage("إنهاء"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
     "forgotPasswordPhoneSubtitle": MessageLookupByLibrary.simpleMessage(
       "أدخل رقم هاتفك وسنرسل لك رمز التحقق لإعادة تعيين كلمة المرور.",
@@ -136,7 +147,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "هيا بنا، انطلق، نبح!",
     ),
     "golden": MessageLookupByLibrary.simpleMessage("ذهبي"),
+    "google": MessageLookupByLibrary.simpleMessage("جوجل"),
     "gray": MessageLookupByLibrary.simpleMessage("رمادي"),
+    "heightLabel": MessageLookupByLibrary.simpleMessage("الطول"),
     "imageSelectionFailedTitle": MessageLookupByLibrary.simpleMessage(
       "فشل اختيار الصورة",
     ),
@@ -200,6 +213,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "networkErrorPrefix": MessageLookupByLibrary.simpleMessage("خطأ: "),
     "networkErrorTitle": MessageLookupByLibrary.simpleMessage("خطأ في الشبكة"),
+    "neuterStatusHint": MessageLookupByLibrary.simpleMessage(
+      "اختر حالة الحيوان",
+    ),
     "neuteredOption": MessageLookupByLibrary.simpleMessage("مخصي"),
     "next": MessageLookupByLibrary.simpleMessage("التالي"),
     "noAccountYet": MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟ "),
@@ -281,13 +297,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "passwordsNotMatch": MessageLookupByLibrary.simpleMessage(
       "كلمتا المرور غير متطابقتين",
     ),
-    "petBreedLabel": MessageLookupByLibrary.simpleMessage("سلالة الحيوان"),
+    "petBreedLabel": MessageLookupByLibrary.simpleMessage("السلالة"),
+    "petGenderHint": MessageLookupByLibrary.simpleMessage("اختر نوع الحيوان"),
     "petNameHint": MessageLookupByLibrary.simpleMessage(
       "أدخل اسم حيوانك الأليف",
     ),
     "petNameLabel": MessageLookupByLibrary.simpleMessage("اسم الحيوان"),
     "petTypeHint": MessageLookupByLibrary.simpleMessage("اختر نوع الحيوان"),
-    "petTypeTitle": MessageLookupByLibrary.simpleMessage("نوع الحيوان"),
+    "petTypeTitle": MessageLookupByLibrary.simpleMessage("النوع"),
     "phoneFieldHint": MessageLookupByLibrary.simpleMessage("أدخل رقم هاتفك"),
     "phoneFieldTitle": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
@@ -312,6 +329,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "retypePassword": MessageLookupByLibrary.simpleMessage(
       "أعد إدخال كلمة المرور",
     ),
+    "search": MessageLookupByLibrary.simpleMessage("بحث"),
     "selectGender": MessageLookupByLibrary.simpleMessage("يرجى اختيار النوع."),
     "selectImageTitle": MessageLookupByLibrary.simpleMessage("اختر صورة"),
     "selectNeuterStatus": MessageLookupByLibrary.simpleMessage(
@@ -358,7 +376,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "فشل التحقق من صحة البيانات.",
     ),
     "weakPassword": MessageLookupByLibrary.simpleMessage("كلمة مرور ضعيفة!"),
-    "weightLabel": MessageLookupByLibrary.simpleMessage("الوزن (كجم)"),
+    "weightLabel": MessageLookupByLibrary.simpleMessage("الوزن"),
     "weightTooHigh": MessageLookupByLibrary.simpleMessage(
       "لا يمكن أن يكون الوزن أكثر من",
     ),

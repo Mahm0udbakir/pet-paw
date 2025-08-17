@@ -608,6 +608,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "wizard_stepper",
+      "rootUri": "file:///C:/Users/DELL/AppData/Local/Pub/Cache/hosted/pub.dev/wizard_stepper-0.0.10",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
       "name": "xdg_directories",
       "rootUri": "file:///C:/Users/DELL/AppData/Local/Pub/Cache/hosted/pub.dev/xdg_directories-1.1.0",
       "packageUri": "lib/",
