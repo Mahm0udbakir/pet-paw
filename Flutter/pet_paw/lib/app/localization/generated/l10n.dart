@@ -959,20 +959,20 @@ class S {
     );
   }
 
-  /// `Medical conditions/Special needs (optional)`
+  /// `Medical condition (optional)`
   String get medicalConditionLabel {
     return Intl.message(
-      'Medical conditions/Special needs (optional)',
+      'Medical condition (optional)',
       name: 'medicalConditionLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Enter any medical conditions or special needs`
+  /// `Enter your Pet medical condition`
   String get medicalConditionHint {
     return Intl.message(
-      'Enter any medical conditions or special needs',
+      'Enter your Pet medical condition',
       name: 'medicalConditionHint',
       desc: '',
       args: [],
@@ -994,6 +994,26 @@ class S {
     return Intl.message(
       'Image Upload Failed',
       name: 'imageUploadFailedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Characteristic`
+  String get petCharacteristicTitle {
+    return Intl.message(
+      'Characteristic',
+      name: 'petCharacteristicTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My pet trained to help people with disability. or Playful - he loves chasing toys ...etc`
+  String get petCharacteristicHint {
+    return Intl.message(
+      'My pet trained to help people with disability. or Playful - he loves chasing toys ...etc',
+      name: 'petCharacteristicHint',
       desc: '',
       args: [],
     );
@@ -1109,10 +1129,10 @@ class S {
     );
   }
 
-  /// `Upload your pet image`
+  /// `Upload your pet Photo ( Optional )`
   String get uploadYourPetImage {
     return Intl.message(
-      'Upload your pet image',
+      'Upload your pet Photo ( Optional )',
       name: 'uploadYourPetImage',
       desc: '',
       args: [],

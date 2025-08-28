@@ -30,7 +30,7 @@ class _CustomStepperIndicatorState extends State<CustomStepperIndicator> {
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
             child: CircleAvatar(
-              radius: 20,
+              radius: 17,
               backgroundColor: isActive
                   ? AppColors.mainColor
                   : AppColors.mainColor.withValues(alpha: 0.5),
@@ -41,7 +41,6 @@ class _CustomStepperIndicatorState extends State<CustomStepperIndicator> {
                     color: isActive
                         ? AppColors.mainColor
                         : AppColors.mainColor.withValues(alpha: 0.5),
-                    width: 1,
                   ),
                 ),
                 padding: const EdgeInsets.all(3),

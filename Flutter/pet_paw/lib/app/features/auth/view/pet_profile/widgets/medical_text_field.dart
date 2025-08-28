@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petpaw/app/common/custom_label.dart';
+import 'package:petpaw/app/core/utils/helpers/helper_functions.dart';
 
 import '../../../../../core/utils/constants/app_colors.dart';
 import '../../../../../core/utils/constants/app_strings.dart';
@@ -17,8 +18,6 @@ class MedicalTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.watch<CreatePetProfileCubit>();
 
-    if (!cubit.hasMedicalCondition) return const SizedBox.shrink();
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -27,57 +26,64 @@ class MedicalTextField extends StatelessWidget {
         TextFormField(
           controller: cubit.medicalController,
           keyboardType: TextInputType.multiline,
-          minLines: 4,
+          minLines: 3,
           maxLength: 500,
           maxLengthEnforcement: MaxLengthEnforcement.enforced,
           inputFormatters: [LengthLimitingTextInputFormatter(500)],
-          maxLines: 10,
+          maxLines: 6,
           textInputAction: TextInputAction.done,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            fontSize: 14.sp,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w400,
+            color: HelperFunctions.isDarkMode(context)
+                ? Colors.white
+                : AppColors.iconColor.withValues(alpha: 0.6),
+          ),
           decoration: InputDecoration(
-            hintText: AppStrings.medicalConditionHint,
+            hint: Text(AppStrings.medicalConditionHint),
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: AppColors.iconColor,
+              fontSize: 14.sp,
+              fontFamily: 'Poppins',
               fontWeight: FontWeight.w400,
-              fontSize: 16.sp,
+              color: HelperFunctions.isDarkMode(context)
+                  ? Colors.white
+                  : AppColors.iconColor.withValues(alpha: 0.6),
             ),
             alignLabelWithHint: true,
             prefixIcon: Padding(
-              padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 8.0),
+              padding: const EdgeInsets.all(10),
               child: SvgPicture.asset(
                 ImagesStrings.medicalIcon,
                 height: 20.h,
                 width: 20.w,
               ),
             ),
-            contentPadding: const EdgeInsets.only(
-              top: 16.0,
-              right: 16.0,
-              bottom: 16.0,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 10,
             ),
             filled: true,
-            fillColor: Theme.of(context).scaffoldBackgroundColor,
+            fillColor: Color(0xff000000).withValues(alpha: 0.05),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(24),
-              borderSide: BorderSide(color: Colors.brown.shade100, width: 1.w),
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Colors.transparent),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(24),
-              borderSide: BorderSide(color: Colors.brown.shade100, width: 1.w),
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Colors.transparent),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(24),
-              borderSide: BorderSide(
-                color: Colors.brown.shade200,
-                width: 1.2.w,
-              ),
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Colors.transparent, width: 1.2.w),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(color: Colors.red.shade300, width: 1.2.w),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(24),
-              borderSide: BorderSide(color: Colors.red.shade300, width: 1.2.w),
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Colors.transparent, width: 1.2.w),
             ),
           ),
         ),

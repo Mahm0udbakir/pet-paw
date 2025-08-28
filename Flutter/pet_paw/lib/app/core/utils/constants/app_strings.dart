@@ -114,6 +114,8 @@ class AppStrings {
   static String get enterBreedHint => S.current.enterBreedHint;
   static String get petTypeHint => S.current.petTypeHint;
   static String get petTypeTitle => S.current.petTypeTitle;
+  static String get petCharacteristicTitle => S.current.petCharacteristicTitle;
+  static String get petCharacteristicHint => S.current.petCharacteristicHint;
 
   // -------------------- Image Upload Section --------------------
   static String get editImageTooltip => S.current.editImageTooltip;

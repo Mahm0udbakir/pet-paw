@@ -39,6 +39,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   final petTypeController = TextEditingController();
   final breedController = TextEditingController();
   final medicalController = TextEditingController();
+  final characteristicController = TextEditingController();
 
   final nameFocus = FocusNode();
   final birthdayFocus = FocusNode();
@@ -47,6 +48,7 @@ class CreatePetProfileCubit extends Cubit<CreatePetProfileState> {
   final petTypeFocus = FocusNode();
   final breedFocus = FocusNode();
   final medicalFocus = FocusNode();
+  final characteristicFocus = FocusNode();
 
   String previousBirthdayText = '';
   String? selected;

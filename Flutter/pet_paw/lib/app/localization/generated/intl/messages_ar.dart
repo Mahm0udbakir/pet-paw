@@ -195,10 +195,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "maleOption": MessageLookupByLibrary.simpleMessage("ذكر"),
     "medicalConditionHint": MessageLookupByLibrary.simpleMessage(
-      "أدخل أي حالات طبية أو احتياجات خاصة",
+      "أدخل الحالة الطبية لحيوانك الأليف",
     ),
     "medicalConditionLabel": MessageLookupByLibrary.simpleMessage(
-      "الحالات الطبية/الاحتياجات الخاصة (اختياري)",
+      "الحالات الطبية (اختياري)",
     ),
     "medicalConditionQuestion": MessageLookupByLibrary.simpleMessage(
       "هل لدى حيوانك أي حالة طبية؟",
@@ -298,6 +298,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "كلمتا المرور غير متطابقتين",
     ),
     "petBreedLabel": MessageLookupByLibrary.simpleMessage("السلالة"),
+    "petCharacteristicHint": MessageLookupByLibrary.simpleMessage(
+      "حيواني الأليف مدرب على مساعدة الأشخاص ذوي الإعاقة. أو مرح - يحب مطاردة الألعاب ... إلخ",
+    ),
+    "petCharacteristicTitle": MessageLookupByLibrary.simpleMessage("ميزات"),
     "petGenderHint": MessageLookupByLibrary.simpleMessage("اختر نوع الحيوان"),
     "petNameHint": MessageLookupByLibrary.simpleMessage(
       "أدخل اسم حيوانك الأليف",
@@ -367,7 +371,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "unknownError": MessageLookupByLibrary.simpleMessage("حدث خطأ غير متوقع."),
     "uploadYourPetImage": MessageLookupByLibrary.simpleMessage(
-      "ارفع صورة حيوانك الأليف",
+      "ارفع صورة حيوانك الأليف (إختياريه)",
     ),
     "validationErrorTitle": MessageLookupByLibrary.simpleMessage(
       "خطأ في التحقق",

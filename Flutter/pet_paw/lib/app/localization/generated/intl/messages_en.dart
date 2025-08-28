@@ -189,10 +189,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "loginWelcomeBack": MessageLookupByLibrary.simpleMessage("Welcome Back to"),
     "maleOption": MessageLookupByLibrary.simpleMessage("Male"),
     "medicalConditionHint": MessageLookupByLibrary.simpleMessage(
-      "Enter any medical conditions or special needs",
+      "Enter your Pet medical condition",
     ),
     "medicalConditionLabel": MessageLookupByLibrary.simpleMessage(
-      "Medical conditions/Special needs (optional)",
+      "Medical condition (optional)",
     ),
     "medicalConditionQuestion": MessageLookupByLibrary.simpleMessage(
       "Does your pet have any medical conditions?",
@@ -288,6 +288,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Passwords do not match",
     ),
     "petBreedLabel": MessageLookupByLibrary.simpleMessage("Breed"),
+    "petCharacteristicHint": MessageLookupByLibrary.simpleMessage(
+      "My pet trained to help people with disability. or Playful - he loves chasing toys ...etc",
+    ),
+    "petCharacteristicTitle": MessageLookupByLibrary.simpleMessage(
+      "Characteristic",
+    ),
     "petGenderHint": MessageLookupByLibrary.simpleMessage(
       "Choose your pet gender",
     ),
@@ -363,7 +369,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Something went wrong.",
     ),
     "uploadYourPetImage": MessageLookupByLibrary.simpleMessage(
-      "Upload your pet image",
+      "Upload your pet Photo ( Optional )",
     ),
     "validationErrorTitle": MessageLookupByLibrary.simpleMessage(
       "Validation Error",

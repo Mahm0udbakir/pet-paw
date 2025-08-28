@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
+import 'package:petpaw/app/features/auth/view/pet_profile/widgets/medical_text_field.dart';
+import 'package:petpaw/app/features/auth/view/signup/widgets/create_pet_profile/finish_dialog.dart';
+import 'package:petpaw/app/features/auth/view/signup/widgets/create_pet_profile/pick_image.dart';
 import 'package:wizard_stepper/wizard_stepper.dart';
 
 import '../../../../../../common/custom_dark_button.dart';
@@ -14,7 +16,6 @@ import '../../../../../../core/utils/constants/sizes.dart';
 import '../../../../../../core/utils/validators/validation.dart';
 import '../../../../controller/create_pet_profile/create_pet_profile_cubit.dart';
 import '../../../../controller/create_pet_profile/stepper_cubit.dart';
-import '../../../pet_profile/widgets/selectable_options_row.dart';
 
 class Step3 extends StatelessWidget with WizardStep {
   Step3({super.key});
@@ -26,9 +27,20 @@ class Step3 extends StatelessWidget with WizardStep {
       key: controller.step2FormKey,
       child: Column(
         children: [
+          PickImage(),
           SizedBox(height: Sizes.spaceBetweenInputFields * 2.h),
-
+          CustomTextField(
+            title: AppStrings.petCharacteristicTitle,
+            hintText: AppStrings.petCharacteristicHint,
+            icon: SvgPicture.asset(ImagesStrings.characteristicIcon),
+            controller: controller.characteristicController,
+            currentFocusNode: controller.characteristicFocus,
+            minLines: 2,
+            maxLines: 4,
+            validator: (value) => Validator.validateCharacteristic(value),
+          ),
           SizedBox(height: Sizes.spaceBetweenInputFields * 2.h),
+          MedicalTextField(),
 
           SizedBox(height: Sizes.spaceBetweenInputFields * 2.h),
           SizedBox(
@@ -37,15 +49,16 @@ class Step3 extends StatelessWidget with WizardStep {
               text: AppStrings.finish,
               onPressed: () {
                 if (controller.step2FormKey.currentState!.validate()) {
-                  context.read<StepperCubit>().nextStep();
-                }
-                /*else {
-                  Loaders.errorSnackBar(
+                  Navigator.of(context).pop();
+
+                  // افتح الـ dialog الجديد
+                  showDialog(
                     context: context,
-                    title: AppStrings.fillAllFields,
-                    message: AppStrings.fillAllFields,
+                    builder: (context) {
+                      return FinishDialog();
+                    },
                   );
-                }*/
+                }
               },
             ),
           ),

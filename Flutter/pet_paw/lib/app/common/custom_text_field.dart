@@ -20,6 +20,7 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final int maxLines;
+  final int minLines;
   final Function(String)? onChanged;
   final VoidCallback? onEditingComplete;
   final FocusNode currentFocusNode;
@@ -44,6 +45,7 @@ class CustomTextField extends StatefulWidget {
     this.readOnly = false,
     this.suffixIcon,
     this.maxLines = 1,
+    this.minLines = 1,
     this.onChanged,
     this.onEditingComplete,
     required this.currentFocusNode,
@@ -80,6 +82,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         SizedBox(height: 8.h),
         TextFormField(
           maxLines: widget.maxLines,
+          minLines: widget.minLines,
           readOnly: widget.readOnly,
           controller: widget.controller,
           validator: widget.validator,
